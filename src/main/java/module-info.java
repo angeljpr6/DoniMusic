@@ -8,4 +8,6 @@ module com.example.donimusic {
     exports com.example.donimusic;
     exports com.example.donimusic.controlador;
     opens com.example.donimusic.controlador to javafx.fxml;
+    exports com.example.donimusic.modelo;
+    opens com.example.donimusic.modelo to javafx.fxml;
 }

@@ -1,5 +1,6 @@
 package com.example.donimusic.controlador;
 
+import com.example.donimusic.modelo.Conexion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +31,7 @@ public class CrearCuenta implements Initializable {
     public Pane errorContrasena;
     @FXML
     public Pane iconoError1;
-    private static Connection c=Conexion.con;
+    private static Connection c= Conexion.con;
     @FXML
     public Label registroExitoso;
 

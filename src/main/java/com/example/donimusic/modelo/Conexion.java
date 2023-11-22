@@ -1,4 +1,4 @@
-package com.example.donimusic.controlador;
+package com.example.donimusic.modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
