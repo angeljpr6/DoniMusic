@@ -27,9 +27,10 @@ public class IniciarSesion implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Image imageError = new Image("C:\\Users\\angel\\IdeaProjects\\DoniMusic\\src\\main\\resources\\Iconos\\IconoError.png");
+        Image imageError = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/IconoError.png")));
         ImageView imageViewError = new ImageView(imageError);
 
+        iconoError.getChildren().add(imageViewError);
         /*
         Esto se tiene que incluir por separado cuando aparezca el error en especifico
 

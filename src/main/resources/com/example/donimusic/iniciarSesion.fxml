@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="412.0" maxWidth="600.0" minHeight="412.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.donimusic.controlador.IniciarSesion">
    <children>
       <Pane prefHeight="412.0" prefWidth="600.0" style="-fx-background-color: #212628;">
@@ -34,7 +33,7 @@
                </font>
             </TextField>
             <PasswordField fx:id="contrasenaTextField" layoutX="272.0" layoutY="167.0" style="-fx-background-color: #3b3f41; -fx-text-fill: white;" />
-            <Button layoutX="181.0" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#iniciarSesion" prefHeight="40.0" prefWidth="240.0" style="-fx-background-radius: 50px; -fx-background-color: white;" text="Iniciar Sesion">
+            <Button layoutX="181.0" layoutY="262.0" mnemonicParsing="false" onMouseClicked="#iniciarSesion" prefHeight="40.0" prefWidth="240.0" style="-fx-background-radius: 50px; -fx-background-color: white;" text="Iniciar Sesion">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
