@@ -11,8 +11,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Conexion con=new Conexion();
-        con.conectar();
+        /*Conexion con=new Conexion();
+        con.conectar();*/
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("iniciarSesion.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("DoniMusic");
