@@ -1,6 +1,7 @@
 module com.example.donimusic {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens com.example.donimusic to javafx.fxml;
