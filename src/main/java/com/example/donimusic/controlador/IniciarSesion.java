@@ -64,8 +64,13 @@ public class IniciarSesion implements Initializable {
         registroBtn.setCursor(Cursor.DEFAULT);
     }
 
-    public void iniciarSesion(MouseEvent mouseEvent) {
-
-
+    public void iniciarSesion(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage crearCuentaStage = new Stage();
+        crearCuentaStage.setTitle("Home");
+        crearCuentaStage.setScene(scene);
+        crearCuentaStage.show();
     }
 }
