@@ -16,13 +16,13 @@ public class CrearCuenta implements Initializable {
     @FXML
     public TextField usuarioRegis;
     @FXML
-    public PasswordField contraseñaRegis;
+    public PasswordField contrasenaRegis;
     @FXML
-    public PasswordField confirmContraseñaRegis;
+    public PasswordField confirmContrasenaRegis;
     @FXML
     public Pane errorUsuarioExist;
     @FXML
-    public Pane errorContraseña;
+    public Pane errorContrasena;
     @FXML
     public Pane iconoError1;
 
@@ -36,9 +36,9 @@ public class CrearCuenta implements Initializable {
     }
 
     public void registrarse(ActionEvent actionEvent) {
-        errorContraseña.setVisible(false);
-        if(!contraseñaRegis.getText().equals(confirmContraseñaRegis.getText())){
-            errorContraseña.setVisible(true);
+        errorContrasena.setVisible(false);
+        if(!contrasenaRegis.getText().equals(confirmContrasenaRegis.getText())){
+            errorContrasena.setVisible(true);
         }
     }
 }
