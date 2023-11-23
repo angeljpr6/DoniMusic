@@ -1,5 +1,6 @@
 package com.example.donimusic.controlador;
 
+import com.example.donimusic.modelo.Conexion;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -21,6 +22,10 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /*
@@ -35,6 +40,7 @@ public class IniciarSesion implements Initializable {
     public PasswordField contrasenaTextField;
     @FXML
     public AnchorPane inicioLogo;
+    private static Connection c= Conexion.con;
     public Pane imagenLogo;
 
 
@@ -92,6 +98,22 @@ public class IniciarSesion implements Initializable {
     }
 
     public void iniciarSesion(MouseEvent mouseEvent) throws IOException {
+        /*PreparedStatement stm;
+
+        try {
+            stm = c.prepareStatement("SELECT * FROM usuario");
+            ResultSet result = stm.executeQuery();
+            while (result.next()) {
+                String nombre=result.getString("nombreUsuario");
+                String password=result.getString("contraseña");
+
+                if(nombre.equals(usuarioTextField.getText()) && password.equals(contrasenaTextField)){
+                    //aqui va lo que ta
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }*/
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
