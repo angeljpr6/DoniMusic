@@ -50,6 +50,7 @@ public class Home implements Initializable {
     public Pane cancionPane;
     public ScrollPane cancionesAnadidas;
     public TextField buscarNCTextField;
+    public Pane controlAppPane;
     private VBox vboxTusPlaylist = new VBox();
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
 
@@ -181,6 +182,9 @@ public class Home implements Initializable {
             cancionPane.setVisible(false);
         }else if (playlistPrincipalPane.isVisible()){
             playlistPrincipalPane.setVisible(false);
+        }else{
+            buscarTextField.setText("Buscar");
+            atrasCircle.requestFocus();
         }
     }
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
@@ -268,6 +272,10 @@ public class Home implements Initializable {
     public void crearPlaylist(MouseEvent mouseEvent) {
         cambiarLabelSeleccionado(crearPlaylistLabel);
         crearPlaylistPane.setVisible(true);
+        controlAppPane.setDisable(true);
+        playlistPrincipalPane.setDisable(true);
+        inicioPane.setDisable(true);
+        cancionPane.setDisable(true);
     }
 
     public void crearPlaylistEntered(MouseEvent mouseEvent) {
@@ -287,7 +295,10 @@ public class Home implements Initializable {
         VBox vBoxAux = new VBox();
         cancionesAnadidas.setContent(vBoxAux);
         nombreNuevaPlaylist.setText("Nombre de la Playlist");
-
+        controlAppPane.setDisable(false);
+        playlistPrincipalPane.setDisable(false);
+        inicioPane.setDisable(false);
+        cancionPane.setDisable(false);
     }
 
     public void cancelarNuevaPlaylist(MouseEvent mouseEvent) {
@@ -295,6 +306,11 @@ public class Home implements Initializable {
         if (playlistPrincipalPane.isVisible()){
             cambiarLabelSeleccionado(cancionesFavLabel);
         }else cambiarLabelSeleccionado(inicioLabel);
+        nombreNuevaPlaylist.setText("Nombre de la Playlist");
+        controlAppPane.setDisable(false);
+        playlistPrincipalPane.setDisable(true);
+        inicioPane.setDisable(false);
+        cancionPane.setDisable(false);
     }
 
     public void anadirNuevaCancion(MouseEvent mouseEvent) {
