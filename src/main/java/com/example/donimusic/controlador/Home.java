@@ -2,16 +2,16 @@ package com.example.donimusic.controlador;
 
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +24,19 @@ public class Home implements Initializable {
     public Label autorCancion;
     public Button botonReproducir;
     public Label nombreCancion;
+    public Label nombrePlaylistHist;
+    public Label autorPlaylistHist;
+    public Label anadirFavLabel;
+    public Button buscarBtn;
+    public TextField buscarTextField;
+    public Pane rockImagen;
+    public Pane fumonImagen;
+    public Pane rockPane;
+    public Pane fumonPane;
+    public Pane enEspanolPane;
+    public Pane rapPane;
+    public Pane enEspanolImagen;
+    public Pane rapImagen;
     private VBox vboxTusPlaylist = new VBox();
 
     @Override
@@ -32,7 +45,52 @@ public class Home implements Initializable {
         crearBotonAtras();
         rellenarPanelTusPlayList();
         inicializarControlarCancion();
+        inicializarBuscarBoton();
+        inicializarGeneros();
 
+    }
+    public void inicializarGeneros(){
+        //Rock
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/imagenes/imagenRock.jpeg")));
+        ImageView imageView = new ImageView(image);
+
+        imageView.setFitWidth(142);
+        imageView.setFitHeight(139);
+
+        rockImagen.getChildren().add(imageView);
+
+        //Fumon
+        Image image2 = new Image(String.valueOf(IniciarSesion.class.getResource("/imagenes/fumones.jpg")));
+        ImageView imageView2 = new ImageView(image2);
+
+        imageView2.setFitWidth(142);
+        imageView2.setFitHeight(139);
+
+        fumonImagen.getChildren().add(imageView2);
+
+        //En español
+        Image image3 = new Image(String.valueOf(IniciarSesion.class.getResource("/imagenes/nano.jpeg")));
+        ImageView imageView3 = new ImageView(image3);
+
+        imageView3.setFitWidth(142);
+        imageView3.setFitHeight(139);
+
+        enEspanolImagen.getChildren().add(imageView3);
+
+        //Rap
+        Image image4 = new Image(String.valueOf(IniciarSesion.class.getResource("/imagenes/rap.png")));
+        ImageView imageView4 = new ImageView(image4);
+
+        imageView4.setFitWidth(142);
+        imageView4.setFitHeight(139);
+
+        rapImagen.getChildren().add(imageView4);
+
+    }
+    public void inicializarBuscarBoton(){
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/lupa.png")));
+        ImageView imageView = new ImageView(image);
+        buscarBtn.setGraphic(imageView);
     }
     public void inicializarControlarCancion(){
 
@@ -80,16 +138,82 @@ public class Home implements Initializable {
 
         panelPlaylists.setContent(vboxTusPlaylist);
     }
-    public void cambiarCursorMano(MouseEvent mouseEvent) {
-        atrasCircle.setOpacity(1);
-        atrasMensaje.setVisible(true);
-        atrasCircle.setCursor(Cursor.HAND);
+    public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
+        node.setCursor(Cursor.HAND);
     }
     public void irAtras(MouseEvent mouseEvent) {
     }
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
+        atrasCircle.setCursor(Cursor.DEFAULT);
+    }
+
+    public void anadirFavoritos(MouseEvent mouseEvent) {
+        anadirFavLabel.setText("Añadido");
+    }
+
+    public void anadirFavEntered(MouseEvent mouseEvent) {
+        if (anadirFavLabel.getText().equals("Añadido")){
+            anadirFavLabel.setText("Quitar de favoritos");
+            anadirFavLabel.setStyle("-fx-text-fill: red;");
+        }else {
+            anadirFavLabel.setStyle("-fx-text-fill: white;");
+            cambiarCursorMano(mouseEvent, anadirFavLabel);
+        }
+    }
+    public void anadirFavExited(MouseEvent mouseEvent) {
+        if (anadirFavLabel.getText().equals("Quitar de favoritos")){
+            anadirFavLabel.setText("Añadido");
+            anadirFavLabel.setStyle("-fx-text-fill: #838383;");
+        }else {
+            anadirFavLabel.setStyle("-fx-text-fill: #838383;");
+            cambiarCursorDefault(mouseEvent);
+        }
+    }
+
+    public void atrasEntered(MouseEvent mouseEvent) {
+        atrasCircle.setOpacity(1);
+        atrasMensaje.setVisible(true);
+        cambiarCursorMano(mouseEvent,atrasCircle);
+    }
+    public void atrasExited(MouseEvent mouseEvent) {
         atrasCircle.setOpacity(0.3);
         atrasMensaje.setVisible(false);
-        atrasCircle.setCursor(Cursor.DEFAULT);
+        cambiarCursorDefault(mouseEvent);
+    }
+
+    public void introducirTextoBuscar(MouseEvent mouseEvent) {
+        buscarTextField.setText("");
+    }
+
+    public void rockEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,rockPane);
+    }
+
+    public void rockExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
+    }
+
+    public void fumonEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,fumonPane);
+    }
+
+    public void fumonExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
+    }
+
+    public void enEspanolEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,enEspanolPane);
+    }
+
+    public void enEspanolExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
+    }
+
+    public void rapEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,rapPane);
+    }
+
+    public void rapExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
     }
 }

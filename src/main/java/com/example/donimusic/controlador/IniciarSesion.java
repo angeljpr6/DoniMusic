@@ -70,13 +70,13 @@ public class IniciarSesion implements Initializable {
         timeline.play();
     }
 
-
     public void AbrirInterfazRegistro(MouseEvent mouseEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/crearCuenta.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage crearCuentaStage = new Stage();
         crearCuentaStage.setTitle("Crear Cuenta");
+        crearCuentaStage.setResizable(false);
         crearCuentaStage.setScene(scene);
         crearCuentaStage.show();
     }
@@ -93,9 +93,10 @@ public class IniciarSesion implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        Stage crearCuentaStage = new Stage();
-        crearCuentaStage.setTitle("Home");
-        crearCuentaStage.setScene(scene);
-        crearCuentaStage.show();
+        Stage homeStage = new Stage();
+        homeStage.setTitle("Home");
+        homeStage.setResizable(false);
+        homeStage.setScene(scene);
+        homeStage.show();
     }
 }

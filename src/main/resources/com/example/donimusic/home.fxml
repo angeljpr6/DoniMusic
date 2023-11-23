@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
@@ -23,7 +24,7 @@
                </font>
             </Label>
             <Button fx:id="botonReproducir" layoutX="651.0" layoutY="31.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(0, 0, 0, 0);;" />
-            <Label layoutX="265.0" layoutY="20.0" prefHeight="32.0" prefWidth="96.0" text="Añadir Favoritos" />
+            <Label fx:id="anadirFavLabel" layoutX="265.0" layoutY="20.0" onMouseClicked="#anadirFavoritos" onMouseEntered="#anadirFavEntered" onMouseExited="#anadirFavExited" prefHeight="32.0" prefWidth="142.0" text="Añadir Favoritos" textFill="#838383" />
          </children></Pane>
       <Pane layoutX="14.0" layoutY="47.0" prefHeight="649.0" prefWidth="286.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
          <children>
@@ -48,7 +49,68 @@
       </Pane>
       <Pane layoutX="326.0" layoutY="47.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
          <children>
-            <Pane fx:id="atrasCircle" layoutX="14.0" layoutY="4.0" onMouseClicked="#irAtras" onMouseEntered="#cambiarCursorMano" onMouseExited="#cambiarCursorDefault" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: black; -fx-background-radius: 100px; -fx-opacity: 0.3;" />
+            <Pane fx:id="atrasCircle" layoutX="14.0" layoutY="11.0" onMouseClicked="#irAtras" onMouseEntered="#atrasEntered" onMouseExited="#atrasExited" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: black; -fx-background-radius: 100px; -fx-opacity: 0.3;" />
+            <Pane layoutX="90.0" layoutY="71.0" prefHeight="118.0" prefWidth="815.0" style="-fx-background-color: #383c41; -fx-background-radius: 5px;">
+               <children>
+                  <Label fx:id="nombrePlaylistHist" layoutX="65.0" layoutY="25.0" prefHeight="32.0" prefWidth="712.0" text="Nombre de la playlist" textFill="WHITE">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="autorPlaylistHist" layoutX="65.0" layoutY="68.0" prefHeight="26.0" prefWidth="722.0" text="Autor de la playlist" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Label layoutX="90.0" layoutY="31.0" text="Ultima playlist escuchada" textFill="#838383">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="buscarTextField" layoutX="139.0" layoutY="224.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="766.0" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
+            <Button fx:id="buscarBtn" layoutX="90.0" layoutY="217.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(0, 0, 0, 0);" />
+            <Pane fx:id="rockPane" layoutX="60.0" layoutY="351.0" onMouseEntered="#rockEntered" onMouseExited="#rockExited" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2e5010; -fx-background-radius: 7px;">
+               <children>
+                  <Label layoutX="80.0" layoutY="160.0" prefHeight="26.0" prefWidth="40.0" text="Rock" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane fx:id="rockImagen" layoutX="29.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
+               </children>
+            </Pane>
+            <Pane fx:id="fumonPane" layoutX="272.0" layoutY="351.0" onMouseEntered="#fumonEntered" onMouseExited="#fumonExited" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #6d5015; -fx-background-radius: 7px;">
+               <children>
+                  <Label layoutX="76.0" layoutY="160.0" prefHeight="26.0" prefWidth="49.0" text="Fumon" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane fx:id="fumonImagen" layoutX="30.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
+               </children>
+            </Pane>
+            <Pane fx:id="enEspanolPane" layoutX="483.0" layoutY="351.0" onMouseEntered="#enEspanolEntered" onMouseExited="#enEspanolExited" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ae1a1a; -fx-background-radius: 7px;">
+               <children>
+                  <Label layoutX="64.0" layoutY="160.0" prefHeight="26.0" prefWidth="73.0" text="En español" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane fx:id="enEspanolImagen" layoutX="30.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
+               </children>
+            </Pane>
+            <Pane fx:id="rapPane" layoutX="693.0" layoutY="351.0" onMouseEntered="#rapEntered" onMouseExited="#rapExited" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #155b6d; -fx-background-radius: 7px;">
+               <children>
+                  <Label layoutX="88.0" layoutY="160.0" prefHeight="26.0" prefWidth="31.0" text="Rap" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane fx:id="rapImagen" layoutX="33.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
+               </children>
+            </Pane>
          </children>
       </Pane>
       <Label fx:id="atrasMensaje" layoutX="332.0" layoutY="21.0" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: black; -fx-alignment: center;" text="Atrás" textFill="#838383" visible="false">
