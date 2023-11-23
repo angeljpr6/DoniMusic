@@ -55,7 +55,7 @@ public class IniciarSesion implements Initializable {
     }
 
     public void verLogo(){
-        Image logoImg = new Image(String.valueOf(CrearCuenta.class.getResource("/Iconos/logo (1).PNG")));
+        Image logoImg = new Image(String.valueOf(CrearCuenta.class.getResource("/Iconos/logoPequeño.PNG")));
         ImageView logo = new ImageView(logoImg);
         inicioLogo.getChildren().add(logo);
         inicioLogo.setVisible(true);
