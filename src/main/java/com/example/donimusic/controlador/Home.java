@@ -14,10 +14,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Home implements Initializable {
-    public ScrollPane panelPlaylists;
+    public ScrollPane playlistsPane;
     public Label inicioLabel;
     public Pane atrasCircle;
     public Label atrasMensaje;
@@ -43,11 +44,19 @@ public class Home implements Initializable {
     public Pane crearPlaylistPane;
     public Pane anadirCancionPane;
     public TextField nombreNuevaPlaylist;
+    public Label cancionesFavLabel;
+    public Pane playlistPrincipalPane;
+    public Pane inicioPane;
+    public Pane cancionPane;
+    public ScrollPane cancionesAnadidas;
+    public TextField buscarNCTextField;
     private VBox vboxTusPlaylist = new VBox();
+    ArrayList<Label> labelSeleccionado = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        labelSeleccionado.add(inicioLabel);
         crearBotonAtras();
         rellenarPanelTusPlayList();
         inicializarControlarCancion();
@@ -143,8 +152,8 @@ public class Home implements Initializable {
     }
     public void rellenarPanelTusPlayList(){
 
-        double scrollPaneWidth = panelPlaylists.getPrefWidth()-15;
-        panelPlaylists.setStyle("-fx-background-color: #212628;");
+        double scrollPaneWidth = playlistsPane.getPrefWidth()-15;
+        playlistsPane.setStyle("-fx-background-color: #212628;");
 
         for (int i = 1; i <= 100; i++) {
             VBox cancionBox = new VBox();
@@ -162,12 +171,17 @@ public class Home implements Initializable {
         scrollbarStyle += "-fx-border-color: #0000FF;"; // Color del borde de las barras
         panelPlaylists.lookup(".scroll-bar:vertical").setStyle(scrollbarStyle);*/
 
-        panelPlaylists.setContent(vboxTusPlaylist);
+        playlistsPane.setContent(vboxTusPlaylist);
     }
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
         node.setCursor(Cursor.HAND);
     }
     public void irAtras(MouseEvent mouseEvent) {
+        if (cancionPane.isVisible()){
+            cancionPane.setVisible(false);
+        }else if (playlistPrincipalPane.isVisible()){
+            playlistPrincipalPane.setVisible(false);
+        }
     }
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
         atrasCircle.setCursor(Cursor.DEFAULT);
@@ -208,7 +222,15 @@ public class Home implements Initializable {
     }
 
     public void introducirTextoBuscar(MouseEvent mouseEvent) {
-        buscarTextField.setText("");
+        if (anadirCancionPane.isVisible()){
+            if (buscarNCTextField.getText().equals("Buscar")){
+                buscarNCTextField.setText("");
+            }
+        }else {
+            if (buscarTextField.getText().equals("Buscar")) {
+                buscarTextField.setText("");
+            }
+        }
     }
 
     public void rockEntered(MouseEvent mouseEvent) {
@@ -244,8 +266,7 @@ public class Home implements Initializable {
     }
 
     public void crearPlaylist(MouseEvent mouseEvent) {
-        seleccionarLabel(crearPlaylistLabel);
-        deselecionarLabel(inicioLabel);
+        cambiarLabelSeleccionado(crearPlaylistLabel);
         crearPlaylistPane.setVisible(true);
     }
 
@@ -260,14 +281,20 @@ public class Home implements Initializable {
     public void guardarNuevaPlaylist(MouseEvent mouseEvent) {
         // TODO: 23/11/2023 añadir la playlist a la base de datos
         crearPlaylistPane.setVisible(false);
-        deselecionarLabel(crearPlaylistLabel);
-        seleccionarLabel(inicioLabel);
+        if (playlistPrincipalPane.isVisible()){
+            cambiarLabelSeleccionado(cancionesFavLabel);
+        }else cambiarLabelSeleccionado(inicioLabel);
+        VBox vBoxAux = new VBox();
+        cancionesAnadidas.setContent(vBoxAux);
+        nombreNuevaPlaylist.setText("Nombre de la Playlist");
+
     }
 
     public void cancelarNuevaPlaylist(MouseEvent mouseEvent) {
         crearPlaylistPane.setVisible(false);
-        deselecionarLabel(crearPlaylistLabel);
-        seleccionarLabel(inicioLabel);
+        if (playlistPrincipalPane.isVisible()){
+            cambiarLabelSeleccionado(cancionesFavLabel);
+        }else cambiarLabelSeleccionado(inicioLabel);
     }
 
     public void anadirNuevaCancion(MouseEvent mouseEvent) {
@@ -294,5 +321,36 @@ public class Home implements Initializable {
         if (nombreNuevaPlaylist.getText().equals("Nombre de la Playlist")){
             nombreNuevaPlaylist.setText("");
         }
+    }
+
+    public void abrirFavoritos(MouseEvent mouseEvent) {
+        cambiarLabelSeleccionado(cancionesFavLabel);
+        playlistPrincipalPane.setVisible(true);
+        crearPlaylistPane.setVisible(false);
+        anadirCancionPane.setVisible(false);
+    }
+    public void cancionesFavoritasEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,cancionesFavLabel);
+    }
+    public void cancionesFavoritasExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
+    }
+    public void irInicio(MouseEvent mouseEvent) {
+        cambiarLabelSeleccionado(inicioLabel);
+        crearPlaylistPane.setVisible(false);
+        anadirCancionPane.setVisible(false);
+        playlistPrincipalPane.setVisible(false);
+    }
+    public void inicioEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,inicioLabel);
+    }
+    public void inicioExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
+    }
+    public void cambiarLabelSeleccionado(Label label){
+        seleccionarLabel(label);
+        deselecionarLabel(labelSeleccionado.get(0));
+        labelSeleccionado.remove(0);
+        labelSeleccionado.add(label);
     }
 }
