@@ -348,8 +348,8 @@ public class Home implements Initializable {
         cambiarCursorDefault(mouseEvent);
     }
     public void cambiarLabelSeleccionado(Label label){
-        seleccionarLabel(label);
         deselecionarLabel(labelSeleccionado.get(0));
+        seleccionarLabel(label);
         labelSeleccionado.remove(0);
         labelSeleccionado.add(label);
     }
