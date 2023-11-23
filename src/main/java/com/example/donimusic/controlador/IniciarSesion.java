@@ -35,6 +35,8 @@ public class IniciarSesion implements Initializable {
     public PasswordField contrasenaTextField;
     @FXML
     public AnchorPane inicioLogo;
+    public Pane imagenLogo;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,7 +59,7 @@ public class IniciarSesion implements Initializable {
     public void verLogo(){
         Image logoImg = new Image(String.valueOf(CrearCuenta.class.getResource("/Iconos/logoPequeño.PNG")));
         ImageView logo = new ImageView(logoImg);
-        inicioLogo.getChildren().add(logo);
+        imagenLogo.getChildren().add(logo);
         inicioLogo.setVisible(true);
         Timeline timeline = new Timeline();
 

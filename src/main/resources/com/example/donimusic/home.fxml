@@ -43,11 +43,11 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="panelPlaylists" layoutX="42.0" layoutY="144.0" prefHeight="487.0" prefWidth="244.0" style="-fx-background-color: #212628;" />
+            <ScrollPane fx:id="panelPlaylists" layoutX="42.0" layoutY="144.0" prefHeight="487.0" prefWidth="244.0" style="-fx-background: #212628; -fx-background-color: #212628;" />
             <Line endX="100.0" layoutX="134.0" layoutY="131.0" startX="-100.0" />
          </children>
       </Pane>
-      <Pane layoutX="326.0" layoutY="62.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
+      <Pane layoutX="326.0" layoutY="62.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
          <children>
             <Pane fx:id="atrasCircle" layoutX="14.0" layoutY="11.0" onMouseClicked="#irAtras" onMouseEntered="#atrasEntered" onMouseExited="#atrasExited" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: black; -fx-background-radius: 100px; -fx-opacity: 0.3;" />
             <Pane layoutX="90.0" layoutY="71.0" prefHeight="118.0" prefWidth="815.0" style="-fx-background-color: #383c41; -fx-background-radius: 5px;">
@@ -119,22 +119,30 @@
          </font>
       </Label>
       <Pane fx:id="logo" layoutX="28.0" layoutY="7.0" prefHeight="49.0" prefWidth="49.0" />
-      <Pane fx:id="crearPlaylistPane" layoutX="399.0" layoutY="120.0" prefHeight="531.0" prefWidth="610.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;">
+      <Pane fx:id="crearPlaylistPane" layoutX="366.0" layoutY="120.0" prefHeight="531.0" prefWidth="610.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
          <children>
-            <TextField layoutX="30.0" layoutY="34.0" promptText="nombrePlaylistTextField" style="-fx-background-color: 101010; -fx-text-fill: white;" text="Nombre de la Playlist">
+            <TextField fx:id="nombreNuevaPlaylist" layoutX="28.0" layoutY="21.0" onMouseClicked="#vaciarNombreNuevaPlaylist" promptText="nombrePlaylistTextField" style="-fx-background-color: 101010; -fx-text-fill: #838383;" text="Nombre de la Playlist">
                <font>
                   <Font name="Yu Gothic UI Bold" size="26.0" />
                </font>
             </TextField>
             <Button fx:id="guardarNuevaPlaylistBtn" layoutX="537.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#guardarNuevaPlaylist" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />
-            <Pane fx:id="anadirNuevaCancion" layoutX="57.0" layoutY="90.0" prefHeight="64.0" prefWidth="64.0" />
+            <Pane fx:id="anadirNuevaCancionBtn" layoutX="57.0" layoutY="90.0" onMouseClicked="#anadirNuevaCancion" onMouseEntered="#anadirNuevaCancionEntered" onMouseExited="#anadirNuevaCancionExited" prefHeight="64.0" prefWidth="64.0" />
             <Button fx:id="cancelarNuevaPlaylistBtn1" layoutX="466.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaPlaylist" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Cancelar" />
-            <ScrollPane layoutX="47.0" layoutY="166.0" prefHeight="309.0" prefWidth="552.0" />
+            <ScrollPane layoutX="47.0" layoutY="166.0" prefHeight="309.0" prefWidth="552.0" style="-fx-background: #383c41; -fx-background-color: black;" />
             <TextField layoutX="157.0" layoutY="94.0" style="-fx-background-color: 101010; -fx-text-fill: white;" text="Añadir canción">
                <font>
                   <Font name="Yu Gothic UI Bold" size="23.0" />
                </font>
             </TextField>
+            <Line endX="421.0" layoutX="146.0" layoutY="69.0" startX="-100.0" stroke="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="anadirCancionPane" layoutX="1002.0" layoutY="120.0" prefHeight="531.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
+         <children>
+            <TextField fx:id="buscarNCTextField" layoutX="55.0" layoutY="22.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
+            <Button fx:id="guardarNuevaCancionBtn" layoutX="167.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#guardarNuevaCancion" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />
+            <Button fx:id="cancelarNuevaCancionBtn1" layoutX="96.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaCancion" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Cancelar" />
          </children>
       </Pane>
    </children>

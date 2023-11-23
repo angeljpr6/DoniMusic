@@ -38,9 +38,11 @@ public class Home implements Initializable {
     public Pane enEspanolImagen;
     public Pane rapImagen;
     public Pane logo;
-    public Pane anadirNuevaCancion;
+    public Pane anadirNuevaCancionBtn;
     public Label crearPlaylistLabel;
     public Pane crearPlaylistPane;
+    public Pane anadirCancionPane;
+    public TextField nombreNuevaPlaylist;
     private VBox vboxTusPlaylist = new VBox();
 
     @Override
@@ -62,7 +64,7 @@ public class Home implements Initializable {
         imageView.setFitWidth(49);
         imageView.setFitHeight(49);
 
-        anadirNuevaCancion.getChildren().add(imageView);
+        anadirNuevaCancionBtn.getChildren().add(imageView);
     }
     public void inicializarLogo(){
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/logoPequeño.png")));
@@ -266,5 +268,31 @@ public class Home implements Initializable {
         crearPlaylistPane.setVisible(false);
         deselecionarLabel(crearPlaylistLabel);
         seleccionarLabel(inicioLabel);
+    }
+
+    public void anadirNuevaCancion(MouseEvent mouseEvent) {
+        anadirCancionPane.setVisible(true);
+    }
+
+    public void anadirNuevaCancionEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,anadirNuevaCancionBtn);
+    }
+
+    public void anadirNuevaCancionExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
+    }
+
+    public void guardarNuevaCancion(MouseEvent mouseEvent) {
+        anadirCancionPane.setVisible(false);
+    }
+
+    public void cancelarNuevaCancion(MouseEvent mouseEvent) {
+        anadirCancionPane.setVisible(false);
+    }
+
+    public void vaciarNombreNuevaPlaylist(MouseEvent mouseEvent) {
+        if (nombreNuevaPlaylist.getText().equals("Nombre de la Playlist")){
+            nombreNuevaPlaylist.setText("");
+        }
     }
 }

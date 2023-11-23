@@ -56,7 +56,15 @@
                   <Pane fx:id="iconoError1" layoutX="14.0" layoutY="8.0" prefHeight="25.0" prefWidth="24.0" />
                </children>
             </Pane>
-            <AnchorPane fx:id="inicioLogo" layoutX="174.0" layoutY="61.0" prefHeight="325.0" prefWidth="345.0" style="-fx-background-color: #212628;" visible="false" />
+            <AnchorPane fx:id="inicioLogo" layoutX="-7.0" layoutY="-7.0" prefHeight="426.0" prefWidth="613.0" style="-fx-background-color: #212628;">
+               <children>
+                  <Pane fx:id="imagenLogo" layoutX="179.0" layoutY="85.0" prefHeight="256.0" prefWidth="256.0" />
+                  <Label layoutX="237.0" layoutY="23.0" text="DoniMusic" textFill="WHITE">
+                     <font>
+                        <Font name="Yu Gothic UI Bold" size="29.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
          </children>
       </Pane>
    </children>
