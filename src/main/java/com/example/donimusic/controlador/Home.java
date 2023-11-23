@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class Home implements Initializable {
     public ScrollPane panelPlaylists;
-    public Label tusPlaylistLabel;
+    public Label inicioLabel;
     public Pane atrasCircle;
     public Label atrasMensaje;
     public Label autorCancion;
@@ -37,6 +37,10 @@ public class Home implements Initializable {
     public Pane rapPane;
     public Pane enEspanolImagen;
     public Pane rapImagen;
+    public Pane logo;
+    public Pane anadirNuevaCancion;
+    public Label crearPlaylistLabel;
+    public Pane crearPlaylistPane;
     private VBox vboxTusPlaylist = new VBox();
 
     @Override
@@ -47,7 +51,27 @@ public class Home implements Initializable {
         inicializarControlarCancion();
         inicializarBuscarBoton();
         inicializarGeneros();
+        inicializarLogo();
+        inicializarAnadirCancion();
 
+    }
+    public void inicializarAnadirCancion(){
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/mas.png")));
+        ImageView imageView = new ImageView(image);
+
+        imageView.setFitWidth(49);
+        imageView.setFitHeight(49);
+
+        anadirNuevaCancion.getChildren().add(imageView);
+    }
+    public void inicializarLogo(){
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/logoPequeño.png")));
+        ImageView imageView = new ImageView(image);
+
+        imageView.setFitWidth(49);
+        imageView.setFitHeight(49);
+
+        logo.getChildren().add(imageView);
     }
     public void inicializarGeneros(){
         //Rock
@@ -123,7 +147,7 @@ public class Home implements Initializable {
         for (int i = 1; i <= 100; i++) {
             VBox cancionBox = new VBox();
             Label label =new Label("Elemento " + i);
-            label.setFont(tusPlaylistLabel.getFont());
+            label.setFont(inicioLabel.getFont());
             label.setStyle("-fx-text-fill: #838383; -fx-min-height: 50px;");
             vboxTusPlaylist.getChildren().add(label);
             vboxTusPlaylist.getChildren().add(cancionBox);
@@ -215,5 +239,32 @@ public class Home implements Initializable {
 
     public void rapExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
+    }
+
+    public void crearPlaylist(MouseEvent mouseEvent) {
+        seleccionarLabel(crearPlaylistLabel);
+        deselecionarLabel(inicioLabel);
+        crearPlaylistPane.setVisible(true);
+    }
+
+    public void crearPlaylistEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,crearPlaylistLabel);
+    }
+
+    public void crearPlaylistExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
+    }
+
+    public void guardarNuevaPlaylist(MouseEvent mouseEvent) {
+        // TODO: 23/11/2023 añadir la playlist a la base de datos
+        crearPlaylistPane.setVisible(false);
+        deselecionarLabel(crearPlaylistLabel);
+        seleccionarLabel(inicioLabel);
+    }
+
+    public void cancelarNuevaPlaylist(MouseEvent mouseEvent) {
+        crearPlaylistPane.setVisible(false);
+        deselecionarLabel(crearPlaylistLabel);
+        seleccionarLabel(inicioLabel);
     }
 }
