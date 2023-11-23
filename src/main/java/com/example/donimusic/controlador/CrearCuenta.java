@@ -1,6 +1,8 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Conexion;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,7 +11,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -17,6 +21,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import static java.lang.Thread.sleep;
 
 public class CrearCuenta implements Initializable {
     @FXML
@@ -35,14 +41,15 @@ public class CrearCuenta implements Initializable {
     @FXML
     public Label registroExitoso;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Image imageError = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/IconoError.png")));
-        ImageView imageViewError = new ImageView(imageError);
 
-        iconoError1.getChildren().add(imageViewError);
+
+
 
     }
+
 
     public void registrarse(ActionEvent actionEvent) {
         errorContrasena.setVisible(false);

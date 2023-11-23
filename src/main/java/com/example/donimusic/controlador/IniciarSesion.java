@@ -1,5 +1,8 @@
 package com.example.donimusic.controlador;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
@@ -11,8 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +33,8 @@ public class IniciarSesion implements Initializable {
     public Pane iconoError1;
     public TextField usuarioTextField;
     public PasswordField contrasenaTextField;
+    @FXML
+    public AnchorPane inicioLogo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -36,6 +43,7 @@ public class IniciarSesion implements Initializable {
         ImageView imageViewError = new ImageView(imageError);
 
         iconoError.getChildren().add(imageViewError);
+        verLogo();
         /*
         Esto se tiene que incluir por separado cuando aparezca el error en especifico
 
@@ -45,6 +53,23 @@ public class IniciarSesion implements Initializable {
          */
 
     }
+
+    public void verLogo(){
+        Image logoImg = new Image(String.valueOf(CrearCuenta.class.getResource("/Iconos/logo (1).PNG")));
+        ImageView logo = new ImageView(logoImg);
+        inicioLogo.getChildren().add(logo);
+        inicioLogo.setVisible(true);
+        Timeline timeline = new Timeline();
+
+        // Añadir un KeyFrame para ocultar el inicioLogo después de 5 segundos
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(2), event -> inicioLogo.setVisible(false))
+        );
+
+        // Iniciar la animación
+        timeline.play();
+    }
+
 
     public void AbrirInterfazRegistro(MouseEvent mouseEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/crearCuenta.fxml"));
