@@ -2,7 +2,10 @@ package com.example.donimusic.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListaDeCanciones {
 
@@ -74,13 +77,71 @@ public class ListaDeCanciones {
             throw new RuntimeException(e);
         }
     }
-    public void  addCancion(){
+    public  void addCancion(int idCancion){
+        try {
+            PreparedStatement stm = c.prepareStatement("INSERT INTO listaCancion (cancionId) SELECT cancionId FROM cancion WHERE cancionId = ?");
+            stm.setInt(1, idCancion);
 
-    }
-    public void  eliminarCancion(){
+            int filasAfectadas = stm.executeUpdate();
 
+            if (filasAfectadas > 0) {
+                System.out.println("La canción se añadió correctamente a la lista.");
+            } else {
+                System.out.println("No se pudo añadir la canción a la lista.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public void  siguiente(){
+    public void  eliminarCancion(int idCancion){
+
+        try {
+            String sql = "DELETE FROM listaCancion WHERE cancionId = (SELECT cancionId FROM cancion WHERE cancionId = ?)";
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setInt(1, idCancion);
+
+                int filasAfectadas = stm.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Canción eliminada de la lista exitosamente.");
+                } else {
+                    System.out.println("No se encontró la canción en la lista.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Cancion>  buscarCancion(String nombreCancion, int idLista ) {
+        List<Cancion> cancionesEnLista = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM cancion WHERE nombreCancion =? AND cancionId IN (SELECT cancionId FROM listaCancion WHERE cancionId = ?);" ;
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setString(1, nombreCancion);
+                stm.setInt(2, idLista);
+
+                try (ResultSet resultSet = stm.executeQuery()) {
+                    while (resultSet.next()) {
+
+                        int idCancion = resultSet.getInt("cancionId");
+                        String nombre = resultSet.getString("nombreCancion");
+                        String album = resultSet.getString("album");
+                        int duracion = resultSet.getInt("duracion");
+                        String artista = resultSet.getString("artista");
+
+                        // Crear objeto Cancion y agregarlo a la lista
+                        Cancion cancion = new Cancion(idCancion, nombre, album, duracion, artista);
+                        cancionesEnLista.add(cancion);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return cancionesEnLista;
 
     }
     public void  atras(){
