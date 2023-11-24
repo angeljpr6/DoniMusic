@@ -25,6 +25,9 @@ public class Cancion {
         this.album = album;
     }
 
+    public Cancion() {
+    }
+
     public static Cancion crearCancion(int id, String nombre, String nombreArtista, int duracion, String album){
         Cancion cancion= new Cancion(id,nombre,nombreArtista,duracion,album);
         return cancion;
@@ -54,27 +57,32 @@ public class Cancion {
             return true;
         }else return false;
     }
-    public static void descargarCancion(String rutaBaseDatos, int idCancion){
-        String stringCancion=String.valueOf(idCancion);
+    public static void descargarCancion(String rutaBaseDatos, int idCancion) {
+        String stringCancion = String.valueOf(idCancion);
+        String rutaGuardado = "C:\\Users\\angel\\IdeaProjects\\DoniMusic\\src\\main\\resources\\canciones\\"+ stringCancion +".mp3"; // Ruta local de guardado
+
         try {
             URL url = new URL(rutaBaseDatos);
             URLConnection connection = url.openConnection();
             BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
-            FileOutputStream fileOutputStream = new FileOutputStream(String.valueOf(Cancion.class.getResource("/cancione/"+stringCancion+".mp3"))); // Nombre local del archivo
+            FileOutputStream fileOutputStream = new FileOutputStream(rutaGuardado);
 
             byte[] dataBuffer = new byte[1024];
             int bytesRead;
-            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+            while ((bytesRead = in.read(dataBuffer)) != -1) {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
             }
 
-            fileOutputStream.close();
-            in.close();
-
-            System.out.println("Descarga completa.");
+            // Cierre de recursos utilizando try-with-resources
+            try (in; fileOutputStream) {
+                System.out.println("Descarga completa.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
     public String pasarARutaValida(String rutaCancion){
         String rutaCancionAux = rutaCancion;
@@ -85,11 +93,10 @@ public class Cancion {
     }
     public void reproducirCancion(int id){
         String idCancion=String.valueOf(id);
-        File archivo=new File("/canciones/"+idCancion+".mp3");
+        File archivo=new File(String.valueOf(Cancion.class.getResource("C:\\Users\\angel\\IdeaProjects\\DoniMusic\\src\\main\\resources\\canciones\\"+idCancion+".mp3")));
         Media audio=new Media(archivo.toURI().toString());
         MediaPlayer reproductor=new MediaPlayer(audio);
         reproductor.play();
-
     }
 
 
