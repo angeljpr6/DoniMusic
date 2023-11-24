@@ -9,27 +9,40 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Cancion {
     private int id;
     private String nombre;
     private String nombreArtista;
+    private String archivo;
     private int duracion;
     private String album;
+    private static Media media;
+    private static MediaPlayer mediaPlayer;
+    private static Connection c= Conexion.con;
 
-    public Cancion(int id, String nombre, String nombreArtista, int duracion, String album) {
+
+
+    public Cancion(int id, String nombre, String nombreArtista,String archivo, String album) {
         this.id = id;
         this.nombre = nombre;
         this.nombreArtista = nombreArtista;
-        this.duracion = duracion;
+        this.archivo=archivo;
+        this.duracion = 1;
         this.album = album;
     }
 
     public Cancion() {
+        this.duracion=1;
     }
 
-    public static Cancion crearCancion(int id, String nombre, String nombreArtista, int duracion, String album){
-        Cancion cancion= new Cancion(id,nombre,nombreArtista,duracion,album);
+    public static Cancion crearCancion(int id, String nombre,String archivo, String nombreArtista, String album){
+        Cancion cancion= new Cancion(id,nombre,nombreArtista,archivo,album);
         return cancion;
     }
 
@@ -97,6 +110,30 @@ public class Cancion {
         Media audio=new Media(archivo.toURI().toString());
         MediaPlayer reproductor=new MediaPlayer(audio);
         reproductor.play();
+    }
+
+    public static ArrayList<Cancion> buscarCancion(String busqueda){
+        ArrayList<Cancion>canciones=new ArrayList<>();
+        PreparedStatement stm;
+        try {
+            stm = c.prepareStatement("SELECT * FROM cancion WHERE nombreCancion LIKE '"+busqueda+"%';");
+            ResultSet result = stm.executeQuery();
+            while (result.next()) {
+                int id=result.getInt("cancionId");
+                String nombre=result.getString("nombreCancion ");
+                String archivo=result.getString("archivo");
+                String nombreArtista= result.getString("artista");
+                String album=result.getString("album");
+                Cancion c1=new Cancion(id,nombre,nombreArtista,archivo,album);
+                canciones.add(c1);
+            }
+
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return canciones;
+
     }
 
 
