@@ -1,5 +1,6 @@
 package com.example.donimusic.controlador;
 
+import com.example.donimusic.modelo.Cancion;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -53,6 +54,7 @@ public class Home implements Initializable {
     public Pane controlAppPane;
     private VBox vboxTusPlaylist = new VBox();
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
+    private boolean reproduciendo= false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -368,5 +370,16 @@ public class Home implements Initializable {
         seleccionarLabel(label);
         labelSeleccionado.remove(0);
         labelSeleccionado.add(label);
+    }
+
+    public void reproducirCancion(MouseEvent mouseEvent) {
+        Cancion cancion = new Cancion();
+        if (reproduciendo){
+
+        }else {
+            String ruta = "file:///C:/Users/angel/Music/Playlists/porque%20hostias%20no%20se%20acaba%20ya%20la%20puta%20guerra.mp3";
+            Cancion.descargarCancion(ruta, 1);
+            cancion.reproducirCancion(1);
+        }
     }
 }

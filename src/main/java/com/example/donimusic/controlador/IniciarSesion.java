@@ -53,7 +53,7 @@ public class IniciarSesion implements Initializable {
         ImageView imageViewError = new ImageView(imageError);
 
         iconoError.getChildren().add(imageViewError);
-        if (logoCargado == false) {
+        if (!logoCargado) {
             inicioLogo.setVisible(true);
             verLogo();
             logoCargado=true;
