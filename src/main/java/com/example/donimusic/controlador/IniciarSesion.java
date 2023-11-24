@@ -32,6 +32,7 @@ import java.util.ResourceBundle;
  * Background color: #212628
  */
 public class IniciarSesion implements Initializable {
+    private static boolean logoCargado=false;
     public Label registroBtn;
     public Pane iconoError;
     public Pane errorUsuarioInexist;
@@ -42,6 +43,7 @@ public class IniciarSesion implements Initializable {
     public AnchorPane inicioLogo;
     private static Connection c= Conexion.con;
     public Pane imagenLogo;
+    public Label artistaBtn;
 
 
     @Override
@@ -51,7 +53,12 @@ public class IniciarSesion implements Initializable {
         ImageView imageViewError = new ImageView(imageError);
 
         iconoError.getChildren().add(imageViewError);
-        verLogo();
+        if (logoCargado == false) {
+            inicioLogo.setVisible(true);
+            verLogo();
+            logoCargado=true;
+        }
+
         /*
         Esto se tiene que incluir por separado cuando aparezca el error en especifico
 
@@ -87,6 +94,8 @@ public class IniciarSesion implements Initializable {
         crearCuentaStage.setResizable(false);
         crearCuentaStage.setScene(scene);
         crearCuentaStage.show();
+        Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
+        myStage.close();
     }
 
     public void cambiarCursorMano(MouseEvent mouseEvent) {
@@ -122,5 +131,24 @@ public class IniciarSesion implements Initializable {
         homeStage.setResizable(false);
         homeStage.setScene(scene);
         homeStage.show();
+        Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
+        myStage.close();
+    }
+
+    public void abrirInicioArtista(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/inicioArtista.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage inicioArtistaStage = new Stage();
+        inicioArtistaStage.setTitle("Inicio Artista");
+        inicioArtistaStage.setResizable(false);
+        inicioArtistaStage.setScene(scene);
+        inicioArtistaStage.show();
+        Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
+        myStage.close();
+    }
+
+    public void cambiarCursorManoArtista(MouseEvent mouseEvent) {
+        artistaBtn.setCursor(Cursor.HAND);
     }
 }

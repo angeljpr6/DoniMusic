@@ -8,16 +8,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="412.0" maxWidth="600.0" minHeight="412.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.donimusic.controlador.IniciarSesion">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.donimusic.controlador.InicioArtista">
    <children>
-      <Pane prefHeight="412.0" prefWidth="600.0" style="-fx-background-color: #212628;">
+      <Pane prefHeight="417.0" prefWidth="605.0" style="-fx-background-color: #212628;">
          <children>
-            <Label fx:id="artistaBtn" layoutX="502.0" layoutY="378.0" onMouseClicked="#abrirInicioArtista" onMouseEntered="#cambiarCursorManoArtista" onMouseExited="#cambiarCursorDefault" text="Soy un artista" textFill="WHITE" underline="true">
-               <font>
-                  <Font name="Yu Gothic UI Regular" size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="179.0" layoutY="56.0" text="Iniciar Sesion" textFill="WHITE">
+            <Label layoutX="136.0" layoutY="52.0" text="Iniciar sesion como " textFill="WHITE">
                <font>
                   <Font name="Yu Gothic UI Bold" size="28.0" />
                </font>
@@ -43,12 +39,6 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="178.0" layoutY="326.0" text="¿Aún no tienes una cuenta?" textFill="#939393" />
-            <Label fx:id="registroBtn" layoutX="334.0" layoutY="325.0" onMouseClicked="#AbrirInterfazRegistro" onMouseEntered="#cambiarCursorMano" onMouseExited="#cambiarCursorDefault" text="Regístrate" textFill="WHITE" underline="true">
-               <font>
-                  <Font name="Yu Gothic UI Regular" size="14.0" />
-               </font>
-            </Label>
             <Pane fx:id="errorUsuarioInexist" layoutX="165.0" layoutY="206.0" prefHeight="40.0" prefWidth="272.0" style="-fx-background-color: red; -fx-background-radius: 3px;" visible="false">
                <children>
                   <Label alignment="CENTER_RIGHT" layoutX="63.0" layoutY="5.0" prefHeight="31.0" prefWidth="182.0" style="-fx-alignment: center; -fx-background-radius: 3px;" text="El nombre de usuario no existe" textFill="WHITE" />
@@ -61,15 +51,16 @@
                   <Pane fx:id="iconoError1" layoutX="14.0" layoutY="8.0" prefHeight="25.0" prefWidth="24.0" />
                </children>
             </Pane>
-            <AnchorPane fx:id="inicioLogo" layoutX="-7.0" layoutY="-7.0" prefHeight="426.0" prefWidth="613.0" style="-fx-background-color: #212628;" visible="false">
-               <children>
-                  <Pane fx:id="imagenLogo" layoutX="179.0" layoutY="85.0" prefHeight="256.0" prefWidth="256.0" />
-                  <Label layoutX="237.0" layoutY="23.0" text="DoniMusic" textFill="WHITE">
-                     <font>
-                        <Font name="Yu Gothic UI Bold" size="29.0" />
-                     </font>
-                  </Label>
-               </children></AnchorPane>
+            <Label layoutX="411.0" layoutY="52.0" text="Artista" textFill="WHITE" underline="true">
+               <font>
+                  <Font name="Yu Gothic UI Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label fx:id="noArtistaBtn" layoutX="486.0" layoutY="393.0" onMouseClicked="#abrirInicioSesion" onMouseEntered="#cambiarCursorMano" onMouseExited="#cambiarCursorDefault" text="No soy un artista" textFill="WHITE" underline="true">
+               <font>
+                  <Font name="Yu Gothic UI Regular" size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
