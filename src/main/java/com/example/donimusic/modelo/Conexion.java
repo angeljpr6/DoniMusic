@@ -16,10 +16,10 @@ public class Conexion {
     public Connection conectar(){
         con = null;
 
-
         try {
             con = (Connection) DriverManager.getConnection(url, user, pass);
             if(con!= null){
+
             }
 
 

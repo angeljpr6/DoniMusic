@@ -1,6 +1,7 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Cancion;
+import com.example.donimusic.modelo.Usuario;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -54,6 +55,7 @@ public class Home implements Initializable {
     public Pane controlAppPane;
     private VBox vboxTusPlaylist = new VBox();
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
+    public static Usuario usuario=new Usuario();
     private boolean reproduciendo= false;
 
     @Override
@@ -165,7 +167,6 @@ public class Home implements Initializable {
             label.setStyle("-fx-text-fill: #838383; -fx-min-height: 50px;");
             vboxTusPlaylist.getChildren().add(label);
             vboxTusPlaylist.getChildren().add(cancionBox);
-
         }
         vboxTusPlaylist.setStyle("-fx-background-color:  #212628; -fx-min-width: "+scrollPaneWidth+"px;");
 
