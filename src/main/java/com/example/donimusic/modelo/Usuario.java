@@ -30,10 +30,11 @@ public class Usuario {
         this.password = password;
     }
 
+
     public void eliminarLista(ListaDeCanciones listaDeCanciones){
     listaDeCanciones.eliminarLista();
     }
-    public void addLista(ListaDeCanciones listaDeCanciones) {
+    public void crearLista(ListaDeCanciones listaDeCanciones) {
          listaDeCanciones.crearLista(nombre);
     }
     public void addCancion(ListaDeCanciones listaDeCanciones,Cancion cancion) {
