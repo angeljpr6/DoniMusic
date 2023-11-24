@@ -1,5 +1,9 @@
 package com.example.donimusic.modelo;
 
+
+import java.io.File;
+
+
 public class Artista {
     private String nombre;
     private int numCanciones;
@@ -42,4 +46,6 @@ public class Artista {
         rutaCancion = rutaCancion.replaceAll(" ","%20");
         return rutaCancion;
     }
+
+
 }
