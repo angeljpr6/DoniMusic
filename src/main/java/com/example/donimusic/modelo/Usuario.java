@@ -1,9 +1,13 @@
 package com.example.donimusic.modelo;
 
+import com.example.donimusic.controlador.Home;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
     String nombre;
@@ -35,6 +39,31 @@ public class Usuario {
             }
         }
         return true;
+    }
+    public ArrayList<ListaDeCanciones> obtenerListasUsuario(){
+        ArrayList<ListaDeCanciones> arrayListaDeCanciones = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM usuario WHERE nombreUsuario =? ;" ;
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setString(1, Home.usuario.getNombre());
+
+                try (ResultSet resultSet = stm.executeQuery()) {
+                    while (resultSet.next()) {
+
+                        String nombre = resultSet.getString("nombreCancion");
+                        String artista = resultSet.getString("artista");
+
+                        // Crear objeto Cancion y agregarlo a la lista
+                        ListaDeCanciones listaDeCanciones = new ListaDeCanciones(nombre,artista);
+                        arrayListaDeCanciones.add(listaDeCanciones);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return arrayListaDeCanciones;
     }
 
 

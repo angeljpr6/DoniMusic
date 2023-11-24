@@ -2,13 +2,14 @@ package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Cancion;
 import com.example.donimusic.modelo.Usuario;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -53,10 +54,13 @@ public class Home implements Initializable {
     public ScrollPane cancionesAnadidas;
     public TextField buscarNCTextField;
     public Pane controlAppPane;
+    public TableView tablaBusquedaPrin;
     private VBox vboxTusPlaylist = new VBox();
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     public static Usuario usuario=new Usuario();
+    public static Cancion cancionActual =null;
     private boolean reproduciendo= false;
+    private TableColumn<String, String> columnaNombreUsuario = new TableColumn<>("Nombre");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,6 +73,7 @@ public class Home implements Initializable {
         inicializarGeneros();
         inicializarLogo();
         inicializarAnadirCancion();
+        inicializarColumnaBusqPrinc();
 
     }
     public void inicializarAnadirCancion(){
@@ -79,6 +84,12 @@ public class Home implements Initializable {
         imageView.setFitHeight(49);
 
         anadirNuevaCancionBtn.getChildren().add(imageView);
+    }
+    public void inicializarColumnaBusqPrinc(){
+        columnaNombreUsuario.setResizable(true);
+        columnaNombreUsuario.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
+        columnaNombreUsuario.setMinWidth(742);
+        columnaNombreUsuario.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
     }
     public void inicializarLogo(){
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/logoPequeño.png")));
@@ -375,12 +386,28 @@ public class Home implements Initializable {
 
     public void reproducirCancion(MouseEvent mouseEvent) {
         Cancion cancion = new Cancion();
-        if (reproduciendo){
-
-        }else {
-            String ruta = "file:///C:/Users/angel/Music/Playlists/porque%20hostias%20no%20se%20acaba%20ya%20la%20puta%20guerra.mp3";
-            Cancion.descargarCancion(ruta, 1);
-            cancion.reproducirCancion(1);
+        if (!(cancionActual ==null)) {
+            if (reproduciendo) {
+                // TODO: 24/11/2023 Llamar la metodo pausa 
+            } else {
+                String ruta = "file:///C:/Users/angel/Music/Playlists/porque%20hostias%20no%20se%20acaba%20ya%20la%20puta%20guerra.mp3";
+                Cancion.descargarCancion(ruta, 1);
+                cancion.reproducirCancion(1);
+            }
         }
+    }
+
+    /**
+     * Metodo a medias
+     * @param mouseEvent
+     */
+    public void buscarCancion(MouseEvent mouseEvent) {
+
+        ObservableList<String> nombresUsuarios = FXCollections.observableArrayList();
+
+
+        tablaBusquedaPrin.getColumns().add(columnaNombreUsuario);
+
+        tablaBusquedaPrin.setItems(nombresUsuarios);
     }
 }
