@@ -28,10 +28,6 @@ public class Conexion {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return con;
-
     }
-
-
-
 }
 
