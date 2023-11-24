@@ -1,11 +1,15 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Conexion;
+import com.example.donimusic.modelo.Usuario;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -13,8 +17,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -51,37 +57,29 @@ public class CrearCuenta implements Initializable {
     }
 
 
-    public void registrarse(ActionEvent actionEvent) {
+    public void registrarse(ActionEvent actionEvent) throws IOException {
         errorContrasena.setVisible(false);
         errorUsuarioExist.setVisible(false);
-        registroExitoso.setVisible(false);
-        PreparedStatement stm;
-        boolean comprobacion=false;
-        try {
-            stm = c.prepareStatement("SELECT * FROM usuario");
-            ResultSet result = stm.executeQuery();
-            while (result.next()) {
-                String nombre=result.getString("nombreUsuario");
-                if(nombre.equals(usuarioRegis.getText())){
-                    comprobacion=true;
-                }
-            }
-
-            if(!contrasenaRegis.getText().equals(confirmContrasenaRegis.getText())){
-                errorContrasena.setVisible(true);
-            }else {
-                if(comprobacion!=true){
-                    stm=c.prepareStatement("insert into usuario values(?,?);");
-                    stm.setString(1,usuarioRegis.getText());
-                    stm.setString(2, contrasenaRegis.getText());
-                    stm.execute();
-                    registroExitoso.setVisible(true);
-                }else {
-                    errorUsuarioExist.setVisible(true);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        if (contrasenaRegis.getText().equals(confirmContrasenaRegis.getText())){
+            Home.usuario.setNombre(usuarioRegis.getText());
+            Home.usuario.setPassword(contrasenaRegis.getText());
+            if (Home.usuario.crearUsuario()){
+                abrirHome();
+            }else errorUsuarioExist.setVisible(true);
+        }else {
+            errorContrasena.setVisible(true);
         }
+    }
+    public void abrirHome() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage homeStage = new Stage();
+        homeStage.setTitle("Home");
+        homeStage.setResizable(false);
+        homeStage.setScene(scene);
+        homeStage.show();
+        Stage myStage = (Stage) this.contrasenaRegis.getScene().getWindow();
+        myStage.close();
     }
 }

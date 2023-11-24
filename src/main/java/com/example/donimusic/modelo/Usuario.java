@@ -2,6 +2,7 @@ package com.example.donimusic.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Usuario {
@@ -11,6 +12,29 @@ public class Usuario {
     public Usuario(String nombre, String password) {
         this.nombre = nombre;
         this.password = password;
+    }
+
+    public Usuario() {
+    }
+
+    public boolean crearUsuario(){
+        PreparedStatement stm;
+        try {
+
+            stm=c.prepareStatement("insert into usuario values(?,?);");
+            stm.setString(1,nombre);
+            stm.setString(2, password);
+            stm.execute();
+
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("23000")) {
+                System.out.println("El nombre de usuario ya existe en la base de datos.");
+                return false;
+            } else {
+                e.printStackTrace();
+            }
+        }
+        return true;
     }
 
 
