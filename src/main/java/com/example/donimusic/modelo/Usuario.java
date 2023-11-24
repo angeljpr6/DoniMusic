@@ -36,5 +36,17 @@ public class Usuario {
     public void addLista(ListaDeCanciones listaDeCanciones) {
          listaDeCanciones.crearLista(nombre);
     }
+    public void addCancion(ListaDeCanciones listaDeCanciones,Cancion cancion) {
+        listaDeCanciones.addCancion(cancion.getId());
+    }
+    public void eliminarCancion(ListaDeCanciones listaDeCanciones,Cancion cancion) {
+        listaDeCanciones.eliminarCancion(cancion.getId());
+    }
+    public void buscarCancionEnLista(ListaDeCanciones listaDeCanciones,Cancion cancion){
+
+        //Este metodo debería retornar un arrayList de canciones así que si lo usas recuerda guardar los resultados
+
+        listaDeCanciones.buscarCancion(cancion.getNombre(),listaDeCanciones.getId());
+    }
 
 }
