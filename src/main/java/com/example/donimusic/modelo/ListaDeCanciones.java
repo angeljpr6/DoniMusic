@@ -74,11 +74,40 @@ public class ListaDeCanciones {
             throw new RuntimeException(e);
         }
     }
-    public void  addCancion(){
+    public  void addCancion(int idCancion){
+        try {
+            PreparedStatement stm = c.prepareStatement("INSERT INTO listaCancion (cancionId) SELECT cancionId FROM cancion WHERE cancionId = ?");
+            stm.setInt(1, idCancion);
 
+            int filasAfectadas = stm.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                System.out.println("La canción se añadió correctamente a la lista.");
+            } else {
+                System.out.println("No se pudo añadir la canción a la lista.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public void  eliminarCancion(){
+    public void  eliminarCancion(int idCancion){
 
+        try {
+            String sql = "DELETE FROM listaCancion WHERE cancionId = (SELECT cancionId FROM cancion WHERE cancionId = ?)";
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setInt(1, idCancion);
+
+                int filasAfectadas = stm.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Canción eliminada de la lista exitosamente.");
+                } else {
+                    System.out.println("No se encontró la canción en la lista.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void  siguiente(){
 
