@@ -42,9 +42,9 @@ public class ListaDeCanciones {
         this.nombreCreador = nombreCreador;
     }
 
-    public  void crearLista(String nombreUsuario){
+    public void crearLista(String nombreUsuario) {
         try {
-            PreparedStatement stm = c.prepareStatement("INSERT INTO listaCancion (nombre, nombreUsuario) VALUES (?, ?)");
+            PreparedStatement stm = c.prepareStatement("INSERT INTO lista (nombre, nombreUsuario) VALUES (?, ?)");
             stm.setString(1, nombre);
             stm.setString(2, nombreUsuario);
 
@@ -60,11 +60,10 @@ public class ListaDeCanciones {
         }
     }
 
-    public  void eliminarLista(){
+    public void eliminarLista() {
         try {
-            PreparedStatement stm = c.prepareStatement("DELETE FROM listaCancion WHERE nombre = ?");
+            PreparedStatement stm = c.prepareStatement("DELETE FROM lista WHERE nombre = ?");
             stm.setString(1, nombre);
-
 
             int filasAfectadas = stm.executeUpdate();
 
@@ -77,10 +76,12 @@ public class ListaDeCanciones {
             throw new RuntimeException(e);
         }
     }
-    public  void addCancion(int idCancion){
+
+    public void addCancion(int idCancion) {
         try {
-            PreparedStatement stm = c.prepareStatement("INSERT INTO listaCancion (cancionId) SELECT cancionId FROM cancion WHERE cancionId = ?");
-            stm.setInt(1, idCancion);
+            PreparedStatement stm = c.prepareStatement("INSERT INTO playListCanciones (listaId, cancionId) VALUES (?, ?)");
+            stm.setInt(1, id);
+            stm.setInt(2, idCancion);
 
             int filasAfectadas = stm.executeUpdate();
 
@@ -93,45 +94,42 @@ public class ListaDeCanciones {
             throw new RuntimeException(e);
         }
     }
-    public void  eliminarCancion(int idCancion){
 
+    public void eliminarCancion(int idCancion) {
         try {
-            String sql = "DELETE FROM listaCancion WHERE cancionId = (SELECT cancionId FROM cancion WHERE cancionId = ?)";
-            try (PreparedStatement stm = c.prepareStatement(sql)) {
-                stm.setInt(1, idCancion);
+            PreparedStatement stm = c.prepareStatement("DELETE FROM playListCanciones WHERE listaId = ? AND cancionId = ?");
+            stm.setInt(1, id);
+            stm.setInt(2, idCancion);
 
-                int filasAfectadas = stm.executeUpdate();
+            int filasAfectadas = stm.executeUpdate();
 
-                if (filasAfectadas > 0) {
-                    System.out.println("Canción eliminada de la lista exitosamente.");
-                } else {
-                    System.out.println("No se encontró la canción en la lista.");
-                }
+            if (filasAfectadas > 0) {
+                System.out.println("Canción eliminada de la lista exitosamente.");
+            } else {
+                System.out.println("No se encontró la canción en la lista.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public List<Cancion>  buscarCancion(String nombreCancion, int idLista ) {
+    public List<Cancion> buscarCancion(String nombreCancion, int idLista) {
         List<Cancion> cancionesEnLista = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM cancion WHERE nombreCancion =? AND cancionId IN (SELECT cancionId FROM listaCancion WHERE cancionId = ?);" ;
+            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE c.nombreCancion = ? AND plc.listaId = ?";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
                 stm.setString(1, nombreCancion);
                 stm.setInt(2, idLista);
 
                 try (ResultSet resultSet = stm.executeQuery()) {
                     while (resultSet.next()) {
-
                         int idCancion = resultSet.getInt("cancionId");
                         String nombre = resultSet.getString("nombreCancion");
                         String album = resultSet.getString("album");
                         String archivo = resultSet.getString("archivo");
                         String artista = resultSet.getString("artista");
 
-                        // Crear objeto Cancion y agregarlo a la lista
-                        Cancion cancion = new Cancion(idCancion, nombre, artista, archivo,album);
+                        Cancion cancion = new Cancion(idCancion, nombre, artista, archivo, album);
                         cancionesEnLista.add(cancion);
                     }
                 }
@@ -142,12 +140,20 @@ public class ListaDeCanciones {
         }
 
         return cancionesEnLista;
-
     }
-    public void  atras(){
 
+    public void siguiente() {
+        // Implementa la lógica para reproducir la siguiente canción en la lista
+        // Utiliza la posición actual para determinar cuál es la siguiente canción
     }
-    public void  cambiarOrdenRep(){
 
+    public void atras() {
+        // Implementa la lógica para reproducir la canción anterior en la lista
+        // Utiliza la posición actual para determinar cuál es la canción anterior
+    }
+
+    public void cambiarOrdenRep() {
+        // Implementa la lógica para cambiar el orden de reproducción
     }
 }
+
