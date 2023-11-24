@@ -127,11 +127,11 @@ public class ListaDeCanciones {
                         int idCancion = resultSet.getInt("cancionId");
                         String nombre = resultSet.getString("nombreCancion");
                         String album = resultSet.getString("album");
-                        int duracion = resultSet.getInt("duracion");
+                        String archivo = resultSet.getString("archivo");
                         String artista = resultSet.getString("artista");
 
                         // Crear objeto Cancion y agregarlo a la lista
-                        Cancion cancion = new Cancion(idCancion, nombre, album, duracion, artista);
+                        Cancion cancion = new Cancion(idCancion, nombre, artista, archivo,album);
                         cancionesEnLista.add(cancion);
                     }
                 }
