@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListaDeCanciones {
@@ -142,18 +143,86 @@ public class ListaDeCanciones {
         return cancionesEnLista;
     }
 
-    public void siguiente() {
-        // Implementa la lógica para reproducir la siguiente canción en la lista
-        // Utiliza la posición actual para determinar cuál es la siguiente canción
+    public int siguiente(int idLista, int posicionActual) {
+       List<Cancion> cancionesEnLista = obtenerCancionesEnLista(idLista);
+
+        if (!cancionesEnLista.isEmpty()) {
+            if (posicionActual < cancionesEnLista.size() - 1) {
+                posicionActual++;
+            } else {
+                posicionActual = 0;
+            }
+
+            reproducirCancionActual(cancionesEnLista.get(posicionActual));
+        } else {
+            System.out.println("No hay canciones en la lista para reproducir.");
+        }
+
+        return posicionActual;
     }
 
-    public void atras() {
-        // Implementa la lógica para reproducir la canción anterior en la lista
-        // Utiliza la posición actual para determinar cuál es la canción anterior
-    }
 
-    public void cambiarOrdenRep() {
-        // Implementa la lógica para cambiar el orden de reproducción
+    public int atras(int idLista, int posicionActual) {
+        List<Cancion>   cancionesEnLista = obtenerCancionesEnLista(idLista);
+
+        if (!cancionesEnLista.isEmpty()) {
+            if (posicionActual > 0) {
+                posicionActual--;
+            } else {
+                posicionActual = cancionesEnLista.size() - 1;
+            }
+
+            reproducirCancionActual(cancionesEnLista.get(posicionActual));
+        } else {
+            System.out.println("No hay canciones en la lista para reproducir.");
+        }
+
+        return posicionActual;
+    }
+    public void cambiarOrdenRep(int idLista) {
+        List<Cancion> cancionesEnLista = obtenerCancionesEnLista(idLista);
+
+        if (!cancionesEnLista.isEmpty()) {
+            // Mezcla el orden de las canciones en la lista de forma aleatoria
+            Collections.shuffle(cancionesEnLista);
+
+            // Reproduce la primera canción en la nueva lista mezclada
+            reproducirCancionActual(cancionesEnLista.get(0));
+        } else {
+            System.out.println("No hay canciones en la lista para reproducir.");
+        }
+    }
+    private List<Cancion> obtenerCancionesEnLista(int idLista) {
+        List<Cancion> cancionesEnLista = new ArrayList<>();
+        try {
+            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE plc.listaId = ?";
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setInt(1, idLista);
+
+                try (ResultSet resultSet = stm.executeQuery()) {
+                    while (resultSet.next()) {
+                        int idCancion = resultSet.getInt("cancionId");
+                        String nombre = resultSet.getString("nombreCancion");
+                        String album = resultSet.getString("album");
+                        String archivo = resultSet.getString("archivo");
+                        String artista = resultSet.getString("artista");
+
+                        Cancion cancion = new Cancion(idCancion, nombre, artista, archivo, album);
+                        cancionesEnLista.add(cancion);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return cancionesEnLista;
+    }
+    private void reproducirCancionActual(Cancion cancion) {
+       //No se que poner aqui si ya hay un metodo o algo pero si funciona bien tendría que salier el sout digo en los metodos anteriores por si pueden hacer pruebas
+
+        System.out.println("Reproduciendo: " + cancion.getNombre());
     }
 }
 
