@@ -161,6 +161,14 @@ public class Cancion {
         this.nombreArtista = nombreArtista;
     }
 
+    public String getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
+    }
+
     public int getDuracion() {
         return duracion;
     }

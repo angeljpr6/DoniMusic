@@ -1,9 +1,6 @@
 package com.example.donimusic.modelo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +10,9 @@ public class ListaDeCanciones {
     int id;
     String nombre;
     String nombreCreador;
+
     private static Connection c= Conexion.con;
+
     public ListaDeCanciones(String nombre, String nombreCreador) {
         this.nombre = nombre;
         this.nombreCreador = nombreCreador;
@@ -43,42 +42,47 @@ public class ListaDeCanciones {
         this.nombreCreador = nombreCreador;
     }
 
-    public void crearLista(String nombreUsuario) {
+    public int crearLista(String nombreUsuario) {
         try {
-            PreparedStatement stm = c.prepareStatement("INSERT INTO lista (nombre, nombreUsuario) VALUES (?, ?)");
+            PreparedStatement stm = c.prepareStatement("INSERT INTO lista (nombre, nombreUsuario) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, nombre);
             stm.setString(2, nombreUsuario);
 
             int filasAfectadas = stm.executeUpdate();
 
             if (filasAfectadas > 0) {
-                System.out.println("Lista de canciones creada exitosamente.");
+
+
+                // Obtener el id de la lista recién creada
+                ResultSet rs = stm.getGeneratedKeys();
+                if (rs.next()) {
+                    id = rs.getInt(1);
+                }
+
+                return id;
             } else {
-                System.out.println("No se pudo crear la lista de canciones.");
+            //No se pudo crear la lista de canciones
+                return -1; // Retorna un valor que indique que no se pudo crear la lista
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return -1;
         }
     }
-
     public void eliminarLista() {
         try {
             PreparedStatement stm = c.prepareStatement("DELETE FROM lista WHERE nombre = ?");
-            stm.setString(1, nombre);
+            stm.setString(1, this.nombre);
 
-            int filasAfectadas = stm.executeUpdate();
 
-            if (filasAfectadas > 0) {
-                System.out.println("Lista de canciones eliminada exitosamente.");
-            } else {
-                System.out.println("La lista de canciones no existe en la base de datos.");
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void addCancion(int idCancion) {
+
+
         try {
             PreparedStatement stm = c.prepareStatement("INSERT INTO playListCanciones (listaId, cancionId) VALUES (?, ?)");
             stm.setInt(1, id);
@@ -92,7 +96,24 @@ public class ListaDeCanciones {
                 System.out.println("No se pudo añadir la canción a la lista.");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+    }
+    private boolean existeLista(int idLista) {
+        try {
+            String sql = "SELECT COUNT(*) FROM lista WHERE listaId = ?";
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setInt(1, idLista);
+
+                try (ResultSet resultSet = stm.executeQuery()) {
+                    resultSet.next();
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -102,13 +123,6 @@ public class ListaDeCanciones {
             stm.setInt(1, id);
             stm.setInt(2, idCancion);
 
-            int filasAfectadas = stm.executeUpdate();
-
-            if (filasAfectadas > 0) {
-                System.out.println("Canción eliminada de la lista exitosamente.");
-            } else {
-                System.out.println("No se encontró la canción en la lista.");
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -165,7 +179,7 @@ public class ListaDeCanciones {
     public int atras(int idLista, int posicionActual) {
         List<Cancion>   cancionesEnLista = obtenerCancionesEnLista(idLista);
 
-        if (!cancionesEnLista.isEmpty()) {
+
             if (posicionActual > 0) {
                 posicionActual--;
             } else {
@@ -173,9 +187,7 @@ public class ListaDeCanciones {
             }
 
             reproducirCancionActual(cancionesEnLista.get(posicionActual));
-        } else {
-            System.out.println("No hay canciones en la lista para reproducir.");
-        }
+
 
         return posicionActual;
     }
@@ -219,10 +231,50 @@ public class ListaDeCanciones {
 
         return cancionesEnLista;
     }
-    private void reproducirCancionActual(Cancion cancion) {
+    public void mostrarListaDeCanciones(int idLista) {
+        List<Cancion> cancionesEnLista = obtenerCancionesEnLista(idLista);
+
+        System.out.println("Lista de canciones:");
+        for (Cancion cancion : cancionesEnLista) {
+            System.out.println("ID: " + cancion.getId() +
+                    ", Nombre: " + cancion.getNombre() +
+                    ", Artista: " + cancion.getNombreArtista() +
+                    ", Album: " + cancion.getAlbum() +
+                    ", Archivo: " + cancion.getArchivo());
+        }
+    }
+    public Cancion encontrarCancion(String nombreCancion, int idLista) {
+        Cancion cancionEncontrada = null;
+        try {
+            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE c.nombreCancion = ? AND plc.listaId = ?";
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setString(1, nombreCancion);
+                stm.setInt(2, idLista);
+
+                try (ResultSet resultSet = stm.executeQuery()) {
+                    if (resultSet.next()) {
+                        int idCancion = resultSet.getInt("cancionId");
+                        String nombre = resultSet.getString("nombreCancion");
+                        String album = resultSet.getString("album");
+                        String archivo = resultSet.getString("archivo");
+                        String artista = resultSet.getString("artista");
+
+                        cancionEncontrada = new Cancion(idCancion, nombre, artista, archivo, album);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return cancionEncontrada;
+    }
+    public void reproducirCancionActual(Cancion cancion) {
        //No se que poner aqui si ya hay un metodo o algo pero si funciona bien tendría que salier el sout digo en los metodos anteriores por si pueden hacer pruebas
 
         System.out.println("Reproduciendo: " + cancion.getNombre());
     }
+
 }
 
