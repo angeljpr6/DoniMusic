@@ -1,6 +1,7 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Conexion;
+import com.example.donimusic.modelo.Usuario;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -123,6 +124,7 @@ public class IniciarSesion implements Initializable {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }*/
+        Home.usuario = new Usuario("pepe","ca");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);

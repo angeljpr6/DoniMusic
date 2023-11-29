@@ -1,6 +1,7 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Cancion;
+import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -9,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Home implements Initializable {
-    public ScrollPane playlistsPane;
     public Label inicioLabel;
     public Pane atrasCircle;
     public Label atrasMensaje;
@@ -55,12 +54,13 @@ public class Home implements Initializable {
     public TextField buscarNCTextField;
     public Pane controlAppPane;
     public TableView tablaBusquedaPrin;
+    public ListView playlistListView;
     private VBox vboxTusPlaylist = new VBox();
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     public static Usuario usuario=new Usuario();
     public static Cancion cancionActual =null;
     private boolean reproduciendo= false;
-    private TableColumn<String, String> columnaNombreUsuario = new TableColumn<>("Nombre");
+    private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -86,10 +86,10 @@ public class Home implements Initializable {
         anadirNuevaCancionBtn.getChildren().add(imageView);
     }
     public void inicializarColumnaBusqPrinc(){
-        columnaNombreUsuario.setResizable(true);
-        columnaNombreUsuario.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
-        columnaNombreUsuario.setMinWidth(742);
-        columnaNombreUsuario.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
+        columnaNombrePlaylist.setResizable(true);
+        columnaNombrePlaylist.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
+        columnaNombrePlaylist.setMinWidth(742);
+        columnaNombrePlaylist.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
     }
     public void inicializarLogo(){
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/logoPequeño.png")));
@@ -166,27 +166,25 @@ public class Home implements Initializable {
         imageViewError.setLayoutY(centerY);
         atrasCircle.getChildren().add(imageViewError);
     }
+
     public void rellenarPanelTusPlayList(){
+        VBox vbox = new VBox();
+        Label label = new Label();
+        vbox.getChildren().add(label);
+        vbox.setPrefHeight(50); // Establece la altura deseada para la celda
 
-        double scrollPaneWidth = playlistsPane.getPrefWidth()-15;
-        playlistsPane.setStyle("-fx-background-color: #212628;");
 
-        for (int i = 1; i <= 100; i++) {
-            VBox cancionBox = new VBox();
-            Label label =new Label("Elemento " + i);
-            label.setFont(inicioLabel.getFont());
-            label.setStyle("-fx-text-fill: #838383; -fx-min-height: 50px;");
-            vboxTusPlaylist.getChildren().add(label);
-            vboxTusPlaylist.getChildren().add(cancionBox);
+        ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
+        int altura=51;
+        playlistListView.setStyle("-fx-background-color: #212628;");
+        playlistListView.setCellFactory(param -> vbox);
+
+        for (ListaDeCanciones l : listaDeCancionesArrayList) {
+            String nombreCancion = l.getNombre();
+            playlistListView.getItems().add(nombreCancion);
+            playlistListView.setPrefHeight(altura);
+            altura+=50;
         }
-        vboxTusPlaylist.setStyle("-fx-background-color:  #212628; -fx-min-width: "+scrollPaneWidth+"px;");
-
-        /*String scrollbarStyle = "-fx-background-color: #FF0000;"; // Color de fondo de las barras
-        scrollbarStyle += "-fx-background: #00FF00;"; // Color de las barras
-        scrollbarStyle += "-fx-border-color: #0000FF;"; // Color del borde de las barras
-        panelPlaylists.lookup(".scroll-bar:vertical").setStyle(scrollbarStyle);*/
-
-        playlistsPane.setContent(vboxTusPlaylist);
     }
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
         node.setCursor(Cursor.HAND);
@@ -403,11 +401,14 @@ public class Home implements Initializable {
      */
     public void buscarCancion(MouseEvent mouseEvent) {
 
-        ObservableList<String> nombresUsuarios = FXCollections.observableArrayList();
+        ObservableList<String> playlists = FXCollections.observableArrayList();
+        ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
+        for (ListaDeCanciones l : listaDeCancionesArrayList) {
+            playlists.add(l.getNombre());
+        }
+        tablaBusquedaPrin.getColumns().add(columnaNombrePlaylist);
 
-
-        tablaBusquedaPrin.getColumns().add(columnaNombreUsuario);
-
-        tablaBusquedaPrin.setItems(nombresUsuarios);
+        tablaBusquedaPrin.setItems(playlists);
+        tablaBusquedaPrin.setVisible(true);
     }
 }

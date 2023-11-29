@@ -1,0 +1,11 @@
+/* Estilo para la barra de desplazamiento vertical */
+.scroll-bar:vertical {
+    -fx-background-color: #f0f0f0; /* Color de fondo */
+    -fx-background-radius: 5px; /* Radio del borde */
+}
+
+/* Estilo para la barra de desplazamiento horizontal */
+.scroll-bar:horizontal {
+    -fx-background-color: #ccc; /* Color de fondo */
+    -fx-background-radius: 5px; /* Radio del borde */
+}

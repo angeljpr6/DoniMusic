@@ -60,14 +60,16 @@ public class CrearCuenta implements Initializable {
     public void registrarse(ActionEvent actionEvent) throws IOException {
         errorContrasena.setVisible(false);
         errorUsuarioExist.setVisible(false);
-        if (contrasenaRegis.getText().equals(confirmContrasenaRegis.getText())){
-            Home.usuario.setNombre(usuarioRegis.getText());
-            Home.usuario.setPassword(contrasenaRegis.getText());
-            if (Home.usuario.crearUsuario()){
-                abrirHome();
-            }else errorUsuarioExist.setVisible(true);
-        }else {
-            errorContrasena.setVisible(true);
+        if (!contrasenaRegis.getText().isBlank() && !usuarioRegis.getText().isBlank()) {
+            if (contrasenaRegis.getText().equals(confirmContrasenaRegis.getText())) {
+                Home.usuario.setNombre(usuarioRegis.getText());
+                Home.usuario.setPassword(contrasenaRegis.getText());
+                if (Home.usuario.crearUsuario()) {
+                    abrirHome();
+                } else errorUsuarioExist.setVisible(true);
+            } else {
+                errorContrasena.setVisible(true);
+            }
         }
     }
     public void abrirHome() throws IOException {
