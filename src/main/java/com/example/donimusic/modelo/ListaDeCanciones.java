@@ -231,18 +231,6 @@ public class ListaDeCanciones {
 
         return cancionesEnLista;
     }
-    public void mostrarListaDeCanciones(int idLista) {
-        List<Cancion> cancionesEnLista = obtenerCancionesEnLista(idLista);
-
-        System.out.println("Lista de canciones:");
-        for (Cancion cancion : cancionesEnLista) {
-            System.out.println("ID: " + cancion.getId() +
-                    ", Nombre: " + cancion.getNombre() +
-                    ", Artista: " + cancion.getNombreArtista() +
-                    ", Album: " + cancion.getAlbum() +
-                    ", Archivo: " + cancion.getArchivo());
-        }
-    }
     public Cancion encontrarCancion(String nombreCancion, int idLista) {
         Cancion cancionEncontrada = null;
         try {
