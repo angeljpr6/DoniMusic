@@ -22,8 +22,8 @@ public class Cancion {
     private String archivo;
     private int duracion;
     private String album;
-    private static Media media;
-    private static MediaPlayer mediaPlayer;
+    private static Media media=null;
+    private static MediaPlayer mediaPlayer=null;
     private static Connection c= Conexion.con;
 
 
@@ -107,9 +107,9 @@ public class Cancion {
     public void reproducirCancion(int id){
         String idCancion=String.valueOf(id);
         File archivo=new File(String.valueOf(Cancion.class.getResource("C:\\Users\\angel\\IdeaProjects\\DoniMusic\\src\\main\\resources\\canciones\\"+idCancion+".mp3")));
-        Media audio=new Media(archivo.toURI().toString());
-        MediaPlayer reproductor=new MediaPlayer(audio);
-        reproductor.play();
+        media=new Media(archivo.toURI().toString());
+        mediaPlayer=new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
     public static ArrayList<Cancion> buscarCancion(String busqueda){
@@ -183,5 +183,13 @@ public class Cancion {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public String getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
     }
 }
