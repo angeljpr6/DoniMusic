@@ -181,11 +181,4 @@ public class Cancion {
         this.album = album;
     }
 
-    public String getArchivo() {
-        return archivo;
-    }
-
-    public void setArchivo(String archivo) {
-        this.archivo = archivo;
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Cancion;
+import com.example.donimusic.modelo.CustomCellFactory;
 import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
 import javafx.beans.property.SimpleStringProperty;
@@ -175,16 +176,16 @@ public class Home implements Initializable {
 
 
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
-        int altura=51;
-        playlistListView.setStyle("-fx-background-color: #212628;");
-        playlistListView.setCellFactory(param -> vbox);
+        int altura=50;
+        playlistListView.setCellFactory(new CustomCellFactory());
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
             String nombreCancion = l.getNombre();
             playlistListView.getItems().add(nombreCancion);
             playlistListView.setPrefHeight(altura);
-            altura+=50;
+            altura+=57;
         }
+
     }
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
         node.setCursor(Cursor.HAND);
