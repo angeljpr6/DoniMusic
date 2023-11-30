@@ -234,7 +234,7 @@ public class ListaDeCanciones {
     public void mostrarListaDeCanciones(int idLista) {
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(idLista);
 
-        System.out.println("Lista de canciones:");
+
         for (Cancion cancion : cancionesEnLista) {
             System.out.println("ID: " + cancion.getId() +
                     ", Nombre: " + cancion.getNombre() +
