@@ -1,7 +1,7 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Cancion;
-import com.example.donimusic.modelo.CustomCellFactory;
+import com.example.donimusic.modelo.customCeldas.CustomCellFactory;
 import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Home implements Initializable {
@@ -56,7 +57,7 @@ public class Home implements Initializable {
     public Pane controlAppPane;
     public TableView tablaBusquedaPrin;
     public ListView playlistListView;
-    private VBox vboxTusPlaylist = new VBox();
+    public ListView playlistPrinListView;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     public static Usuario usuario=new Usuario();
     public static Cancion cancionActual =null;
@@ -169,23 +170,27 @@ public class Home implements Initializable {
     }
 
     public void rellenarPanelTusPlayList(){
-        VBox vbox = new VBox();
-        Label label = new Label();
-        vbox.getChildren().add(label);
-        vbox.setPrefHeight(50); // Establece la altura deseada para la celda
-
 
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
         int altura=50;
         playlistListView.setCellFactory(new CustomCellFactory());
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
-            String nombrePlaylist = l.getNombre();
-            playlistListView.getItems().add(nombrePlaylist);
+
+            playlistListView.getItems().add(l);
             playlistListView.setPrefHeight(altura);
             altura+=57;
         }
 
+    }
+    public void rellenarPlayList(List<Cancion> canciones){
+        playlistPrincipalPane.setVisible(true);
+
+        //playlistPrinListView.setCellFactory(new CustomCellFactory());
+
+        for (Cancion c : canciones) {
+            playlistListView.getItems().add(c.getNombre());
+        }
     }
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
         node.setCursor(Cursor.HAND);
@@ -414,10 +419,8 @@ public class Home implements Initializable {
     }
 
     public void seleccionarPlayList(MouseEvent mouseEvent) {
-        playlistListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                ListaDeCanciones.obtenerCancionesEnLista(1);// TODO: 30/11/2023 hay que buscar la manera de obtener el id de la lista
-            }
-        });
+        ListaDeCanciones listaDeCanciones = (ListaDeCanciones) playlistListView.getSelectionModel().selectedItemProperty().getValue();
+        System.out.println(listaDeCanciones.getId());
+
     }
 }

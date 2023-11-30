@@ -204,12 +204,12 @@ public class ListaDeCanciones {
             System.out.println("No hay canciones en la lista para reproducir.");
         }
     }
-    public static List<Cancion> obtenerCancionesEnLista(int nombreLista) {
+    public static List<Cancion> obtenerCancionesEnLista(int idLista) {
         List<Cancion> cancionesEnLista = new ArrayList<>();
         try {
-            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE plc.nombre = ?";
+            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE plc.listaId = ?";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
-                stm.setInt(1, nombreLista);
+                stm.setInt(1, idLista);
 
                 try (ResultSet resultSet = stm.executeQuery()) {
                     while (resultSet.next()) {
@@ -224,7 +224,6 @@ public class ListaDeCanciones {
                     }
                 }
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
