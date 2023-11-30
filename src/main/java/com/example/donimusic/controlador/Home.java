@@ -180,8 +180,8 @@ public class Home implements Initializable {
         playlistListView.setCellFactory(new CustomCellFactory());
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
-            String nombreCancion = l.getNombre();
-            playlistListView.getItems().add(nombreCancion);
+            String nombrePlaylist = l.getNombre();
+            playlistListView.getItems().add(nombrePlaylist);
             playlistListView.setPrefHeight(altura);
             altura+=57;
         }
@@ -411,5 +411,13 @@ public class Home implements Initializable {
 
         tablaBusquedaPrin.setItems(playlists);
         tablaBusquedaPrin.setVisible(true);
+    }
+
+    public void seleccionarPlayList(MouseEvent mouseEvent) {
+        playlistListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                ListaDeCanciones.obtenerCancionesEnLista(1);// TODO: 30/11/2023 hay que buscar la manera de obtener el id de la lista
+            }
+        });
     }
 }

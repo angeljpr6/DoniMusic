@@ -204,12 +204,12 @@ public class ListaDeCanciones {
             System.out.println("No hay canciones en la lista para reproducir.");
         }
     }
-    private List<Cancion> obtenerCancionesEnLista(int idLista) {
+    public static List<Cancion> obtenerCancionesEnLista(int nombreLista) {
         List<Cancion> cancionesEnLista = new ArrayList<>();
         try {
-            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE plc.listaId = ?";
+            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE plc.nombre = ?";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
-                stm.setInt(1, idLista);
+                stm.setInt(1, nombreLista);
 
                 try (ResultSet resultSet = stm.executeQuery()) {
                     while (resultSet.next()) {
@@ -272,7 +272,6 @@ public class ListaDeCanciones {
     }
     public void reproducirCancionActual(Cancion cancion) {
        //No se que poner aqui si ya hay un metodo o algo pero si funciona bien tendría que salier el sout digo en los metodos anteriores por si pueden hacer pruebas
-
         System.out.println("Reproduciendo: " + cancion.getNombre());
     }
 
