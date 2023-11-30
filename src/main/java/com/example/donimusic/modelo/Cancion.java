@@ -162,8 +162,9 @@ public class Cancion {
     }
 
 
-
-
+    public String getArchivo() {
+        return archivo;
+    }
 
     public int getDuracion() {
         return duracion;
