@@ -26,7 +26,7 @@ public class Cancion {
         this.id = id;
         this.nombre = nombre;
         this.nombreArtista = nombreArtista;
-
+        this.ruta = "";
         this.album = album;
     }
 
@@ -142,6 +142,10 @@ public class Cancion {
 
     public String getAlbum() {
         return album;
+    }
+
+    public String getRuta() {
+        return ruta;
     }
 
     public void setAlbum(String album) {

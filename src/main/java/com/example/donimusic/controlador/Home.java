@@ -166,7 +166,6 @@ public class Home implements Initializable {
         botonAnterior.setGraphic(imageViewAnterior);
     }
     public void inicializarSlider(){
-
     }
     public void seleccionarLabel(Label label){
         label.setStyle("-fx-text-fill: white;");
@@ -411,26 +410,27 @@ public class Home implements Initializable {
         reproducirCancion();
     }
     public void inicializarCancion(){
-        cancionActual=new Cancion();
         cancionActual.descargarCancion();
         cancionActual.reproducirCancion();
     }
     public void reproducirCancion(){
-        if (reproduciendo) {
-            Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
-            ImageView imageViewPlay = new ImageView(imagePlay);
-            botonReproducir.setGraphic(imageViewPlay);
-            cancionActual.pausarCancion(1);
-            reproduciendo=false;
-        } else {
-            reproduciendo=true;
-            if (cancionActual==null){
-                inicializarCancion();
-            }else cancionActual.playCancion();
+        if (cancionActual==null) {
+            if (reproduciendo) {
+                Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
+                ImageView imageViewPlay = new ImageView(imagePlay);
+                botonReproducir.setGraphic(imageViewPlay);
+                cancionActual.pausarCancion(1);
+                reproduciendo = false;
+            } else {
+                reproduciendo = true;
+                if (cancionActual.getRuta().equals("")) {
+                    inicializarCancion();
+                } else cancionActual.playCancion();
 
-            Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa.png")));
-            ImageView imageViewPlay = new ImageView(imagePlay);
-            botonReproducir.setGraphic(imageViewPlay);
+                Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa.png")));
+                ImageView imageViewPlay = new ImageView(imagePlay);
+                botonReproducir.setGraphic(imageViewPlay);
+            }
         }
     }
     
