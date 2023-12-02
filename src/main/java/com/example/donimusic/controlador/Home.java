@@ -1,7 +1,8 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Cancion;
-import com.example.donimusic.modelo.customCeldas.CustomCellFactory;
+import com.example.donimusic.modelo.customCeldas.CustomCellFactoryCan;
+import com.example.donimusic.modelo.customCeldas.CustomCellFactoryPlaylist;
 import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
 import javafx.beans.property.SimpleStringProperty;
@@ -173,7 +174,7 @@ public class Home implements Initializable {
 
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
         int altura=50;
-        playlistListView.setCellFactory(new CustomCellFactory());
+        playlistListView.setCellFactory(new CustomCellFactoryPlaylist());
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
 
@@ -186,10 +187,10 @@ public class Home implements Initializable {
     public void rellenarPlayList(List<Cancion> canciones){
         playlistPrincipalPane.setVisible(true);
 
-        //playlistPrinListView.setCellFactory(new CustomCellFactory());
+        playlistPrinListView.setCellFactory(new CustomCellFactoryCan());
 
         for (Cancion c : canciones) {
-            playlistListView.getItems().add(c.getNombre());
+            playlistPrinListView.getItems().add(c);
         }
     }
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
@@ -420,6 +421,8 @@ public class Home implements Initializable {
 
     public void seleccionarPlayList(MouseEvent mouseEvent) {
         ListaDeCanciones listaDeCanciones = (ListaDeCanciones) playlistListView.getSelectionModel().selectedItemProperty().getValue();
+        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaDeCanciones.getId());
+        rellenarPlayList(canciones);
         System.out.println(listaDeCanciones.getId());
 
     }

@@ -13,7 +13,8 @@ public class ListaDeCanciones {
 
     private static Connection c= Conexion.con;
 
-    public ListaDeCanciones(String nombre, String nombreCreador) {
+    public ListaDeCanciones(int idLista, String nombre, String nombreCreador) {
+        this.id = idLista;
         this.nombre = nombre;
         this.nombreCreador = nombreCreador;
     }

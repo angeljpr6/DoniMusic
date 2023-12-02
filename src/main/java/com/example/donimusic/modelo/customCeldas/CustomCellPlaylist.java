@@ -8,12 +8,12 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class CustomCell extends ListCell<ListaDeCanciones> {
+public class CustomCellPlaylist extends ListCell<ListaDeCanciones> {
     private final VBox vbox;
     private final Label label;
     public static Color colorTexto;
 
-    public CustomCell() {
+    public CustomCellPlaylist() {
         vbox = new VBox();
         label = new Label();
         vbox.getChildren().add(label);

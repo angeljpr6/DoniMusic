@@ -5,10 +5,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
-public class CustomCellFactory implements Callback<ListView<ListaDeCanciones>, ListCell<ListaDeCanciones>> {
+public class CustomCellFactoryPlaylist implements Callback<ListView<ListaDeCanciones>, ListCell<ListaDeCanciones>> {
     @Override
     public ListCell<ListaDeCanciones> call(ListView<ListaDeCanciones> listView) {
-        return new CustomCell();
+        return new CustomCellPlaylist();
     }
 }
 
