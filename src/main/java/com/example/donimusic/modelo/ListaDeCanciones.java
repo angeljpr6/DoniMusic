@@ -11,6 +11,8 @@ public class ListaDeCanciones {
     String nombre;
     String nombreCreador;
 
+    private boolean reproductor =false;
+
     private static Connection c = Conexion.con;
 
     public ListaDeCanciones(int idLista, String nombre, String nombreCreador) {
@@ -29,6 +31,14 @@ public class ListaDeCanciones {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public boolean isReproductor() {
+        return reproductor;
+    }
+
+    public void setReproductor(boolean reproductor) {
+        this.reproductor = reproductor;
     }
 
     public void setNombre(String nombre) {
@@ -164,6 +174,8 @@ public class ListaDeCanciones {
 
         // Obtiene la lista de canciones asociadas a la lista de reproducción actual
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(this.id);
+        if(this.reproductor==false){
+
 
         // Verifica si la lista de canciones no está vacía
         if (!cancionesEnLista.isEmpty()) {
@@ -183,8 +195,12 @@ public class ListaDeCanciones {
                     Cancion siguienteCancion = cancionesEnLista.get(0);
                     return siguienteCancion;
                 }
+            }
 
             }
+        }
+        else {
+            llamaraleatorio(cancion);
         }
 
         // Retorna null si no se pudo reproducir la siguiente canción
@@ -195,47 +211,76 @@ public class ListaDeCanciones {
     public Cancion atras(Cancion cancion) {
         // Obtiene la lista de canciones asociadas a la lista de reproducción actual
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(this.id);
+        if(this.reproductor==false) {
+            // Verifica si la lista de canciones no está vacía
+            if (!cancionesEnLista.isEmpty()) {
+                // Obtiene el índice de la canción proporcionada en la lista de canciones
+                int index = cancionesEnLista.indexOf(cancion);
 
-        // Verifica si la lista de canciones no está vacía
-        if (!cancionesEnLista.isEmpty()) {
-            // Obtiene el índice de la canción proporcionada en la lista de canciones
-            int index = cancionesEnLista.indexOf(cancion);
+                // Verifica si la canción está en la lista (index != -1)
+                if (index != -1) {
+                    // Verifica si hay una canción siguiente en la lista
+                    if (index > 0) {
+                        // Si hay una canción siguiente, incrementa el índice
+                        index--;
+                        Cancion previaCancion = cancionesEnLista.get(index);
+                        return previaCancion;
+                    } else {
+                        // Si estamos en la última canción, vuelve al inicio de la lista
+                        index = cancionesEnLista.size() - 1;
+                        Cancion previaCancion = cancionesEnLista.get(index);
+                        return previaCancion;
+                    }
 
-            // Verifica si la canción está en la lista (index != -1)
-            if (index != -1) {
-                // Verifica si hay una canción siguiente en la lista
-                if (index > 0) {
-                    // Si hay una canción siguiente, incrementa el índice
-                    index--;
-                    Cancion previaCancion = cancionesEnLista.get(index);
-                    return previaCancion;
-                } else {
-                    // Si estamos en la última canción, vuelve al inicio de la lista
-                    index= cancionesEnLista.size() - 1;
-                    Cancion previaCancion = cancionesEnLista.get(index);
-                    return previaCancion;
                 }
-
             }
+        }
+        else {
+            llamaraleatorio(cancion);
         }
 
         // Retorna null si no se pudo reproducir la siguiente canción
         return null;
     }
 
+public Cancion llamaraleatorio(Cancion cancion){
+    // Obtiene la lista de canciones asociadas a la lista de reproducción actual
+    List<Cancion> cancionesEnLista = obtenerCancionesEnLista(this.id);
 
-    public void cambiarOrdenRep(int idLista) {
-        List<Cancion> cancionesEnLista = obtenerCancionesEnLista(idLista);
+    // Verifica si la lista de canciones no está vacía
+    if (!cancionesEnLista.isEmpty()) {
+        // Obtiene el índice de la canción proporcionada en la lista de canciones
+        int index = cancionesEnLista.indexOf(cancion);
 
-        if (!cancionesEnLista.isEmpty()) {
-            // Mezcla el orden de las canciones en la lista de forma aleatoria
-            Collections.shuffle(cancionesEnLista);
+        // Verifica si la canción está en la lista (index != -1)
+        if (index != -1) {
+            // Genera un índice aleatorio dentro del rango de la lista
+            int randomIndex = (int) (Math.random() * cancionesEnLista.size());
 
-            // Reproduce la primera canción en la nueva lista mezclada
-            reproducirCancionActual(cancionesEnLista.get(0));
-        } else {
-            System.out.println("No hay canciones en la lista para reproducir.");
+            // Verifica si el índice aleatorio es igual al índice actual
+            while (randomIndex == index) {
+                randomIndex = (int) (Math.random() * cancionesEnLista.size());
+            }
+
+            // Reproduce la canción aleatoria
+            Cancion cancionAleatoria = cancionesEnLista.get(randomIndex);
+            reproducirCancionActual(cancionAleatoria);
+            return cancionAleatoria;
         }
+    }
+
+    // Retorna null si no se pudo reproducir la canción aleatoria
+    return null;
+}
+
+    public boolean cambiarOrdenRep() {
+        if (this.reproductor == true) {
+            this.reproductor=false;
+        }
+        else if (this.reproductor == false) {
+            this.reproductor=true;
+        }
+        return this.reproductor;
     }
     public static List<Cancion> obtenerCancionesEnLista(int idLista) {
         List<Cancion> cancionesEnLista = new ArrayList<>();
