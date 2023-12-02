@@ -412,9 +412,8 @@ public class Home implements Initializable {
     }
     public void inicializarCancion(){
         cancionActual=new Cancion();
-        String ruta = "file:///C:/Users/angel/Music/Playlists/porque%20hostias%20no%20se%20acaba%20ya%20la%20puta%20guerra.mp3";
-        Cancion.descargarCancion(ruta, 1);
-        cancionActual.reproducirCancion(1);
+        cancionActual.descargarCancion();
+        cancionActual.reproducirCancion();
     }
     public void reproducirCancion(){
         if (reproduciendo) {
