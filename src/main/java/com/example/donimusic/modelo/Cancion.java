@@ -90,7 +90,7 @@ public class Cancion {
             ResultSet result = stm.executeQuery();
             while (result.next()) {
                 int id=result.getInt("cancionId");
-                String nombre=result.getString("nombreCancion ");
+                String nombre=result.getString("nombreCancion");
                 String archivo=result.getString("archivo");
                 String nombreArtista= result.getString("artista");
                 String album=result.getString("album");

@@ -203,8 +203,9 @@ public class Home implements Initializable {
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
-
         playlistPrinListView.setCellFactory(new CustomCellFactoryCan());
+        playlistPrinListView.getItems().clear();
+
 
         for (Cancion c : canciones) {
             playlistPrinListView.getItems().add(c);
@@ -440,10 +441,11 @@ public class Home implements Initializable {
      * @param mouseEvent
      */
     public void buscarCancion(MouseEvent mouseEvent) {
+        tablaBusquedaPrin.getColumns().clear();
 
         ObservableList<String> playlists = FXCollections.observableArrayList();
-        ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
-        for (ListaDeCanciones l : listaDeCancionesArrayList) {
+        ArrayList<Cancion> listaDeCancionesArrayList = Cancion.buscarCancion(buscarTextField.getText());
+        for (Cancion l : listaDeCancionesArrayList) {
             playlists.add(l.getNombre());
         }
         tablaBusquedaPrin.getColumns().add(columnaNombrePlaylist);
