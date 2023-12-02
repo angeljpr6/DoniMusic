@@ -414,7 +414,7 @@ public class Home implements Initializable {
         cancionActual.reproducirCancion();
     }
     public void reproducirCancion(){
-        if (cancionActual==null) {
+        if (cancionActual!=null) {
             if (reproduciendo) {
                 Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
                 ImageView imageViewPlay = new ImageView(imagePlay);
