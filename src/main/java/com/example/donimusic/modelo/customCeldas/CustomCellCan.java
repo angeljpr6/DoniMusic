@@ -58,9 +58,13 @@ public class CustomCellCan extends ListCell<Cancion> {
         selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
             if (isNowSelected) {
                 nombreLabel.setTextFill(Color.WHITE);
+                albumLabel.setTextFill(Color.WHITE);
+                duracionLabel.setTextFill(Color.WHITE);
             } else {
                 Color texto = Color.rgb(0x83, 0x83, 0x83);
                 nombreLabel.setTextFill(texto);
+                albumLabel.setTextFill(texto);
+                duracionLabel.setTextFill(texto);
             }
         });
     }

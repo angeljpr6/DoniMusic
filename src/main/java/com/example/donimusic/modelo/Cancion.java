@@ -104,11 +104,18 @@ public class Cancion {
         rutaCancion = rutaCancion.replaceAll(" ","%20");
         return rutaCancion;
     }
+
     public void reproducirCancion(int id){
         String idCancion=String.valueOf(id);
         File archivo=new File(String.valueOf(Cancion.class.getResource("C:\\Users\\angel\\IdeaProjects\\DoniMusic\\src\\main\\resources\\canciones\\"+idCancion+".mp3")));
         media=new Media(archivo.toURI().toString());
         mediaPlayer=new MediaPlayer(media);
+        mediaPlayer.play();
+    }
+    public void pausarCancion(int id){
+        mediaPlayer.pause();
+    }
+    public void playCancion(){
         mediaPlayer.play();
     }
 

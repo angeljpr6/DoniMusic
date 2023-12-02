@@ -59,6 +59,8 @@ public class Home implements Initializable {
     public TableView tablaBusquedaPrin;
     public ListView playlistListView;
     public ListView playlistPrinListView;
+    public Button botonSiguiente;
+    public Button botonAnterior;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     public static Usuario usuario=new Usuario();
     public static Cancion cancionActual =null;
@@ -148,9 +150,15 @@ public class Home implements Initializable {
     }
     public void inicializarControlarCancion(){
 
-        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa-de-video.png")));
-        ImageView imageView = new ImageView(image);
-        botonReproducir.setGraphic(imageView);
+        Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
+        ImageView imageViewPlay = new ImageView(imagePlay);
+        botonReproducir.setGraphic(imageViewPlay);
+        Image imageSiguiente = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/siguiente-cancion.png")));
+        ImageView imageViewSiguiente = new ImageView(imageSiguiente);
+        botonSiguiente.setGraphic(imageViewSiguiente);
+        Image imageAnterior = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/anterior-cancion.png")));
+        ImageView imageViewAnterior = new ImageView(imageAnterior);
+        botonAnterior.setGraphic(imageViewAnterior);
     }
     public void seleccionarLabel(Label label){
         label.setStyle("-fx-text-fill: white;");
@@ -389,18 +397,37 @@ public class Home implements Initializable {
         labelSeleccionado.add(label);
     }
 
-    public void reproducirCancion(MouseEvent mouseEvent) {
-        Cancion cancion = new Cancion();
-        if (!(cancionActual ==null)) {
-            if (reproduciendo) {
-                // TODO: 24/11/2023 Llamar la metodo pausa 
-            } else {
-                String ruta = "file:///C:/Users/angel/Music/Playlists/porque%20hostias%20no%20se%20acaba%20ya%20la%20puta%20guerra.mp3";
-                Cancion.descargarCancion(ruta, 1);
-                cancion.reproducirCancion(1);
-            }
-        }
+    public void pausarYReproducir(MouseEvent mouseEvent) {
+        reproducirCancion();
     }
+    public void inicializarCancion(){
+        cancionActual=new Cancion();
+        String ruta = "file:///C:/Users/angel/Music/Playlists/porque%20hostias%20no%20se%20acaba%20ya%20la%20puta%20guerra.mp3";
+        Cancion.descargarCancion(ruta, 1);
+        cancionActual.reproducirCancion(1);
+    }
+    public void reproducirCancion(){
+        //if (!(cancionActual ==null)) {
+            if (reproduciendo) {
+                // TODO: 24/11/2023 Llamar la metodo pausa
+                Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
+                ImageView imageViewPlay = new ImageView(imagePlay);
+                botonReproducir.setGraphic(imageViewPlay);
+                cancionActual.pausarCancion(1);
+                reproduciendo=false;
+            } else {
+                reproduciendo=true;
+                if (cancionActual==null){
+                    inicializarCancion();
+                }else cancionActual.playCancion();
+
+                Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa.png")));
+                ImageView imageViewPlay = new ImageView(imagePlay);
+                botonReproducir.setGraphic(imageViewPlay);
+            }
+        //}
+    }
+    
 
     /**
      * Metodo a medias
@@ -425,5 +452,13 @@ public class Home implements Initializable {
         rellenarPlayList(canciones);
         System.out.println(listaDeCanciones.getId());
 
+    }
+
+    public void siguienteCancion(MouseEvent mouseEvent) {
+        // TODO: 02/12/2023  
+    }
+
+    public void anteriorCancion(MouseEvent mouseEvent) {
+        // TODO: 02/12/2023  
     }
 }
