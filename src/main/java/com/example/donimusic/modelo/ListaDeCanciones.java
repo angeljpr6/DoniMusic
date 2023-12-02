@@ -264,7 +264,6 @@ public Cancion llamaraleatorio(Cancion cancion){
 
             // Reproduce la canción aleatoria
             Cancion cancionAleatoria = cancionesEnLista.get(randomIndex);
-            reproducirCancionActual(cancionAleatoria);
             return cancionAleatoria;
         }
     }
@@ -347,10 +346,7 @@ public Cancion llamaraleatorio(Cancion cancion){
 
         return cancionEncontrada;
     }
-    public void reproducirCancionActual(Cancion cancion) {
-       //No se que poner aqui si ya hay un metodo o algo pero si funciona bien tendría que salier el sout digo en los metodos anteriores por si pueden hacer pruebas
-        System.out.println("Reproduciendo: " + cancion.getNombre());
-    }
+
 
 }
 
