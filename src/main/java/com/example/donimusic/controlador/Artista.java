@@ -18,7 +18,6 @@ public class Artista {
     }
 
     public void subirCancion(String cancionNombre, Blob cancion) {
-
         String sql = "INSERT INTO cancion (nombreCancion, archivo, artista) VALUES (?, ?, ?)";
 
         try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
@@ -33,9 +32,6 @@ public class Artista {
             throw new RuntimeException(ex);
         }
     }
-
-
-
 
     public void eliminarCancion(){
 

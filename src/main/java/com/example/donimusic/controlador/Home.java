@@ -5,6 +5,7 @@ import com.example.donimusic.modelo.customCeldas.CustomCellFactoryCan;
 import com.example.donimusic.modelo.customCeldas.CustomCellFactoryPlaylist;
 import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,9 +62,13 @@ public class Home implements Initializable {
     public ListView playlistPrinListView;
     public Button botonSiguiente;
     public Button botonAnterior;
+    public Slider cancionSlider;
+    public Label nombrePlaylistPrin;
+    public Label autorPlaylistPrin;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     public static Usuario usuario=new Usuario();
     public static Cancion cancionActual =null;
+    public static ListaDeCanciones listaActual=null;
     private boolean reproduciendo= false;
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
 
@@ -160,6 +165,9 @@ public class Home implements Initializable {
         ImageView imageViewAnterior = new ImageView(imageAnterior);
         botonAnterior.setGraphic(imageViewAnterior);
     }
+    public void inicializarSlider(){
+
+    }
     public void seleccionarLabel(Label label){
         label.setStyle("-fx-text-fill: white;");
     }
@@ -177,7 +185,6 @@ public class Home implements Initializable {
         imageViewError.setLayoutY(centerY);
         atrasCircle.getChildren().add(imageViewError);
     }
-
     public void rellenarPanelTusPlayList(){
 
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
@@ -193,7 +200,10 @@ public class Home implements Initializable {
 
     }
     public void rellenarPlayList(List<Cancion> canciones){
+
         playlistPrincipalPane.setVisible(true);
+        nombrePlaylistPrin.setText(listaActual.getNombre());
+        autorPlaylistPrin.setText(listaActual.getNombreCreador());
 
         playlistPrinListView.setCellFactory(new CustomCellFactoryCan());
 
@@ -407,25 +417,22 @@ public class Home implements Initializable {
         cancionActual.reproducirCancion(1);
     }
     public void reproducirCancion(){
-        //if (!(cancionActual ==null)) {
-            if (reproduciendo) {
-                // TODO: 24/11/2023 Llamar la metodo pausa
-                Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
-                ImageView imageViewPlay = new ImageView(imagePlay);
-                botonReproducir.setGraphic(imageViewPlay);
-                cancionActual.pausarCancion(1);
-                reproduciendo=false;
-            } else {
-                reproduciendo=true;
-                if (cancionActual==null){
-                    inicializarCancion();
-                }else cancionActual.playCancion();
+        if (reproduciendo) {
+            Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
+            ImageView imageViewPlay = new ImageView(imagePlay);
+            botonReproducir.setGraphic(imageViewPlay);
+            cancionActual.pausarCancion(1);
+            reproduciendo=false;
+        } else {
+            reproduciendo=true;
+            if (cancionActual==null){
+                inicializarCancion();
+            }else cancionActual.playCancion();
 
-                Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa.png")));
-                ImageView imageViewPlay = new ImageView(imagePlay);
-                botonReproducir.setGraphic(imageViewPlay);
-            }
-        //}
+            Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa.png")));
+            ImageView imageViewPlay = new ImageView(imagePlay);
+            botonReproducir.setGraphic(imageViewPlay);
+        }
     }
     
 
@@ -441,17 +448,17 @@ public class Home implements Initializable {
             playlists.add(l.getNombre());
         }
         tablaBusquedaPrin.getColumns().add(columnaNombrePlaylist);
-
         tablaBusquedaPrin.setItems(playlists);
         tablaBusquedaPrin.setVisible(true);
     }
 
     public void seleccionarPlayList(MouseEvent mouseEvent) {
+
         ListaDeCanciones listaDeCanciones = (ListaDeCanciones) playlistListView.getSelectionModel().selectedItemProperty().getValue();
+        listaActual=listaDeCanciones;
         List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaDeCanciones.getId());
         rellenarPlayList(canciones);
         System.out.println(listaDeCanciones.getId());
-
     }
 
     public void siguienteCancion(MouseEvent mouseEvent) {
