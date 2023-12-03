@@ -468,10 +468,14 @@ public class Home implements Initializable {
     }
 
     public void siguienteCancion(MouseEvent mouseEvent) {
+        reproducirCancion();
         cancionActual=listaActual.siguiente(cancionActual);
+        reproducirCancion();
     }
 
     public void anteriorCancion(MouseEvent mouseEvent) {
+        reproducirCancion();
         cancionActual=listaActual.atras(cancionActual);
+        reproducirCancion();
     }
 }
