@@ -63,6 +63,7 @@ public class CustomCellCan extends ListCell<Cancion> {
                 duracionLabel.setTextFill(Color.WHITE);
                 if(item!=null){
                     Home.cancionActual=item;
+
                 }else{
 
                 }

@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +28,7 @@ public class Home implements Initializable {
     public Label inicioLabel;
     public Pane atrasCircle;
     public Label atrasMensaje;
-    public Label autorCancion;
+    public  Label autorCancion;
     public Button botonReproducir;
     public Label nombreCancion;
     public Label nombrePlaylistHist;
@@ -98,7 +99,17 @@ public class Home implements Initializable {
         columnaNombrePlaylist.setResizable(true);
         columnaNombrePlaylist.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
         columnaNombrePlaylist.setMinWidth(742);
-        columnaNombrePlaylist.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
+
+        // Configurar CellValueFactory para obtener el nombre de la canción
+        columnaNombrePlaylist.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+        // Añadir una nueva columna para mostrar el artista de la canción
+        TableColumn<Cancion, String> columnaArtista = new TableColumn<>("Artista");
+        columnaArtista.setMinWidth(742);
+        columnaArtista.setCellValueFactory(new PropertyValueFactory<>("artista"));
+
+        // Agregar las columnas al TableView
+        tablaBusquedaPrin.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
     }
     public void inicializarLogo(){
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/logoPequeño.png")));
@@ -208,10 +219,9 @@ public class Home implements Initializable {
             playlistPrinListView.getItems().add(c);
         }
     }
-    public void actualizarCancionRep(Cancion cancion){
-        autorCancion.setText(cancion.getNombreArtista());
-        nombreCancion.setText(cancion.getNombre());
-
+    public void actualizarCancionRep(){
+        autorCancion.setText(cancionActual.getNombreArtista());
+        nombreCancion.setText(cancionActual.getNombre());
     }
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
         node.setCursor(Cursor.HAND);
@@ -231,8 +241,11 @@ public class Home implements Initializable {
     }
     public void anadirFavoritos(MouseEvent mouseEvent) {
         if (anadirFavLabel.getText().equals("Quitar de favoritos")){
+
             anadirFavLabel.setText("Añadir Favoritos");
-        }else anadirFavLabel.setText("Añadido");
+        }else{
+            anadirFavLabel.setText("Añadido");
+        }
     }
 
     public void anadirFavEntered(MouseEvent mouseEvent) {
@@ -421,6 +434,7 @@ public class Home implements Initializable {
     }
     public void reproducirCancion(){
         if (cancionActual!=null) {
+            actualizarCancionRep();
             if (reproduciendo) {
                 Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
                 ImageView imageViewPlay = new ImageView(imagePlay);
@@ -448,15 +462,16 @@ public class Home implements Initializable {
     public void buscarCancion(MouseEvent mouseEvent) {
         tablaBusquedaPrin.getColumns().clear();
 
-        ObservableList<String> playlists = FXCollections.observableArrayList();
+        ObservableList<Cancion> playlists = FXCollections.observableArrayList();
         ArrayList<Cancion> listaDeCancionesArrayList = Cancion.buscarCancion(buscarTextField.getText());
         for (Cancion l : listaDeCancionesArrayList) {
-            playlists.add(l.getNombre());
+            playlists.add(l);
         }
         tablaBusquedaPrin.getColumns().add(columnaNombrePlaylist);
         tablaBusquedaPrin.setItems(playlists);
         tablaBusquedaPrin.setVisible(true);
     }
+
 
     public void seleccionarPlayList(MouseEvent mouseEvent) {
 
@@ -477,5 +492,10 @@ public class Home implements Initializable {
         reproducirCancion();
         cancionActual=listaActual.atras(cancionActual);
         reproducirCancion();
+    }
+
+    public void obtenerCancionBusqueda(MouseEvent mouseEvent) {
+        Cancion c1=(Cancion)tablaBusquedaPrin.getSelectionModel().getSelectedItem();
+        cancionActual=c1;
     }
 }

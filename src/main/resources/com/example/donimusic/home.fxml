@@ -115,7 +115,7 @@
                   <Pane fx:id="rapImagen" layoutX="33.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
                </children>
             </Pane>
-            <TableView fx:id="tablaBusquedaPrin" layoutX="150.0" layoutY="224.0" prefHeight="251.0" prefWidth="744.0" style="-fx-background-color: #383c41; -fx-text-fill: black;" visible="false" />
+            <TableView fx:id="tablaBusquedaPrin" layoutX="150.0" layoutY="224.0" onMouseClicked="#obtenerCancionBusqueda" prefHeight="251.0" prefWidth="744.0" style="-fx-background-color: #383c41; -fx-text-fill: black;" visible="false" />
             <TextField fx:id="buscarTextField" layoutX="139.0" layoutY="224.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="766.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
          </children>
       </Pane>
