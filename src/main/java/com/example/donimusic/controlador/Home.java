@@ -5,7 +5,6 @@ import com.example.donimusic.modelo.customCeldas.CustomCellFactoryCan;
 import com.example.donimusic.modelo.customCeldas.CustomCellFactoryPlaylist;
 import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -192,20 +191,17 @@ public class Home implements Initializable {
         playlistListView.setCellFactory(new CustomCellFactoryPlaylist());
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
-
             playlistListView.getItems().add(l);
             playlistListView.setPrefHeight(altura);
             altura+=57;
         }
-
     }
     public void rellenarPlayList(List<Cancion> canciones){
-
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
-
         playlistPrinListView.setCellFactory(new CustomCellFactoryCan());
+        playlistPrinListView.getItems().clear();
 
         for (Cancion c : canciones) {
             playlistPrinListView.getItems().add(c);
@@ -227,9 +223,10 @@ public class Home implements Initializable {
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
         atrasCircle.setCursor(Cursor.DEFAULT);
     }
-
     public void anadirFavoritos(MouseEvent mouseEvent) {
-        anadirFavLabel.setText("Añadido");
+        if (anadirFavLabel.getText().equals("Quitar de favoritos")){
+            anadirFavLabel.setText("Añadir Favoritos");
+        }else anadirFavLabel.setText("Añadido");
     }
 
     public void anadirFavEntered(MouseEvent mouseEvent) {
@@ -345,7 +342,7 @@ public class Home implements Initializable {
         }else cambiarLabelSeleccionado(inicioLabel);
         nombreNuevaPlaylist.setText("Nombre de la Playlist");
         controlAppPane.setDisable(false);
-        playlistPrincipalPane.setDisable(true);
+        playlistPrincipalPane.setDisable(false);
         inicioPane.setDisable(false);
         cancionPane.setDisable(false);
     }
@@ -411,27 +408,27 @@ public class Home implements Initializable {
         reproducirCancion();
     }
     public void inicializarCancion(){
-        cancionActual=new Cancion();
-        String ruta = "file:///C:/Users/angel/Music/Playlists/porque%20hostias%20no%20se%20acaba%20ya%20la%20puta%20guerra.mp3";
-        Cancion.descargarCancion(ruta, 1);
-        cancionActual.reproducirCancion(1);
+        cancionActual.descargarCancion();
+        cancionActual.reproducirCancion();
     }
     public void reproducirCancion(){
-        if (reproduciendo) {
-            Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
-            ImageView imageViewPlay = new ImageView(imagePlay);
-            botonReproducir.setGraphic(imageViewPlay);
-            cancionActual.pausarCancion(1);
-            reproduciendo=false;
-        } else {
-            reproduciendo=true;
-            if (cancionActual==null){
-                inicializarCancion();
-            }else cancionActual.playCancion();
+        if (cancionActual!=null) {
+            if (reproduciendo) {
+                Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
+                ImageView imageViewPlay = new ImageView(imagePlay);
+                botonReproducir.setGraphic(imageViewPlay);
+                cancionActual.pausarCancion(1);
+                reproduciendo = false;
+            } else {
+                reproduciendo = true;
+                if (cancionActual.getRuta().equals("")) {
+                    inicializarCancion();
+                } else cancionActual.playCancion();
 
-            Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa.png")));
-            ImageView imageViewPlay = new ImageView(imagePlay);
-            botonReproducir.setGraphic(imageViewPlay);
+                Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa.png")));
+                ImageView imageViewPlay = new ImageView(imagePlay);
+                botonReproducir.setGraphic(imageViewPlay);
+            }
         }
     }
     
@@ -441,10 +438,11 @@ public class Home implements Initializable {
      * @param mouseEvent
      */
     public void buscarCancion(MouseEvent mouseEvent) {
+        tablaBusquedaPrin.getColumns().clear();
 
         ObservableList<String> playlists = FXCollections.observableArrayList();
-        ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
-        for (ListaDeCanciones l : listaDeCancionesArrayList) {
+        ArrayList<Cancion> listaDeCancionesArrayList = Cancion.buscarCancion(buscarTextField.getText());
+        for (Cancion l : listaDeCancionesArrayList) {
             playlists.add(l.getNombre());
         }
         tablaBusquedaPrin.getColumns().add(columnaNombrePlaylist);

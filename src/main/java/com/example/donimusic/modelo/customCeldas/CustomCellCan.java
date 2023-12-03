@@ -1,5 +1,6 @@
 package com.example.donimusic.modelo.customCeldas;
 
+import com.example.donimusic.controlador.Home;
 import com.example.donimusic.modelo.Cancion;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -60,6 +61,13 @@ public class CustomCellCan extends ListCell<Cancion> {
                 nombreLabel.setTextFill(Color.WHITE);
                 albumLabel.setTextFill(Color.WHITE);
                 duracionLabel.setTextFill(Color.WHITE);
+                if(item!=null){
+                    System.out.println("no es null");
+                    Home.cancionActual=item;
+                }else{
+                    System.out.println("es null");
+                }
+
             } else {
                 Color texto = Color.rgb(0x83, 0x83, 0x83);
                 nombreLabel.setTextFill(texto);

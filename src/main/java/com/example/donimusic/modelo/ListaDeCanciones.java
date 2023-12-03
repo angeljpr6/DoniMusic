@@ -202,10 +202,9 @@ public class ListaDeCanciones {
                         int idCancion = resultSet.getInt("cancionId");
                         String nombre = resultSet.getString("nombreCancion");
                         String album = resultSet.getString("album");
-                        String archivo = resultSet.getString("archivo");
                         String artista = resultSet.getString("artista");
 
-                        Cancion cancion = new Cancion(idCancion, nombre, artista, archivo, album);
+                        Cancion cancion = new Cancion(idCancion, nombre, artista, album);
                         cancionesEnLista.add(cancion);
                     }
                 }
@@ -344,7 +343,7 @@ public Cancion llamaraleatorio(Cancion cancion){
                         String archivo = resultSet.getString("archivo");
                         String artista = resultSet.getString("artista");
 
-                        Cancion cancion = new Cancion(idCancion, nombre, artista, archivo, album);
+                        Cancion cancion = new Cancion(idCancion, nombre, artista, album);
                         cancionesEnLista.add(cancion);
                     }
                 }
@@ -363,8 +362,7 @@ public Cancion llamaraleatorio(Cancion cancion){
             System.out.println("ID: " + cancion.getId() +
                     ", Nombre: " + cancion.getNombre() +
                     ", Artista: " + cancion.getNombreArtista() +
-                    ", Album: " + cancion.getAlbum() +
-                    ", Archivo: " + cancion.getArchivo());
+                    ", Album: " + cancion.getAlbum() );
         }
     }
     public Cancion encontrarCancion(String nombreCancion, int idLista) {
@@ -383,7 +381,7 @@ public Cancion llamaraleatorio(Cancion cancion){
                         String archivo = resultSet.getString("archivo");
                         String artista = resultSet.getString("artista");
 
-                        cancionEncontrada = new Cancion(idCancion, nombre, artista, archivo, album);
+                        cancionEncontrada = new Cancion(idCancion, nombre, artista, album);
                     }
                 }
             }
