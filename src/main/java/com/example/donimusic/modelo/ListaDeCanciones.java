@@ -218,106 +218,89 @@ public class ListaDeCanciones {
     }
 
     public Cancion siguiente(Cancion cancion) {
-
         // Obtiene la lista de canciones asociadas a la lista de reproducción actual
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(this.id);
-        if(this.reproductor==false){
 
+        if (!reproductor) { // Si el reproductor está desactivado
+            // Verifica si la lista de canciones no está vacía
+            if (!cancionesEnLista.isEmpty()) {
+                int index = obtenerIndiceCancion(cancion, cancionesEnLista);
 
-        // Verifica si la lista de canciones no está vacía
-        if (!cancionesEnLista.isEmpty()) {
-            // Obtiene el índice de la canción proporcionada en la lista de canciones
-            int index = cancionesEnLista.indexOf(cancion);
-
-            // Verifica si la canción está en la lista (index != -1)
-            if (index != -1) {
-                // Verifica si hay una canción siguiente en la lista
-                if (index < cancionesEnLista.size() - 1) {
-                    // Si hay una canción siguiente, incrementa el índice
-                    index++;
-                    Cancion siguienteCancion = cancionesEnLista.get(index);
-                    return siguienteCancion;
-                } else {
-                    // Si estamos en la última canción, vuelve al inicio de la lista
-                    Cancion siguienteCancion = cancionesEnLista.get(0);
-                    return siguienteCancion;
+                // Verifica si la canción está en la lista
+                if (index != -1) {
+                    // Verifica si hay una canción siguiente en la lista
+                    if (index < cancionesEnLista.size() - 1) {
+                        // Si hay una canción siguiente, incrementa el índice
+                        index++;
+                        return cancionesEnLista.get(index);
+                    } else {
+                        // Si estamos en la última canción, vuelve al inicio de la lista
+                        return cancionesEnLista.get(0);
+                    }
                 }
             }
-
-            }
-        }
-        else {
-            llamaraleatorio(cancion);
+        } else {
+            // Llamada al método para reproducir canción aleatoria
+            return llamarAleatorio(cancionesEnLista);
         }
 
         // Retorna null si no se pudo reproducir la siguiente canción
         return null;
     }
-
 
     public Cancion atras(Cancion cancion) {
         // Obtiene la lista de canciones asociadas a la lista de reproducción actual
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(this.id);
-        if(this.reproductor==false) {
+
+        if (!reproductor) { // Si el reproductor está desactivado
             // Verifica si la lista de canciones no está vacía
             if (!cancionesEnLista.isEmpty()) {
-                // Obtiene el índice de la canción proporcionada en la lista de canciones
-                int index = cancionesEnLista.indexOf(cancion);
+                int index = obtenerIndiceCancion(cancion, cancionesEnLista);
 
-                // Verifica si la canción está en la lista (index != -1)
+                // Verifica si la canción está en la lista
                 if (index != -1) {
-                    // Verifica si hay una canción siguiente en la lista
+                    // Verifica si hay una canción anterior en la lista
                     if (index > 0) {
-                        // Si hay una canción siguiente, incrementa el índice
+                        // Si hay una canción anterior, decrementa el índice
                         index--;
-                        Cancion previaCancion = cancionesEnLista.get(index);
-                        return previaCancion;
+                        return cancionesEnLista.get(index);
                     } else {
-                        // Si estamos en la última canción, vuelve al inicio de la lista
+                        // Si estamos en la primera canción, vuelve al final de la lista
                         index = cancionesEnLista.size() - 1;
-                        Cancion previaCancion = cancionesEnLista.get(index);
-                        return previaCancion;
+                        return cancionesEnLista.get(index);
                     }
-
                 }
             }
-        }
-        else {
-            llamaraleatorio(cancion);
+        } else {
+            // Llamada al método para reproducir canción aleatoria
+            return llamarAleatorio(cancionesEnLista);
         }
 
-        // Retorna null si no se pudo reproducir la siguiente canción
+        // Retorna null si no se pudo reproducir la canción anterior
         return null;
     }
 
-public Cancion llamaraleatorio(Cancion cancion){
-    // Obtiene la lista de canciones asociadas a la lista de reproducción actual
-    List<Cancion> cancionesEnLista = obtenerCancionesEnLista(this.id);
-
-    // Verifica si la lista de canciones no está vacía
-    if (!cancionesEnLista.isEmpty()) {
-        // Obtiene el índice de la canción proporcionada en la lista de canciones
-        int index = cancionesEnLista.indexOf(cancion);
-
-        // Verifica si la canción está en la lista (index != -1)
-        if (index != -1) {
-            // Genera un índice aleatorio dentro del rango de la lista
-            int randomIndex = (int) (Math.random() * cancionesEnLista.size());
-
-            // Verifica si el índice aleatorio es igual al índice actual
-            while (randomIndex == index) {
-                randomIndex = (int) (Math.random() * cancionesEnLista.size());
-            }
-
-            // Reproduce la canción aleatoria
-            Cancion cancionAleatoria = cancionesEnLista.get(randomIndex);
-            return cancionAleatoria;
+    public Cancion llamarAleatorio(List<Cancion> cancionesEnLista) {
+        // Verifica si la lista de canciones no está vacía
+        if (!cancionesEnLista.isEmpty()) {
+            int index = (int) (Math.random() * cancionesEnLista.size());
+            return cancionesEnLista.get(index);
         }
+
+        // Retorna null si no se pudo reproducir la canción aleatoria
+        return null;
     }
 
-    // Retorna null si no se pudo reproducir la canción aleatoria
-    return null;
-}
+    private int obtenerIndiceCancion(Cancion cancion, List<Cancion> cancionesEnLista) {
+        // Recorre manualmente la lista para encontrar la posición de la canción
+        for (int i = 0; i < cancionesEnLista.size(); i++) {
+            if (cancionesEnLista.get(i).equals(cancion)) {
+                return i;
+            }
+        }
+        return -1; // Retorna -1 si la canción no está en la lista
+    }
+
 
     public boolean cambiarOrdenRep() {
         if (this.reproductor == true) {
