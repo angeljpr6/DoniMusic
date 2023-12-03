@@ -189,6 +189,7 @@ public class Home implements Initializable {
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
         int altura=50;
         playlistListView.setCellFactory(new CustomCellFactoryPlaylist());
+        playlistListView.getItems().clear();
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
             playlistListView.getItems().add(l);
@@ -311,7 +312,6 @@ public class Home implements Initializable {
         inicioPane.setDisable(true);
         cancionPane.setDisable(true);
     }
-
     public void crearPlaylistEntered(MouseEvent mouseEvent) {
         cambiarCursorMano(mouseEvent,crearPlaylistLabel);
     }
@@ -321,18 +321,21 @@ public class Home implements Initializable {
     }
 
     public void guardarNuevaPlaylist(MouseEvent mouseEvent) {
-        // TODO: 23/11/2023 añadir la playlist a la base de datos
-        crearPlaylistPane.setVisible(false);
-        if (playlistPrincipalPane.isVisible()){
-            cambiarLabelSeleccionado(cancionesFavLabel);
-        }else cambiarLabelSeleccionado(inicioLabel);
-        VBox vBoxAux = new VBox();
-        cancionesAnadidas.setContent(vBoxAux);
-        nombreNuevaPlaylist.setText("Nombre de la Playlist");
-        controlAppPane.setDisable(false);
-        playlistPrincipalPane.setDisable(false);
-        inicioPane.setDisable(false);
-        cancionPane.setDisable(false);
+        if (!nombreNuevaPlaylist.getText().isBlank()) {
+            ListaDeCanciones.crearLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
+            crearPlaylistPane.setVisible(false);
+            if (playlistPrincipalPane.isVisible()) {
+                cambiarLabelSeleccionado(cancionesFavLabel);
+            } else cambiarLabelSeleccionado(inicioLabel);
+            VBox vBoxAux = new VBox();
+            cancionesAnadidas.setContent(vBoxAux);
+            nombreNuevaPlaylist.setText("Nombre de la Playlist");
+            controlAppPane.setDisable(false);
+            playlistPrincipalPane.setDisable(false);
+            inicioPane.setDisable(false);
+            cancionPane.setDisable(false);
+            rellenarPanelTusPlayList();
+        }
     }
 
     public void cancelarNuevaPlaylist(MouseEvent mouseEvent) {
@@ -460,10 +463,10 @@ public class Home implements Initializable {
     }
 
     public void siguienteCancion(MouseEvent mouseEvent) {
-        // TODO: 02/12/2023  
+        cancionActual=listaActual.siguiente(cancionActual);
     }
 
     public void anteriorCancion(MouseEvent mouseEvent) {
-        // TODO: 02/12/2023  
+        cancionActual=listaActual.atras(cancionActual);
     }
 }
