@@ -83,9 +83,10 @@ public class ListaDeCanciones {
     }
     public static void obtenerIdLista(String nombreLista, String nombreUsuario) {
         try {
-            // Preparar una sentencia SQL para obtener el ID de la lista recién creada
-            PreparedStatement stm = c.prepareStatement("SELECT listaId FROM lista WHERE nombre = ?");
+            // Preparar una sentencia SQL para obtener el ID de la última lista recién creada por el usuario
+            PreparedStatement stm = c.prepareStatement("SELECT listaId FROM lista WHERE nombre = ? AND nombreUsuario = ? ORDER BY listaId DESC LIMIT 1");
             stm.setString(1, nombreLista);
+            stm.setString(2, nombreUsuario);
 
             // Ejecutar la consulta y obtener un conjunto de resultados
             ResultSet rs = stm.executeQuery();
@@ -99,13 +100,14 @@ public class ListaDeCanciones {
                 establecerRelacionPlayListUsuario(idLista, nombreUsuario);
             } else {
                 // Si no se encontró la lista, imprimir un mensaje (puedes ajustar según necesites)
-                System.out.println("La lista no fue encontrada en la base de datos.");
+                System.out.println("La lista no fue encontrada en la base de datos para el usuario " + nombreUsuario);
             }
         } catch (SQLException e) {
             // Manejar excepciones
             throw new RuntimeException(e);
         }
     }
+
 
     private static void establecerRelacionPlayListUsuario(int idLista, String nombreUsuario) {
         try {
