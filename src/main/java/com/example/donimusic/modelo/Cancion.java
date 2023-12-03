@@ -1,11 +1,8 @@
 package com.example.donimusic.modelo;
-import com.example.donimusic.controlador.CrearCuenta;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -126,20 +123,9 @@ public class Cancion {
     public String getNombreArtista() {
         return nombreArtista;
     }
-
-    public void setNombreArtista(String nombreArtista) {
-        this.nombreArtista = nombreArtista;
-    }
-
-
     public int getDuracion() {
         return duracion;
     }
-
-    public void setDuracion(int duracion) {
-        this.duracion = duracion;
-    }
-
     public String getAlbum() {
         return album;
     }

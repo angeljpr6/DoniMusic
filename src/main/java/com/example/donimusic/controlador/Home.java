@@ -5,7 +5,6 @@ import com.example.donimusic.modelo.customCeldas.CustomCellFactoryCan;
 import com.example.donimusic.modelo.customCeldas.CustomCellFactoryPlaylist;
 import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -166,6 +165,7 @@ public class Home implements Initializable {
         botonAnterior.setGraphic(imageViewAnterior);
     }
     public void inicializarSlider(){
+
     }
     public void seleccionarLabel(Label label){
         label.setStyle("-fx-text-fill: white;");
@@ -191,21 +191,17 @@ public class Home implements Initializable {
         playlistListView.setCellFactory(new CustomCellFactoryPlaylist());
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
-
             playlistListView.getItems().add(l);
             playlistListView.setPrefHeight(altura);
             altura+=57;
         }
-
     }
     public void rellenarPlayList(List<Cancion> canciones){
-
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
         playlistPrinListView.setCellFactory(new CustomCellFactoryCan());
         playlistPrinListView.getItems().clear();
-
 
         for (Cancion c : canciones) {
             playlistPrinListView.getItems().add(c);
@@ -227,9 +223,10 @@ public class Home implements Initializable {
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
         atrasCircle.setCursor(Cursor.DEFAULT);
     }
-
     public void anadirFavoritos(MouseEvent mouseEvent) {
-        anadirFavLabel.setText("Añadido");
+        if (anadirFavLabel.getText().equals("Quitar de favoritos")){
+            anadirFavLabel.setText("Añadir Favoritos");
+        }else anadirFavLabel.setText("Añadido");
     }
 
     public void anadirFavEntered(MouseEvent mouseEvent) {
@@ -345,7 +342,7 @@ public class Home implements Initializable {
         }else cambiarLabelSeleccionado(inicioLabel);
         nombreNuevaPlaylist.setText("Nombre de la Playlist");
         controlAppPane.setDisable(false);
-        playlistPrincipalPane.setDisable(true);
+        playlistPrincipalPane.setDisable(false);
         inicioPane.setDisable(false);
         cancionPane.setDisable(false);
     }
