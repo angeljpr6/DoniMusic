@@ -53,31 +53,79 @@ public class ListaDeCanciones {
         this.nombreCreador = nombreCreador;
     }
 
-    public int crearLista(String nombreUsuario) {
+    public static void crearLista(String nombreLista, String usuario) {
         try {
+            // El " Statement.RETURN_GENERATED_KEYS" especifica que se deben devolver las claves generadas automáticamente.
             PreparedStatement stm = c.prepareStatement("INSERT INTO lista (nombre, nombreUsuario) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
-            stm.setString(1, nombre);
-            stm.setString(2, nombreUsuario);
+            stm.setString(1, nombreLista);
+            stm.setString(2, usuario);
 
             int filasAfectadas = stm.executeUpdate();
 
             if (filasAfectadas > 0) {
-
-
-                // Obtener el id de la lista recién creada
+                // Obtener el id de la lista recién creada que contiene las claves generadas automáticamente por la base de datos.
                 ResultSet rs = stm.getGeneratedKeys();
                 if (rs.next()) {
-                    id = rs.getInt(1);
-                }
+                    // Asignar este ID a la variable 'id' para su posterior uso.
+                    int id = rs.getInt(1);
 
-                return id;
+                    // Llamar al método para establecer la relación en la tabla playListUsuarios
+                    obtenerIdLista(nombreLista, usuario);
+                } else {
+                    System.out.println("No se pudo obtener el ID de la lista de canciones.");
+                }
             } else {
-                //No se pudo crear la lista de canciones
-                return -1; // Retorna un valor que indique que no se pudo crear la lista
+                System.out.println("No se pudo crear la lista de canciones.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return -1;
+        }
+    }
+    public static void obtenerIdLista(String nombreLista, String nombreUsuario) {
+        try {
+            // Preparar una sentencia SQL para obtener el ID de la lista recién creada
+            PreparedStatement stm = c.prepareStatement("SELECT listaId FROM lista WHERE nombre = ?");
+            stm.setString(1, nombreLista);
+
+            // Ejecutar la consulta y obtener un conjunto de resultados
+            ResultSet rs = stm.executeQuery();
+
+            // Verificar si se encontró una fila en los resultados
+            if (rs.next()) {
+                // Obtener el ID de la lista
+                int idLista = rs.getInt("listaId");
+
+                // Llamar al método para establecer la relación en la tabla playListUsuarios
+                establecerRelacionPlayListUsuario(idLista, nombreUsuario);
+            } else {
+                // Si no se encontró la lista, imprimir un mensaje (puedes ajustar según necesites)
+                System.out.println("La lista no fue encontrada en la base de datos.");
+            }
+        } catch (SQLException e) {
+            // Manejar excepciones
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void establecerRelacionPlayListUsuario(int idLista, String nombreUsuario) {
+        try {
+            // Preparar una sentencia SQL para insertar una fila en la tabla playListUsuarios
+            PreparedStatement stm = c.prepareStatement("INSERT INTO playListUsuarios (listaId, nombreUsuario) VALUES (?, ?)");
+            stm.setInt(1, idLista);
+            stm.setString(2, nombreUsuario);
+
+            // Ejecutar la sentencia SQL de inserción
+            int filasAfectadas = stm.executeUpdate();
+
+            // Verificar si la inserción fue exitosa
+            if (filasAfectadas > 0) {
+                System.out.println("Relación playListUsuarios establecida correctamente.");
+            } else {
+                System.out.println("No se pudo establecer la relación en playListUsuarios.");
+            }
+        } catch (SQLException e) {
+            // Manejar excepciones
+            throw new RuntimeException(e);
         }
     }
 

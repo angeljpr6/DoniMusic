@@ -91,7 +91,7 @@ public class Usuario {
     listaDeCanciones.eliminarLista();
     }
     public void crearLista(ListaDeCanciones listaDeCanciones) {
-         listaDeCanciones.crearLista(nombre);
+         listaDeCanciones.crearLista("lista",nombre);
     }
     public void addCancion(ListaDeCanciones listaDeCanciones,Cancion cancion) {
         listaDeCanciones.addCancion(cancion.getId());
