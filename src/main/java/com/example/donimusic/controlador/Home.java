@@ -65,6 +65,10 @@ public class Home implements Initializable {
     public Slider cancionSlider;
     public Label nombrePlaylistPrin;
     public Label autorPlaylistPrin;
+    public TextField buscarNCTextField1;
+    public Button guardarNuevaCancionPlayLBtn;
+    public Button cancelarNuevaCancionPlayLBtn;
+    public Pane anadirNuevaCancionPlBtn;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     public static Usuario usuario=new Usuario();
     public static Cancion cancionActual =null;
@@ -93,8 +97,14 @@ public class Home implements Initializable {
 
         imageView.setFitWidth(49);
         imageView.setFitHeight(49);
-
         anadirNuevaCancionBtn.getChildren().add(imageView);
+
+        ImageView imageView2 = new ImageView(image);
+
+        imageView2.setFitWidth(49);
+        imageView2.setFitHeight(49);
+        anadirNuevaCancionPlBtn.getChildren().add(imageView2);
+
     }
     public void inicializarColumnaBusqPrinc(){
         columnaNombrePlaylist.setResizable(true);
@@ -504,5 +514,15 @@ public class Home implements Initializable {
 
     public void cerrarBusqueda(MouseEvent mouseEvent) {
         tablaBusquedaPrin.setVisible(false);
+    }
+
+    public void anadirNuevaCancionPlaylist(MouseEvent mouseEvent) {
+
+    }
+
+    public void cancelarNuevaCancionPlayL(MouseEvent mouseEvent) {
+    }
+
+    public void guardarNuevaCancionPlayL(MouseEvent mouseEvent) {
     }
 }

@@ -125,7 +125,7 @@
          </font>
       </Label>
       <Pane fx:id="logo" layoutX="28.0" layoutY="7.0" prefHeight="49.0" prefWidth="49.0" />
-      <Pane fx:id="playlistPrincipalPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
+      <Pane fx:id="playlistPrincipalPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
          <children>
             <Label fx:id="nombrePlaylistPrin" layoutX="68.0" layoutY="36.0" text="Nombre de la Playlist" textFill="WHITE">
                <font>
@@ -153,6 +153,7 @@
                </font>
             </Label>
             <ListView fx:id="playlistPrinListView" layoutX="96.0" layoutY="173.0" prefHeight="448.0" prefWidth="849.0" style="-fx-background-color: #212628; -fx-background: #212628;" />
+            <Pane fx:id="anadirNuevaCancionPlBtn" layoutX="843.0" layoutY="73.0" onMouseClicked="#anadirNuevaCancionPlaylist" prefHeight="64.0" prefWidth="64.0" />
          </children>
       </Pane>
       <Pane fx:id="crearPlaylistPane" layoutX="366.0" layoutY="120.0" prefHeight="531.0" prefWidth="610.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
@@ -188,5 +189,12 @@
             <Font size="17.0" />
          </font>
       </Label>
+      <Pane fx:id="anadirCancionPlayLPane" layoutX="651.0" layoutY="122.0" prefHeight="531.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;">
+         <children>
+            <TextField fx:id="buscarNCTextField1" layoutX="55.0" layoutY="22.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="200.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
+            <Button fx:id="guardarNuevaCancionPlayLBtn" layoutX="165.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#guardarNuevaCancionPlayL" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />
+            <Button fx:id="cancelarNuevaCancionPlayLBtn" layoutX="108.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaCancionPlayL" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Atrás" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

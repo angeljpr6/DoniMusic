@@ -46,7 +46,7 @@ public class Usuario {
             String sql = "SELECT * " +
                     "FROM lista " +
                     "JOIN playListUsuarios ON lista.listaId = playListUsuarios.listaId " +
-                    "WHERE playListUsuarios.nombreUsuario = ?;";  // Quité las comillas alrededor del signo de interrogación
+                    "WHERE playListUsuarios.nombreUsuario = ?;";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
                 stm.setString(1, Home.usuario.getNombre());
                 String nombreLista="",autorLista="";
@@ -86,25 +86,6 @@ public class Usuario {
         this.password = password;
     }
 
-
-    public  void eliminarLista(ListaDeCanciones listaDeCanciones){
-    listaDeCanciones.eliminarLista();
-    }
-    public void crearLista(ListaDeCanciones listaDeCanciones) {
-         listaDeCanciones.crearLista("lista",nombre);
-    }
-    public void addCancion(ListaDeCanciones listaDeCanciones,Cancion cancion) {
-        listaDeCanciones.addCancion(cancion.getId());
-    }
-    public void eliminarCancion(ListaDeCanciones listaDeCanciones,Cancion cancion) {
-        listaDeCanciones.eliminarCancion(cancion.getId());
-    }
-    public  void  buscarCancionEnLista(ListaDeCanciones listaDeCanciones,Cancion cancion){
-
-        //Este metodo debería retornar un arrayList de canciones así que si lo usas recuerda guardar los resultados
-
-        listaDeCanciones.buscarCancion(cancion.getNombre(),listaDeCanciones.getId());
-    }
 
 
 
