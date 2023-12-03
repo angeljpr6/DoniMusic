@@ -8,6 +8,7 @@ import com.example.donimusic.modelo.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -65,6 +66,9 @@ public class Home implements Initializable {
     public Slider cancionSlider;
     public Label nombrePlaylistPrin;
     public Label autorPlaylistPrin;
+    public TableView tablaAnadirPlayList;
+    public Button buscarBtn2;
+    public Button anadirBoton;
     public TextField buscarNCTextField1;
     public Button guardarNuevaCancionPlayLBtn;
     public Button cancelarNuevaCancionPlayLBtn;
@@ -76,6 +80,7 @@ public class Home implements Initializable {
     private boolean reproduciendo= false;
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista= new TableColumn<>("Artista");
+    private ArrayList<Cancion> cancionesAnadirNewPlaylist=new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,6 +94,7 @@ public class Home implements Initializable {
         inicializarLogo();
         inicializarAnadirCancion();
         inicializarColumnaBusqPrinc();
+        inciarColumnAnadirPlayList();
 
     }
     public void inicializarAnadirCancion(){
@@ -97,6 +103,7 @@ public class Home implements Initializable {
 
         imageView.setFitWidth(49);
         imageView.setFitHeight(49);
+
         anadirNuevaCancionBtn.getChildren().add(imageView);
 
         ImageView imageView2 = new ImageView(image);
@@ -122,6 +129,27 @@ public class Home implements Initializable {
 
         // Agregar las columnas al TableView
         tablaBusquedaPrin.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
+    }
+
+    public void inciarColumnAnadirPlayList(){
+        columnaNombrePlaylist.setResizable(true);
+        columnaNombrePlaylist.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
+        columnaNombrePlaylist.setMinWidth(1);
+        columnaNombrePlaylist.setMaxWidth(100);
+
+        // Configurar CellValueFactory para obtener el nombre de la canción
+        columnaNombrePlaylist.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+        // Añadir una nueva columna para mostrar el artista de la canción
+        columnaArtista.setCellValueFactory(new PropertyValueFactory<>("nombreArtista"));
+        columnaArtista.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
+        columnaArtista.setMinWidth(1);
+        columnaArtista.setMaxWidth(98);
+
+
+        // Agregar las columnas al TableView
+        tablaAnadirPlayList.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
+
     }
     public void inicializarLogo(){
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/logoPequeño.png")));
@@ -174,6 +202,9 @@ public class Home implements Initializable {
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/lupa.png")));
         ImageView imageView = new ImageView(image);
         buscarBtn.setGraphic(imageView);
+        ImageView imageView2 = new ImageView(image);
+        buscarBtn2.setGraphic(imageView2);
+
     }
     public void inicializarControlarCancion(){
 
@@ -353,6 +384,11 @@ public class Home implements Initializable {
     public void guardarNuevaPlaylist(MouseEvent mouseEvent) {
         if (!nombreNuevaPlaylist.getText().isBlank()) {
             ListaDeCanciones.crearLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
+            int id=ListaDeCanciones.obtenerIdLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
+            for (Cancion c:cancionesAnadirNewPlaylist) {
+                ListaDeCanciones.addCancion(c.getId(),id);
+            }
+            rellenarPanelTusPlayList();
             crearPlaylistPane.setVisible(false);
             if (playlistPrincipalPane.isVisible()) {
                 cambiarLabelSeleccionado(cancionesFavLabel);
@@ -365,6 +401,8 @@ public class Home implements Initializable {
             inicioPane.setDisable(false);
             cancionPane.setDisable(false);
             rellenarPanelTusPlayList();
+            cancionesAnadirNewPlaylist.removeAll(cancionesAnadirNewPlaylist);
+            anadirCancionPane.setVisible(false);
         }
     }
 
@@ -373,6 +411,7 @@ public class Home implements Initializable {
         if (playlistPrincipalPane.isVisible()){
             cambiarLabelSeleccionado(cancionesFavLabel);
         }else cambiarLabelSeleccionado(inicioLabel);
+        cancionesAnadirNewPlaylist.removeAll(cancionesAnadirNewPlaylist);
         nombreNuevaPlaylist.setText("Nombre de la Playlist");
         controlAppPane.setDisable(false);
         playlistPrincipalPane.setDisable(false);
@@ -382,6 +421,7 @@ public class Home implements Initializable {
 
     public void anadirNuevaCancion(MouseEvent mouseEvent) {
         anadirCancionPane.setVisible(true);
+        crearPlaylistPane.setDisable(true);
     }
 
     public void anadirNuevaCancionEntered(MouseEvent mouseEvent) {
@@ -519,6 +559,43 @@ public class Home implements Initializable {
 
     public void cerrarBusqueda(MouseEvent mouseEvent) {
         tablaBusquedaPrin.setVisible(false);
+    }
+
+    public void buscarCancion2(MouseEvent mouseEvent) {
+        tablaAnadirPlayList.getColumns().clear();
+
+        ObservableList<Cancion> listaCanciones = FXCollections.observableArrayList();
+        ArrayList<Cancion> listaDeCancionesArrayList = Cancion.buscarCancion(buscarNCTextField.getText());
+        for (Cancion l : listaDeCancionesArrayList) {
+            listaCanciones.add(l);
+        }
+        tablaAnadirPlayList.getColumns().add(columnaNombrePlaylist);
+        tablaAnadirPlayList.getColumns().add(columnaArtista);
+        tablaAnadirPlayList.setItems(listaCanciones);
+        tablaAnadirPlayList.setVisible(true);
+    }
+
+    public void seleccionarCancionAnadir(MouseEvent mouseEvent) {
+        anadirBoton.setDisable(true);
+        if(tablaAnadirPlayList.getSelectionModel().getSelectedItem()!=null){
+            anadirBoton.setDisable(false);
+        }
+    }
+
+    public void anadirCancionNewPlaylist(ActionEvent actionEvent) {
+        if(tablaAnadirPlayList.getSelectionModel().getSelectedItem()!=null){
+            Cancion c1=(Cancion)tablaAnadirPlayList.getSelectionModel().getSelectedItem();
+            cancionesAnadirNewPlaylist.add(c1);
+            VBox vboxTusPlaylist=new VBox();
+            crearPlaylistPane.setDisable(false);
+
+            for (Cancion c:cancionesAnadirNewPlaylist) {
+                Label label =new Label("      "+c.getNombre());
+                label.setStyle("-fx-text-fill: #838383; -fx-min-height: 50px;");
+                vboxTusPlaylist.getChildren().add(label);
+                cancionesAnadidas.setContent(vboxTusPlaylist);
+            }
+        }
     }
 
     public void anadirNuevaCancionPlaylist(MouseEvent mouseEvent) {

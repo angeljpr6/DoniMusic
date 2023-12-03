@@ -125,7 +125,7 @@
          </font>
       </Label>
       <Pane fx:id="logo" layoutX="28.0" layoutY="7.0" prefHeight="49.0" prefWidth="49.0" />
-      <Pane fx:id="playlistPrincipalPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
+      <Pane fx:id="playlistPrincipalPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
          <children>
             <Label fx:id="nombrePlaylistPrin" layoutX="68.0" layoutY="36.0" text="Nombre de la Playlist" textFill="WHITE">
                <font>
@@ -179,9 +179,11 @@
       <Pane fx:id="atrasCircle" layoutX="332.0" layoutY="65.0" onMouseClicked="#irAtras" onMouseEntered="#atrasEntered" onMouseExited="#atrasExited" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: black; -fx-background-radius: 100px; -fx-opacity: 0.3;" />
       <Pane fx:id="anadirCancionPane" layoutX="1002.0" layoutY="120.0" prefHeight="531.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
          <children>
-            <TextField fx:id="buscarNCTextField" layoutX="55.0" layoutY="22.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="200.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
-            <Button fx:id="guardarNuevaCancionBtn" layoutX="167.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#guardarNuevaCancion" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />
-            <Button fx:id="cancelarNuevaCancionBtn1" layoutX="96.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaCancion" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Cancelar" />
+            <TableView fx:id="tablaAnadirPlayList" layoutX="84.0" layoutY="28.0" onMouseClicked="#seleccionarCancionAnadir" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #383c41; -fx-text-fill: black;" visible="false" />
+            <TextField fx:id="buscarNCTextField" layoutX="74.0" layoutY="26.0" onMouseClicked="#introducirTextoBuscar" prefHeight="32.0" prefWidth="219.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
+            <Button fx:id="anadirBoton" disable="true" layoutX="167.0" layoutY="478.0" mnemonicParsing="false" onAction="#anadirCancionNewPlaylist" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Añadir" />
+            <Button fx:id="cancelarNuevaCancionBtn1" layoutX="96.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaCancion" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Atras" />
+            <Button fx:id="buscarBtn2" layoutX="23.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#buscarCancion2" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(0, 0, 0, 0);" />
          </children>
       </Pane>
       <Label layoutX="83.0" layoutY="19.0" text="DoniMusic" textFill="WHITE">
@@ -189,7 +191,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Pane fx:id="anadirCancionPlayLPane" layoutX="651.0" layoutY="122.0" prefHeight="531.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;">
+      <Pane fx:id="anadirCancionPlayLPane" layoutX="651.0" layoutY="122.0" prefHeight="531.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
          <children>
             <TextField fx:id="buscarNCTextField1" layoutX="55.0" layoutY="22.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="200.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
             <Button fx:id="guardarNuevaCancionPlayLBtn" layoutX="165.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#guardarNuevaCancionPlayL" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />

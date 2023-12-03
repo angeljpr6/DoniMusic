@@ -112,7 +112,7 @@ public class ListaDeCanciones {
     }
 
 
-    private static void establecerRelacionPlayListUsuario(int idLista, String nombreUsuario) {
+    public static void establecerRelacionPlayListUsuario(int idLista, String nombreUsuario) {
         try {
             // Preparar una sentencia SQL para insertar una fila en la tabla playListUsuarios
             PreparedStatement stm = c.prepareStatement("INSERT INTO playListUsuarios (listaId, nombreUsuario) VALUES (?, ?)");
@@ -145,7 +145,7 @@ public class ListaDeCanciones {
         }
     }
 
-    public void addCancion(int idCancion) {
+    public static void addCancion(int idCancion, int id) {
 
 
         try {
