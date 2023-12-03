@@ -441,7 +441,7 @@ public class Home implements Initializable {
                 Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
                 ImageView imageViewPlay = new ImageView(imagePlay);
                 botonReproducir.setGraphic(imageViewPlay);
-                cancionActual.pausarCancion(1);
+                cancionActual.pausarCancion();
                 reproduciendo = false;
             } else {
                 reproduciendo = true;
@@ -499,7 +499,12 @@ public class Home implements Initializable {
 
     public void obtenerCancionBusqueda(MouseEvent mouseEvent) {
         Cancion c1=(Cancion)tablaBusquedaPrin.getSelectionModel().getSelectedItem();
+        if(reproduciendo==true){
+            reproducirCancion();
+        }
         cancionActual=c1;
+
+        reproducirCancion();
     }
 
     public void cerrarBusqueda(MouseEvent mouseEvent) {

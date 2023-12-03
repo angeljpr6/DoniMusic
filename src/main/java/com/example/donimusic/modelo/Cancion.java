@@ -72,7 +72,7 @@ public class Cancion {
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
-    public void pausarCancion(int id){
+    public void pausarCancion(){
         mediaPlayer.pause();
     }
     public void playCancion(){
