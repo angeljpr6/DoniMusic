@@ -53,7 +53,7 @@
             <ListView fx:id="playlistListView" layoutX="43.0" layoutY="150.0" maxHeight="450.0" onMouseClicked="#seleccionarPlayList" prefHeight="50.0" prefWidth="243.0" style="-fx-background-color: #212628; -fx-background: #212628;" />
          </children>
       </Pane>
-      <Pane fx:id="inicioPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
+      <Pane fx:id="inicioPane" layoutX="326.0" layoutY="61.0" onMouseClicked="#cerrarBusqueda" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
          <children>
             <Pane layoutX="90.0" layoutY="71.0" prefHeight="118.0" prefWidth="815.0" style="-fx-background-color: #383c41; -fx-background-radius: 5px;">
                <children>

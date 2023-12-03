@@ -71,6 +71,7 @@ public class Home implements Initializable {
     public static ListaDeCanciones listaActual=null;
     private boolean reproduciendo= false;
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
+    private TableColumn<String, String> columnaArtista= new TableColumn<>("Artista");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -98,15 +99,16 @@ public class Home implements Initializable {
     public void inicializarColumnaBusqPrinc(){
         columnaNombrePlaylist.setResizable(true);
         columnaNombrePlaylist.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
-        columnaNombrePlaylist.setMinWidth(742);
+        columnaNombrePlaylist.setMinWidth(600);
 
         // Configurar CellValueFactory para obtener el nombre de la canción
         columnaNombrePlaylist.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
         // Añadir una nueva columna para mostrar el artista de la canción
-        TableColumn<Cancion, String> columnaArtista = new TableColumn<>("Artista");
-        columnaArtista.setMinWidth(742);
-        columnaArtista.setCellValueFactory(new PropertyValueFactory<>("artista"));
+        columnaArtista.setCellValueFactory(new PropertyValueFactory<>("nombreArtista"));
+        columnaArtista.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
+        columnaArtista.setMinWidth(142);
+
 
         // Agregar las columnas al TableView
         tablaBusquedaPrin.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
@@ -462,13 +464,14 @@ public class Home implements Initializable {
     public void buscarCancion(MouseEvent mouseEvent) {
         tablaBusquedaPrin.getColumns().clear();
 
-        ObservableList<Cancion> playlists = FXCollections.observableArrayList();
+        ObservableList<Cancion> listaCanciones = FXCollections.observableArrayList();
         ArrayList<Cancion> listaDeCancionesArrayList = Cancion.buscarCancion(buscarTextField.getText());
         for (Cancion l : listaDeCancionesArrayList) {
-            playlists.add(l);
+            listaCanciones.add(l);
         }
         tablaBusquedaPrin.getColumns().add(columnaNombrePlaylist);
-        tablaBusquedaPrin.setItems(playlists);
+        tablaBusquedaPrin.getColumns().add(columnaArtista);
+        tablaBusquedaPrin.setItems(listaCanciones);
         tablaBusquedaPrin.setVisible(true);
     }
 
@@ -497,5 +500,9 @@ public class Home implements Initializable {
     public void obtenerCancionBusqueda(MouseEvent mouseEvent) {
         Cancion c1=(Cancion)tablaBusquedaPrin.getSelectionModel().getSelectedItem();
         cancionActual=c1;
+    }
+
+    public void cerrarBusqueda(MouseEvent mouseEvent) {
+        tablaBusquedaPrin.setVisible(false);
     }
 }
