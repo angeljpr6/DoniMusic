@@ -208,6 +208,11 @@ public class Home implements Initializable {
             playlistPrinListView.getItems().add(c);
         }
     }
+    public void actualizarCancionRep(Cancion cancion){
+        autorCancion.setText(cancion.getNombreArtista());
+        nombreCancion.setText(cancion.getNombre());
+
+    }
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
         node.setCursor(Cursor.HAND);
     }
