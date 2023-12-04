@@ -5,7 +5,6 @@ import com.example.donimusic.modelo.customCeldas.CustomCellFactoryCan;
 import com.example.donimusic.modelo.customCeldas.CustomCellFactoryPlaylist;
 import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +16,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -66,13 +67,17 @@ public class Home implements Initializable {
     public Slider cancionSlider;
     public Label nombrePlaylistPrin;
     public Label autorPlaylistPrin;
-    public TableView tablaAnadirPlayList;
+    public TableView tablaAnadirCancionPlayL;
     public Button buscarBtn2;
     public Button anadirBoton;
     public TextField buscarNCTextField1;
     public Button guardarNuevaCancionPlayLBtn;
     public Button cancelarNuevaCancionPlayLBtn;
     public Pane anadirNuevaCancionPlBtn;
+    public Pane anadirCancionPlayLPane;
+    public Button buscarBtn3;
+    public TextField buscarNCTextFieldPl;
+    public TableView tablaAnadirCancionPlayLPrin;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     public static Usuario usuario=new Usuario();
     public static Cancion cancionActual =null;
@@ -148,7 +153,7 @@ public class Home implements Initializable {
 
 
         // Agregar las columnas al TableView
-        tablaAnadirPlayList.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
+        tablaAnadirCancionPlayL.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
 
     }
     public void inicializarLogo(){
@@ -200,10 +205,15 @@ public class Home implements Initializable {
     }
     public void inicializarBuscarBoton(){
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/lupa.png")));
+
         ImageView imageView = new ImageView(image);
         buscarBtn.setGraphic(imageView);
+
         ImageView imageView2 = new ImageView(image);
         buscarBtn2.setGraphic(imageView2);
+
+        ImageView imageView3 = new ImageView(image);
+        buscarBtn3.setGraphic(imageView3);
 
     }
     public void inicializarControlarCancion(){
@@ -326,6 +336,10 @@ public class Home implements Initializable {
             if (buscarNCTextField.getText().equals("Buscar")){
                 buscarNCTextField.setText("");
             }
+        }else if (anadirCancionPlayLPane.isVisible()){
+            if (buscarNCTextFieldPl.getText().equals("Buscar")) {
+                buscarNCTextFieldPl.setText("");
+            }
         }else {
             if (buscarTextField.getText().equals("Buscar")) {
                 buscarTextField.setText("");
@@ -408,10 +422,17 @@ public class Home implements Initializable {
 
     public void cancelarNuevaPlaylist(MouseEvent mouseEvent) {
         crearPlaylistPane.setVisible(false);
+        anadirCancionPane.setVisible(false);
+
         if (playlistPrincipalPane.isVisible()){
             cambiarLabelSeleccionado(cancionesFavLabel);
         }else cambiarLabelSeleccionado(inicioLabel);
+
+        VBox limpiarPane = new VBox();
+        cancionesAnadidas.setContent(limpiarPane);
+
         cancionesAnadirNewPlaylist.removeAll(cancionesAnadirNewPlaylist);
+
         nombreNuevaPlaylist.setText("Nombre de la Playlist");
         controlAppPane.setDisable(false);
         playlistPrincipalPane.setDisable(false);
@@ -437,7 +458,9 @@ public class Home implements Initializable {
     }
 
     public void cancelarNuevaCancion(MouseEvent mouseEvent) {
+
         anadirCancionPane.setVisible(false);
+        crearPlaylistPane.setDisable(false);
     }
 
     public void vaciarNombreNuevaPlaylist(MouseEvent mouseEvent) {
@@ -562,49 +585,104 @@ public class Home implements Initializable {
     }
 
     public void buscarCancion2(MouseEvent mouseEvent) {
-        tablaAnadirPlayList.getColumns().clear();
+        tablaAnadirCancionPlayL.getColumns().clear();
 
         ObservableList<Cancion> listaCanciones = FXCollections.observableArrayList();
         ArrayList<Cancion> listaDeCancionesArrayList = Cancion.buscarCancion(buscarNCTextField.getText());
         for (Cancion l : listaDeCancionesArrayList) {
             listaCanciones.add(l);
         }
-        tablaAnadirPlayList.getColumns().add(columnaNombrePlaylist);
-        tablaAnadirPlayList.getColumns().add(columnaArtista);
-        tablaAnadirPlayList.setItems(listaCanciones);
-        tablaAnadirPlayList.setVisible(true);
+        tablaAnadirCancionPlayL.getColumns().add(columnaNombrePlaylist);
+        tablaAnadirCancionPlayL.getColumns().add(columnaArtista);
+        tablaAnadirCancionPlayL.setItems(listaCanciones);
+        tablaAnadirCancionPlayL.setVisible(true);
     }
 
     public void seleccionarCancionAnadir(MouseEvent mouseEvent) {
         anadirBoton.setDisable(true);
-        if(tablaAnadirPlayList.getSelectionModel().getSelectedItem()!=null){
+        if(tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem()!=null){
             anadirBoton.setDisable(false);
         }
     }
 
     public void anadirCancionNewPlaylist(ActionEvent actionEvent) {
-        if(tablaAnadirPlayList.getSelectionModel().getSelectedItem()!=null){
-            Cancion c1=(Cancion)tablaAnadirPlayList.getSelectionModel().getSelectedItem();
-            cancionesAnadirNewPlaylist.add(c1);
-            VBox vboxTusPlaylist=new VBox();
-            crearPlaylistPane.setDisable(false);
+        if(tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem() != null){
+            Cancion c1 = (Cancion) tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem();
 
-            for (Cancion c:cancionesAnadirNewPlaylist) {
-                Label label =new Label("      "+c.getNombre());
-                label.setStyle("-fx-text-fill: #838383; -fx-min-height: 50px;");
-                vboxTusPlaylist.getChildren().add(label);
-                cancionesAnadidas.setContent(vboxTusPlaylist);
+            boolean existeCancion=false;
+            for (Cancion c :
+                    cancionesAnadirNewPlaylist) {
+                if(c.getId()== c1.getId()){
+                    existeCancion=true;
+                }
+            }
+            if (!existeCancion) {
+                cancionesAnadirNewPlaylist.add(c1);
+                VBox vBoxCanciones = new VBox();
+                crearPlaylistPane.setDisable(false);
+
+                for (Cancion c : cancionesAnadirNewPlaylist) {
+                    HBox hboxDatosCancion = new HBox();
+                    Label nombreCancion = new Label("  " + c.getNombre());
+                    nombreCancion.setStyle("-fx-text-fill: white; -fx-font-size: 25px; -fx-min-height: 50px; -fx-min-width: 300px;");
+
+                    Label nombreArtista = new Label(c.getNombreArtista() + " ");
+                    nombreArtista.setStyle("-fx-text-fill: white; -fx-font-size: 25px; -fx-min-height: 50px; -fx-min-width: 250px;");
+                    HBox.setHgrow(nombreArtista, Priority.ALWAYS);
+
+                    hboxDatosCancion.getChildren().addAll(nombreCancion, nombreArtista);
+                    vBoxCanciones.getChildren().add(hboxDatosCancion);
+                }
+
+                cancionesAnadidas.setContent(vBoxCanciones);
             }
         }
     }
 
     public void anadirNuevaCancionPlaylist(MouseEvent mouseEvent) {
+        anadirCancionPlayLPane.setVisible(true);
+        playlistPrincipalPane.setDisable(true);
+        controlAppPane.setDisable(true);
+    }
 
+    public void anadirNuevaCancionPlExited(MouseEvent mouseEvent) {
+        cambiarCursorDefault(mouseEvent);
+    }
+
+    public void anadirNuevaCancionPlEntered(MouseEvent mouseEvent) {
+        cambiarCursorMano(mouseEvent,anadirNuevaCancionPlBtn);
     }
 
     public void cancelarNuevaCancionPlayL(MouseEvent mouseEvent) {
+        anadirCancionPlayLPane.setVisible(false);
+        playlistPrincipalPane.setDisable(false);
+        controlAppPane.setDisable(false);
     }
 
     public void guardarNuevaCancionPlayL(MouseEvent mouseEvent) {
+        if(tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem() != null) {
+            Cancion c1 = (Cancion) tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem();
+            if (true){// TODO: 04/12/2023 cambiar el true por una comprobacion de si no existe la cancion en la lista
+                ListaDeCanciones.addCancion(c1.getId(),listaActual.getId());
+                List<Cancion> canciones= ListaDeCanciones.obtenerCancionesEnLista(listaActual.getId());
+                rellenarPlayList(canciones);
+            }
+            cancelarNuevaCancionPlayL(mouseEvent);
+        }
+
+    }
+
+    public void buscarCancion3(MouseEvent mouseEvent) {
+        tablaAnadirCancionPlayLPrin.getColumns().clear();
+
+        ObservableList<Cancion> listaCanciones = FXCollections.observableArrayList();
+        ArrayList<Cancion> listaDeCancionesArrayList = Cancion.buscarCancion(buscarNCTextFieldPl.getText());
+        for (Cancion l : listaDeCancionesArrayList) {
+            listaCanciones.add(l);
+        }
+        tablaAnadirCancionPlayLPrin.getColumns().add(columnaNombrePlaylist);
+        tablaAnadirCancionPlayLPrin.getColumns().add(columnaArtista);
+        tablaAnadirCancionPlayLPrin.setItems(listaCanciones);
+        tablaAnadirCancionPlayLPrin.setVisible(true);
     }
 }

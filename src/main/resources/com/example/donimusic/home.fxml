@@ -32,7 +32,7 @@
             <Button fx:id="botonAnterior" layoutX="601.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#anteriorCancion" prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: rgba(0,0,0,0);" />
             <Slider fx:id="cancionSlider" layoutX="552.0" layoutY="61.0" majorTickUnit="1.0" minorTickCount="1" prefHeight="14.0" prefWidth="243.0" />
          </children></Pane>
-      <Pane fx:id="controlAppPane" layoutX="14.0" layoutY="62.0" prefHeight="649.0" prefWidth="286.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
+      <Pane fx:id="controlAppPane" layoutX="14.0" layoutY="63.0" prefHeight="649.0" prefWidth="286.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
          <children>
             <Label fx:id="inicioLabel" layoutX="42.0" layoutY="25.0" onMouseClicked="#irInicio" onMouseEntered="#inicioEntered" onMouseExited="#inicioExited" text="Inicio" textFill="WHITE">
                <font>
@@ -153,7 +153,7 @@
                </font>
             </Label>
             <ListView fx:id="playlistPrinListView" layoutX="96.0" layoutY="173.0" prefHeight="448.0" prefWidth="849.0" style="-fx-background-color: #212628; -fx-background: #212628;" />
-            <Pane fx:id="anadirNuevaCancionPlBtn" layoutX="843.0" layoutY="73.0" onMouseClicked="#anadirNuevaCancionPlaylist" prefHeight="64.0" prefWidth="64.0" />
+            <Pane fx:id="anadirNuevaCancionPlBtn" layoutX="843.0" layoutY="73.0" onMouseClicked="#anadirNuevaCancionPlaylist" onMouseEntered="#anadirNuevaCancionPlEntered" onMouseExited="#anadirNuevaCancionPlExited" prefHeight="64.0" prefWidth="64.0" />
          </children>
       </Pane>
       <Pane fx:id="crearPlaylistPane" layoutX="366.0" layoutY="120.0" prefHeight="531.0" prefWidth="610.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
@@ -179,7 +179,7 @@
       <Pane fx:id="atrasCircle" layoutX="332.0" layoutY="65.0" onMouseClicked="#irAtras" onMouseEntered="#atrasEntered" onMouseExited="#atrasExited" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: black; -fx-background-radius: 100px; -fx-opacity: 0.3;" />
       <Pane fx:id="anadirCancionPane" layoutX="1002.0" layoutY="120.0" prefHeight="531.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
          <children>
-            <TableView fx:id="tablaAnadirPlayList" layoutX="84.0" layoutY="28.0" onMouseClicked="#seleccionarCancionAnadir" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #383c41; -fx-text-fill: black;" visible="false" />
+            <TableView fx:id="tablaAnadirCancionPlayL" layoutX="84.0" layoutY="28.0" onMouseClicked="#seleccionarCancionAnadir" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #383c41; -fx-text-fill: black;" visible="false" />
             <TextField fx:id="buscarNCTextField" layoutX="74.0" layoutY="26.0" onMouseClicked="#introducirTextoBuscar" prefHeight="32.0" prefWidth="219.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
             <Button fx:id="anadirBoton" disable="true" layoutX="167.0" layoutY="478.0" mnemonicParsing="false" onAction="#anadirCancionNewPlaylist" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Añadir" />
             <Button fx:id="cancelarNuevaCancionBtn1" layoutX="96.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaCancion" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Atras" />
@@ -193,9 +193,11 @@
       </Label>
       <Pane fx:id="anadirCancionPlayLPane" layoutX="651.0" layoutY="122.0" prefHeight="531.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
          <children>
-            <TextField fx:id="buscarNCTextField1" layoutX="55.0" layoutY="22.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="200.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
+            <TableView fx:id="tablaAnadirCancionPlayLPrin" layoutX="74.0" layoutY="22.0" onMouseClicked="#seleccionarCancionAnadir" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #383c41; -fx-text-fill: black;" />
+            <TextField fx:id="buscarNCTextFieldPl" layoutX="64.0" layoutY="22.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="220.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
             <Button fx:id="guardarNuevaCancionPlayLBtn" layoutX="165.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#guardarNuevaCancionPlayL" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />
             <Button fx:id="cancelarNuevaCancionPlayLBtn" layoutX="108.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaCancionPlayL" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Atrás" />
+            <Button fx:id="buscarBtn3" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#buscarCancion3" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(0, 0, 0, 0);" />
          </children>
       </Pane>
    </children>
