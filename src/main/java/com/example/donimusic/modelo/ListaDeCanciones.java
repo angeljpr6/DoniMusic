@@ -356,12 +356,12 @@ public class ListaDeCanciones {
                     ", Album: " + cancion.getAlbum() );
         }
     }
-    public boolean encontrarCancion(String nombreCancion, int idLista) {
+    public boolean encontrarCancion(int idCancion, int idLista) {
         boolean cancionEncontrada = false;
         try {
-            String sql = "SELECT 1 FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE c.nombreCancion = ? AND plc.listaId = ?";
+            String sql = "SELECT 1 FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE c.cancionId  = ? AND plc.listaId = ?";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
-                stm.setString(1, nombreCancion);
+                stm.setInt(1, idCancion);
                 stm.setInt(2, idLista);
 
                 try (ResultSet resultSet = stm.executeQuery()) {
