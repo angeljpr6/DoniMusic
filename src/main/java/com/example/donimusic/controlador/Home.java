@@ -400,7 +400,7 @@ public class Home implements Initializable {
             ListaDeCanciones.crearLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
             int id=ListaDeCanciones.obtenerIdLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
             for (Cancion c:cancionesAnadirNewPlaylist) {
-                ListaDeCanciones.addCancion(c.getId(),id);
+                ListaDeCanciones.addCancion(id,c.getId());
             }
             rellenarPanelTusPlayList();
             crearPlaylistPane.setVisible(false);

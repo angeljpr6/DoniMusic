@@ -81,7 +81,7 @@ public class ListaDeCanciones {
             e.printStackTrace();
         }
     }
-    public static void obtenerIdLista(String nombreLista, String nombreUsuario) {
+    public static int obtenerIdLista(String nombreLista, String nombreUsuario) {
         try {
             // Preparar una sentencia SQL para obtener el ID de la última lista recién creada por el usuario
             PreparedStatement stm = c.prepareStatement("SELECT listaId FROM lista WHERE nombre = ? AND nombreUsuario = ? ORDER BY listaId DESC LIMIT 1");
@@ -98,6 +98,9 @@ public class ListaDeCanciones {
 
                 // Llamar al método para establecer la relación en la tabla playListUsuarios
                 establecerRelacionPlayListUsuario(idLista, nombreUsuario);
+
+                // Retornar el ID de la lista
+                return idLista;
             } else {
                 // Si no se encontró la lista, imprimir un mensaje (puedes ajustar según necesites)
                 System.out.println("La lista no fue encontrada en la base de datos para el usuario " + nombreUsuario);
@@ -106,6 +109,9 @@ public class ListaDeCanciones {
             // Manejar excepciones
             throw new RuntimeException(e);
         }
+
+        // En caso de que no se haya encontrado la lista, puedes devolver un valor por defecto o lanzar una excepción, según tus necesidades.
+        return -1; // Cambia esto según tus necesidades
     }
 
 
@@ -142,12 +148,12 @@ public class ListaDeCanciones {
         }
     }
 
-    public void addCancion(int idCancion) {
+    public static void addCancion(int idLista,int idCancion) {
 
 
         try {
             PreparedStatement stm = c.prepareStatement("INSERT INTO playListCanciones (listaId, cancionId) VALUES (?, ?)");
-            stm.setInt(1, id);
+            stm.setInt(1, idLista);
             stm.setInt(2, idCancion);
 
             int filasAfectadas = stm.executeUpdate();
