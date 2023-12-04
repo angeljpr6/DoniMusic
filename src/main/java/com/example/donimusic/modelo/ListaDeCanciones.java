@@ -11,7 +11,7 @@ public class ListaDeCanciones {
     String nombre;
     String nombreCreador;
 
-    private boolean reproductor =false;
+    private boolean reproductor = false;
 
     private static Connection c = Conexion.con;
 
@@ -67,11 +67,10 @@ public class ListaDeCanciones {
                 ResultSet rs = stm.getGeneratedKeys();
                 if (rs.next()) {
                     // Asignar este ID a la variable 'id' para su posterior uso.
-
+                    int id = rs.getInt(1);
 
                     // Llamar al método para establecer la relación en la tabla playListUsuarios
-                    int id = obtenerIdLista(nombreLista, usuario);
-                    establecerRelacionPlayListUsuario(id, usuario);
+                    obtenerIdLista(nombreLista, usuario);
                 } else {
                     System.out.println("No se pudo obtener el ID de la lista de canciones.");
                 }
@@ -82,7 +81,7 @@ public class ListaDeCanciones {
             e.printStackTrace();
         }
     }
-    public static int obtenerIdLista(String nombreLista, String nombreUsuario) {
+    public static void obtenerIdLista(String nombreLista, String nombreUsuario) {
         try {
             // Preparar una sentencia SQL para obtener el ID de la última lista recién creada por el usuario
             PreparedStatement stm = c.prepareStatement("SELECT listaId FROM lista WHERE nombre = ? AND nombreUsuario = ? ORDER BY listaId DESC LIMIT 1");
@@ -96,10 +95,9 @@ public class ListaDeCanciones {
             if (rs.next()) {
                 // Obtener el ID de la lista
                 int idLista = rs.getInt("listaId");
-                return idLista;
 
                 // Llamar al método para establecer la relación en la tabla playListUsuarios
-
+                establecerRelacionPlayListUsuario(idLista, nombreUsuario);
             } else {
                 // Si no se encontró la lista, imprimir un mensaje (puedes ajustar según necesites)
                 System.out.println("La lista no fue encontrada en la base de datos para el usuario " + nombreUsuario);
@@ -108,11 +106,10 @@ public class ListaDeCanciones {
             // Manejar excepciones
             throw new RuntimeException(e);
         }
-        return -1;
     }
 
 
-    public static void establecerRelacionPlayListUsuario(int idLista, String nombreUsuario) {
+    private static void establecerRelacionPlayListUsuario(int idLista, String nombreUsuario) {
         try {
             // Preparar una sentencia SQL para insertar una fila en la tabla playListUsuarios
             PreparedStatement stm = c.prepareStatement("INSERT INTO playListUsuarios (listaId, nombreUsuario) VALUES (?, ?)");
@@ -145,7 +142,7 @@ public class ListaDeCanciones {
         }
     }
 
-    public static void addCancion(int idCancion, int id) {
+    public void addCancion(int idCancion) {
 
 
         try {
@@ -299,7 +296,7 @@ public class ListaDeCanciones {
     private int obtenerIndiceCancion(Cancion cancion, List<Cancion> cancionesEnLista) {
         // Recorre manualmente la lista para encontrar la posición de la canción
         for (int i = 0; i < cancionesEnLista.size(); i++) {
-            if (cancionesEnLista.get(i).getId()==cancion.getId()) {
+            if (cancionesEnLista.get(i).equals(cancion)) {
                 return i;
             }
         }
