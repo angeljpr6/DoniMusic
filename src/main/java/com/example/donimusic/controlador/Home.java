@@ -662,8 +662,8 @@ public class Home implements Initializable {
     public void guardarNuevaCancionPlayL(MouseEvent mouseEvent) {
         if(tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem() != null) {
             Cancion c1 = (Cancion) tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem();
-            if (true){// TODO: 04/12/2023 cambiar el true por una comprobacion de si no existe la cancion en la lista
-                ListaDeCanciones.addCancion(c1.getId(),listaActual.getId());
+            if (!ListaDeCanciones.encontrarCancion(c1.getId(),listaActual.getId())){// TODO: 04/12/2023 cambiar el true por una comprobacion de si no existe la cancion en la lista
+                ListaDeCanciones.addCancion(listaActual.getId(),c1.getId());
                 List<Cancion> canciones= ListaDeCanciones.obtenerCancionesEnLista(listaActual.getId());
                 rellenarPlayList(canciones);
             }
