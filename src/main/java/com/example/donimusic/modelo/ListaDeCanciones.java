@@ -350,27 +350,21 @@ public class ListaDeCanciones {
                     ", Album: " + cancion.getAlbum() );
         }
     }
-    public Cancion encontrarCancion(String nombreCancion, int idLista) {
-        Cancion cancionEncontrada = null;
+    public boolean encontrarCancion(String nombreCancion, int idLista) {
+        boolean cancionEncontrada = false;
         try {
-            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE c.nombreCancion = ? AND plc.listaId = ?";
+            String sql = "SELECT 1 FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE c.nombreCancion = ? AND plc.listaId = ?";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
                 stm.setString(1, nombreCancion);
                 stm.setInt(2, idLista);
 
                 try (ResultSet resultSet = stm.executeQuery()) {
+                    // Si la consulta devuelve resultados, la canción se encuentra en la lista
                     if (resultSet.next()) {
-                        int idCancion = resultSet.getInt("cancionId");
-                        String nombre = resultSet.getString("nombreCancion");
-                        String album = resultSet.getString("album");
-                        String archivo = resultSet.getString("archivo");
-                        String artista = resultSet.getString("artista");
-
-                        cancionEncontrada = new Cancion(idCancion, nombre, artista, album);
+                        cancionEncontrada = true;
                     }
                 }
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
