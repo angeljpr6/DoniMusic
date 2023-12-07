@@ -1,10 +1,10 @@
 package com.example.donimusic.controlador;
 
 import com.example.donimusic.modelo.Cancion;
-import com.example.donimusic.modelo.customCeldas.CustomCellFactoryCan;
-import com.example.donimusic.modelo.customCeldas.CustomCellFactoryPlaylist;
 import com.example.donimusic.modelo.ListaDeCanciones;
 import com.example.donimusic.modelo.Usuario;
+import com.example.donimusic.modelo.customCeldas.CustomCellFactoryCan;
+import com.example.donimusic.modelo.customCeldas.CustomCellFactoryPlaylist;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +20,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,10 +29,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Home implements Initializable {
+    public static Usuario usuario = new Usuario();
+    public static Cancion cancionActual = null;
+    public static ListaDeCanciones listaActual = null;
     public Label inicioLabel;
     public Pane atrasCircle;
     public Label atrasMensaje;
-    public  Label autorCancion;
+    public Label autorCancion;
     public Button botonReproducir;
     public Label nombreCancion;
     public Label nombrePlaylistHist;
@@ -79,13 +84,10 @@ public class Home implements Initializable {
     public TextField buscarNCTextFieldPl;
     public TableView tablaAnadirCancionPlayLPrin;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
-    public static Usuario usuario=new Usuario();
-    public static Cancion cancionActual =null;
-    public static ListaDeCanciones listaActual=null;
-    private boolean reproduciendo= false;
+    private boolean reproduciendo = false;
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
-    private TableColumn<String, String> columnaArtista= new TableColumn<>("Artista");
-    private ArrayList<Cancion> cancionesAnadirNewPlaylist=new ArrayList<>();
+    private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
+    private ArrayList<Cancion> cancionesAnadirNewPlaylist = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -102,7 +104,8 @@ public class Home implements Initializable {
         inciarColumnAnadirPlayList();
 
     }
-    public void inicializarAnadirCancion(){
+
+    public void inicializarAnadirCancion() {
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/mas.png")));
         ImageView imageView = new ImageView(image);
 
@@ -118,7 +121,8 @@ public class Home implements Initializable {
         anadirNuevaCancionPlBtn.getChildren().add(imageView2);
 
     }
-    public void inicializarColumnaBusqPrinc(){
+
+    public void inicializarColumnaBusqPrinc() {
         columnaNombrePlaylist.setResizable(true);
         columnaNombrePlaylist.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
         columnaNombrePlaylist.setMinWidth(600);
@@ -136,7 +140,7 @@ public class Home implements Initializable {
         tablaBusquedaPrin.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
     }
 
-    public void inciarColumnAnadirPlayList(){
+    public void inciarColumnAnadirPlayList() {
         columnaNombrePlaylist.setResizable(true);
         columnaNombrePlaylist.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
         columnaNombrePlaylist.setMinWidth(1);
@@ -156,7 +160,8 @@ public class Home implements Initializable {
         tablaAnadirCancionPlayL.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
 
     }
-    public void inicializarLogo(){
+
+    public void inicializarLogo() {
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/logoPequeño.png")));
         ImageView imageView = new ImageView(image);
 
@@ -165,7 +170,8 @@ public class Home implements Initializable {
 
         logo.getChildren().add(imageView);
     }
-    public void inicializarGeneros(){
+
+    public void inicializarGeneros() {
         //Rock
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/imagenes/imagenRock.jpeg")));
         ImageView imageView = new ImageView(image);
@@ -203,7 +209,8 @@ public class Home implements Initializable {
         rapImagen.getChildren().add(imageView4);
 
     }
-    public void inicializarBuscarBoton(){
+
+    public void inicializarBuscarBoton() {
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/lupa.png")));
 
         ImageView imageView = new ImageView(image);
@@ -216,7 +223,8 @@ public class Home implements Initializable {
         buscarBtn3.setGraphic(imageView3);
 
     }
-    public void inicializarControlarCancion(){
+
+    public void inicializarControlarCancion() {
 
         Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
         ImageView imageViewPlay = new ImageView(imagePlay);
@@ -228,16 +236,36 @@ public class Home implements Initializable {
         ImageView imageViewAnterior = new ImageView(imageAnterior);
         botonAnterior.setGraphic(imageViewAnterior);
     }
-    public void inicializarSlider(){
+
+    public void inicializarSlider() {
+        MediaPlayer mediaPlayer = Cancion.mediaPlayer;
+
+        // Agregar un listener al tiempo actual de reproducción del MediaPlayer
+        mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            // Obtener la duración total de la canción
+            Duration totalDuration = mediaPlayer.getTotalDuration();
+
+            // Obtener el tiempo actual de reproducción
+            Duration currentDuration = mediaPlayer.getCurrentTime();
+
+            // Calcular el progreso como un porcentaje
+            double progress = currentDuration.toMillis() / totalDuration.toMillis() * 100.0;
+
+            // Actualizar el valor del Slider con el progreso
+            cancionSlider.setValue(progress);
+        });
 
     }
-    public void seleccionarLabel(Label label){
+
+    public void seleccionarLabel(Label label) {
         label.setStyle("-fx-text-fill: white;");
     }
-    public void deselecionarLabel(Label label){
+
+    public void deselecionarLabel(Label label) {
         label.setStyle("-fx-text-fill: #838383;");
     }
-    public void crearBotonAtras(){
+
+    public void crearBotonAtras() {
         Image imageError = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/menorQue.png")));
         ImageView imageViewError = new ImageView(imageError);
 
@@ -248,20 +276,22 @@ public class Home implements Initializable {
         imageViewError.setLayoutY(centerY);
         atrasCircle.getChildren().add(imageViewError);
     }
-    public void rellenarPanelTusPlayList(){
+
+    public void rellenarPanelTusPlayList() {
 
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
-        int altura=50;
+        int altura = 50;
         playlistListView.setCellFactory(new CustomCellFactoryPlaylist());
         playlistListView.getItems().clear();
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
             playlistListView.getItems().add(l);
             playlistListView.setPrefHeight(altura);
-            altura+=57;
+            altura += 57;
         }
     }
-    public void rellenarPlayList(List<Cancion> canciones){
+
+    public void rellenarPlayList(List<Cancion> canciones) {
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
@@ -272,49 +302,55 @@ public class Home implements Initializable {
             playlistPrinListView.getItems().add(c);
         }
     }
-    public void actualizarCancionRep(){
+
+    public void actualizarCancionRep() {
         autorCancion.setText(cancionActual.getNombreArtista());
         nombreCancion.setText(cancionActual.getNombre());
     }
+
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
         node.setCursor(Cursor.HAND);
     }
+
     public void irAtras(MouseEvent mouseEvent) {
-        if (cancionPane.isVisible()){
+        if (cancionPane.isVisible()) {
             cancionPane.setVisible(false);
-        }else if (playlistPrincipalPane.isVisible()){
+        } else if (playlistPrincipalPane.isVisible()) {
             playlistPrincipalPane.setVisible(false);
-        }else{
+        } else {
             buscarTextField.setText("Buscar");
             atrasCircle.requestFocus();
         }
     }
+
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
         atrasCircle.setCursor(Cursor.DEFAULT);
     }
+
     public void anadirFavoritos(MouseEvent mouseEvent) {
-        if (anadirFavLabel.getText().equals("Quitar de favoritos")){
+        if (anadirFavLabel.getText().equals("Quitar de favoritos")) {
 
             anadirFavLabel.setText("Añadir Favoritos");
-        }else{
+        } else {
             anadirFavLabel.setText("Añadido");
         }
     }
 
     public void anadirFavEntered(MouseEvent mouseEvent) {
-        if (anadirFavLabel.getText().equals("Añadido")){
+        if (anadirFavLabel.getText().equals("Añadido")) {
             anadirFavLabel.setText("Quitar de favoritos");
             anadirFavLabel.setStyle("-fx-text-fill: red;");
-        }else {
+        } else {
             anadirFavLabel.setStyle("-fx-text-fill: white;");
             cambiarCursorMano(mouseEvent, anadirFavLabel);
         }
     }
+
     public void anadirFavExited(MouseEvent mouseEvent) {
-        if (anadirFavLabel.getText().equals("Quitar de favoritos")){
+        if (anadirFavLabel.getText().equals("Quitar de favoritos")) {
             anadirFavLabel.setText("Añadido");
             anadirFavLabel.setStyle("-fx-text-fill: #838383;");
-        }else {
+        } else {
             anadirFavLabel.setStyle("-fx-text-fill: #838383;");
             cambiarCursorDefault(mouseEvent);
         }
@@ -323,8 +359,9 @@ public class Home implements Initializable {
     public void atrasEntered(MouseEvent mouseEvent) {
         atrasCircle.setOpacity(1);
         atrasMensaje.setVisible(true);
-        cambiarCursorMano(mouseEvent,atrasCircle);
+        cambiarCursorMano(mouseEvent, atrasCircle);
     }
+
     public void atrasExited(MouseEvent mouseEvent) {
         atrasCircle.setOpacity(0.3);
         atrasMensaje.setVisible(false);
@@ -332,15 +369,15 @@ public class Home implements Initializable {
     }
 
     public void introducirTextoBuscar(MouseEvent mouseEvent) {
-        if (anadirCancionPane.isVisible()){
-            if (buscarNCTextField.getText().equals("Buscar")){
+        if (anadirCancionPane.isVisible()) {
+            if (buscarNCTextField.getText().equals("Buscar")) {
                 buscarNCTextField.setText("");
             }
-        }else if (anadirCancionPlayLPane.isVisible()){
+        } else if (anadirCancionPlayLPane.isVisible()) {
             if (buscarNCTextFieldPl.getText().equals("Buscar")) {
                 buscarNCTextFieldPl.setText("");
             }
-        }else {
+        } else {
             if (buscarTextField.getText().equals("Buscar")) {
                 buscarTextField.setText("");
             }
@@ -348,7 +385,7 @@ public class Home implements Initializable {
     }
 
     public void rockEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,rockPane);
+        cambiarCursorMano(mouseEvent, rockPane);
     }
 
     public void rockExited(MouseEvent mouseEvent) {
@@ -356,7 +393,7 @@ public class Home implements Initializable {
     }
 
     public void fumonEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,fumonPane);
+        cambiarCursorMano(mouseEvent, fumonPane);
     }
 
     public void fumonExited(MouseEvent mouseEvent) {
@@ -364,7 +401,7 @@ public class Home implements Initializable {
     }
 
     public void enEspanolEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,enEspanolPane);
+        cambiarCursorMano(mouseEvent, enEspanolPane);
     }
 
     public void enEspanolExited(MouseEvent mouseEvent) {
@@ -372,7 +409,7 @@ public class Home implements Initializable {
     }
 
     public void rapEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,rapPane);
+        cambiarCursorMano(mouseEvent, rapPane);
     }
 
     public void rapExited(MouseEvent mouseEvent) {
@@ -387,8 +424,9 @@ public class Home implements Initializable {
         inicioPane.setDisable(true);
         cancionPane.setDisable(true);
     }
+
     public void crearPlaylistEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,crearPlaylistLabel);
+        cambiarCursorMano(mouseEvent, crearPlaylistLabel);
     }
 
     public void crearPlaylistExited(MouseEvent mouseEvent) {
@@ -398,9 +436,9 @@ public class Home implements Initializable {
     public void guardarNuevaPlaylist(MouseEvent mouseEvent) {
         if (!nombreNuevaPlaylist.getText().isBlank()) {
             ListaDeCanciones.crearLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
-            int id=ListaDeCanciones.obtenerIdLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
-            for (Cancion c:cancionesAnadirNewPlaylist) {
-                ListaDeCanciones.addCancion(id,c.getId());
+            int id = ListaDeCanciones.obtenerIdLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
+            for (Cancion c : cancionesAnadirNewPlaylist) {
+                ListaDeCanciones.addCancion(id, c.getId());
             }
             rellenarPanelTusPlayList();
             crearPlaylistPane.setVisible(false);
@@ -424,9 +462,9 @@ public class Home implements Initializable {
         crearPlaylistPane.setVisible(false);
         anadirCancionPane.setVisible(false);
 
-        if (playlistPrincipalPane.isVisible()){
+        if (playlistPrincipalPane.isVisible()) {
             cambiarLabelSeleccionado(cancionesFavLabel);
-        }else cambiarLabelSeleccionado(inicioLabel);
+        } else cambiarLabelSeleccionado(inicioLabel);
 
         VBox limpiarPane = new VBox();
         cancionesAnadidas.setContent(limpiarPane);
@@ -446,7 +484,7 @@ public class Home implements Initializable {
     }
 
     public void anadirNuevaCancionEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,anadirNuevaCancionBtn);
+        cambiarCursorMano(mouseEvent, anadirNuevaCancionBtn);
     }
 
     public void anadirNuevaCancionExited(MouseEvent mouseEvent) {
@@ -464,7 +502,7 @@ public class Home implements Initializable {
     }
 
     public void vaciarNombreNuevaPlaylist(MouseEvent mouseEvent) {
-        if (nombreNuevaPlaylist.getText().equals("Nombre de la Playlist")){
+        if (nombreNuevaPlaylist.getText().equals("Nombre de la Playlist")) {
             nombreNuevaPlaylist.setText("");
         }
     }
@@ -475,25 +513,31 @@ public class Home implements Initializable {
         crearPlaylistPane.setVisible(false);
         anadirCancionPane.setVisible(false);
     }
+
     public void cancionesFavoritasEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,cancionesFavLabel);
+        cambiarCursorMano(mouseEvent, cancionesFavLabel);
     }
+
     public void cancionesFavoritasExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
     }
+
     public void irInicio(MouseEvent mouseEvent) {
         cambiarLabelSeleccionado(inicioLabel);
         crearPlaylistPane.setVisible(false);
         anadirCancionPane.setVisible(false);
         playlistPrincipalPane.setVisible(false);
     }
+
     public void inicioEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,inicioLabel);
+        cambiarCursorMano(mouseEvent, inicioLabel);
     }
+
     public void inicioExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
     }
-    public void cambiarLabelSeleccionado(Label label){
+
+    public void cambiarLabelSeleccionado(Label label) {
         deselecionarLabel(labelSeleccionado.get(0));
         seleccionarLabel(label);
         labelSeleccionado.remove(0);
@@ -503,12 +547,14 @@ public class Home implements Initializable {
     public void pausarYReproducir(MouseEvent mouseEvent) {
         reproducirCancion();
     }
-    public void inicializarCancion(){
+
+    public void inicializarCancion() {
         cancionActual.descargarCancion();
         cancionActual.reproducirCancion();
     }
-    public void reproducirCancion(){
-        if (cancionActual!=null) {
+
+    public void reproducirCancion() {
+        if (cancionActual != null) {
             actualizarCancionRep();
             if (reproduciendo) {
                 Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
@@ -520,6 +566,7 @@ public class Home implements Initializable {
                 reproduciendo = true;
                 if (cancionActual.getRuta().equals("")) {
                     inicializarCancion();
+                    inicializarSlider();
                 } else cancionActual.playCancion();
 
                 Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-pausa.png")));
@@ -528,10 +575,11 @@ public class Home implements Initializable {
             }
         }
     }
-    
+
 
     /**
      * Metodo a medias
+     *
      * @param mouseEvent
      */
     public void buscarCancion(MouseEvent mouseEvent) {
@@ -552,7 +600,7 @@ public class Home implements Initializable {
     public void seleccionarPlayList(MouseEvent mouseEvent) {
 
         ListaDeCanciones listaDeCanciones = (ListaDeCanciones) playlistListView.getSelectionModel().selectedItemProperty().getValue();
-        listaActual=listaDeCanciones;
+        listaActual = listaDeCanciones;
         List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaDeCanciones.getId());
         rellenarPlayList(canciones);
         System.out.println(listaDeCanciones.getId());
@@ -560,22 +608,22 @@ public class Home implements Initializable {
 
     public void siguienteCancion(MouseEvent mouseEvent) {
         reproducirCancion();
-        cancionActual=listaActual.siguiente(cancionActual);
+        cancionActual = listaActual.siguiente(cancionActual);
         reproducirCancion();
     }
 
     public void anteriorCancion(MouseEvent mouseEvent) {
         reproducirCancion();
-        cancionActual=listaActual.atras(cancionActual);
+        cancionActual = listaActual.atras(cancionActual);
         reproducirCancion();
     }
 
     public void obtenerCancionBusqueda(MouseEvent mouseEvent) {
-        Cancion c1=(Cancion)tablaBusquedaPrin.getSelectionModel().getSelectedItem();
-        if(reproduciendo==true){
+        Cancion c1 = (Cancion) tablaBusquedaPrin.getSelectionModel().getSelectedItem();
+        if (reproduciendo == true) {
             reproducirCancion();
         }
-        cancionActual=c1;
+        cancionActual = c1;
 
         reproducirCancion();
     }
@@ -600,20 +648,20 @@ public class Home implements Initializable {
 
     public void seleccionarCancionAnadir(MouseEvent mouseEvent) {
         anadirBoton.setDisable(true);
-        if(tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem()!=null){
+        if (tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem() != null) {
             anadirBoton.setDisable(false);
         }
     }
 
     public void anadirCancionNewPlaylist(ActionEvent actionEvent) {
-        if(tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem() != null){
+        if (tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem() != null) {
             Cancion c1 = (Cancion) tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem();
 
-            boolean existeCancion=false;
+            boolean existeCancion = false;
             for (Cancion c :
                     cancionesAnadirNewPlaylist) {
-                if(c.getId()== c1.getId()){
-                    existeCancion=true;
+                if (c.getId() == c1.getId()) {
+                    existeCancion = true;
                 }
             }
             if (!existeCancion) {
@@ -650,7 +698,7 @@ public class Home implements Initializable {
     }
 
     public void anadirNuevaCancionPlEntered(MouseEvent mouseEvent) {
-        cambiarCursorMano(mouseEvent,anadirNuevaCancionPlBtn);
+        cambiarCursorMano(mouseEvent, anadirNuevaCancionPlBtn);
     }
 
     public void cancelarNuevaCancionPlayL(MouseEvent mouseEvent) {
@@ -660,11 +708,11 @@ public class Home implements Initializable {
     }
 
     public void guardarNuevaCancionPlayL(MouseEvent mouseEvent) {
-        if(tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem() != null) {
+        if (tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem() != null) {
             Cancion c1 = (Cancion) tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem();
-            if (!ListaDeCanciones.encontrarCancion(c1.getId(),listaActual.getId())){// TODO: 04/12/2023 cambiar el true por una comprobacion de si no existe la cancion en la lista
-                ListaDeCanciones.addCancion(listaActual.getId(),c1.getId());
-                List<Cancion> canciones= ListaDeCanciones.obtenerCancionesEnLista(listaActual.getId());
+            if (!ListaDeCanciones.encontrarCancion(c1.getId(), listaActual.getId())) {// TODO: 04/12/2023 cambiar el true por una comprobacion de si no existe la cancion en la lista
+                ListaDeCanciones.addCancion(listaActual.getId(), c1.getId());
+                List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaActual.getId());
                 rellenarPlayList(canciones);
             }
             cancelarNuevaCancionPlayL(mouseEvent);

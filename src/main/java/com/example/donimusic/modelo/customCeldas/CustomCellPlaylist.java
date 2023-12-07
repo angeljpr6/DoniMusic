@@ -9,9 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class CustomCellPlaylist extends ListCell<ListaDeCanciones> {
+    public static Color colorTexto;
     private final VBox vbox;
     private final Label label;
-    public static Color colorTexto;
 
     public CustomCellPlaylist() {
         vbox = new VBox();

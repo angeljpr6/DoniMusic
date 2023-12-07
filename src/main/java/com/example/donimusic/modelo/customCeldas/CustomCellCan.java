@@ -7,7 +7,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class CustomCellCan extends ListCell<Cancion> {
@@ -48,9 +47,9 @@ public class CustomCellCan extends ListCell<Cancion> {
         if (empty || item == null) {
             setGraphic(null);
         } else {
-            nombreLabel.setText(item.getNombre()+" ");
-            albumLabel.setText(item.getAlbum()+" ");
-            duracionLabel.setText(item.getDuracion()+" ");
+            nombreLabel.setText(item.getNombre() + " ");
+            albumLabel.setText(item.getAlbum() + " ");
+            duracionLabel.setText(item.getDuracion() + " ");
             setGraphic(hbox);
             Color fondo = Color.rgb(0x21, 0x26, 0x28);
             setBackground(new Background(new BackgroundFill(fondo, null, null)));
@@ -61,10 +60,10 @@ public class CustomCellCan extends ListCell<Cancion> {
                 nombreLabel.setTextFill(Color.WHITE);
                 albumLabel.setTextFill(Color.WHITE);
                 duracionLabel.setTextFill(Color.WHITE);
-                if(item!=null){
-                    Home.cancionActual=item;
+                if (item != null) {
+                    Home.cancionActual = item;
 
-                }else{
+                } else {
 
                 }
 

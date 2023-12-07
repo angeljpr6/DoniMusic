@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Usuario {
+    private static Connection c = Conexion.con;
     String nombre;
     String password;
-    private static Connection c= Conexion.con;
+
     public Usuario(String nombre, String password) {
         this.nombre = nombre;
         this.password = password;
@@ -21,12 +21,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public boolean crearUsuario(){
+    public boolean crearUsuario() {
         PreparedStatement stm;
         try {
 
-            stm=c.prepareStatement("insert into usuario values(?,?);");
-            stm.setString(1,nombre);
+            stm = c.prepareStatement("insert into usuario values(?,?);");
+            stm.setString(1, nombre);
             stm.setString(2, password);
             stm.execute();
 
@@ -40,7 +40,8 @@ public class Usuario {
         }
         return true;
     }
-    public ArrayList<ListaDeCanciones> obtenerListasUsuario(){
+
+    public ArrayList<ListaDeCanciones> obtenerListasUsuario() {
         ArrayList<ListaDeCanciones> arrayListaDeCanciones = new ArrayList<>();
         try {
             String sql = "SELECT * " +
@@ -49,8 +50,8 @@ public class Usuario {
                     "WHERE playListUsuarios.nombreUsuario = ?;";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
                 stm.setString(1, Home.usuario.getNombre());
-                String nombreLista="",autorLista="";
-                int idLista=0;
+                String nombreLista = "", autorLista = "";
+                int idLista = 0;
 
                 try (ResultSet resultSet = stm.executeQuery()) {
                     while (resultSet.next()) {
@@ -58,7 +59,7 @@ public class Usuario {
                         autorLista = resultSet.getString("nombreUsuario");
                         nombreLista = resultSet.getString("nombre");
                         idLista = resultSet.getInt("listaId");
-                        arrayListaDeCanciones.add(new ListaDeCanciones(idLista,nombreLista,autorLista));
+                        arrayListaDeCanciones.add(new ListaDeCanciones(idLista, nombreLista, autorLista));
 
                     }
                 }
@@ -85,8 +86,6 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 
 
 }

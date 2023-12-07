@@ -1,7 +1,6 @@
 package com.example.donimusic.modelo.customCeldas;
 
 import com.example.donimusic.modelo.Cancion;
-import com.example.donimusic.modelo.ListaDeCanciones;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;

@@ -24,16 +24,14 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /*
  * Background color: #212628
  */
 public class IniciarSesion implements Initializable {
-    private static boolean logoCargado=false;
+    private static boolean logoCargado = false;
+    private static Connection c = Conexion.con;
     public Label registroBtn;
     public Pane iconoError;
     public Pane errorUsuarioInexist;
@@ -42,7 +40,6 @@ public class IniciarSesion implements Initializable {
     public PasswordField contrasenaTextField;
     @FXML
     public AnchorPane inicioLogo;
-    private static Connection c= Conexion.con;
     public Pane imagenLogo;
     public Label artistaBtn;
 
@@ -57,7 +54,7 @@ public class IniciarSesion implements Initializable {
         if (!logoCargado) {
             inicioLogo.setVisible(true);
             verLogo();
-            logoCargado=true;
+            logoCargado = true;
         }
 
         /*
@@ -70,7 +67,7 @@ public class IniciarSesion implements Initializable {
 
     }
 
-    public void verLogo(){
+    public void verLogo() {
         Image logoImg = new Image(String.valueOf(CrearCuenta.class.getResource("/Iconos/logoPequeño.PNG")));
         ImageView logo = new ImageView(logoImg);
         imagenLogo.getChildren().add(logo);
@@ -124,7 +121,7 @@ public class IniciarSesion implements Initializable {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }*/
-        Home.usuario = new Usuario("pepe","ca");
+        Home.usuario = new Usuario("pepe", "ca");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);

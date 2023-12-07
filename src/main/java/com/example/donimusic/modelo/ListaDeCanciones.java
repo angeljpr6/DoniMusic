@@ -2,54 +2,19 @@ package com.example.donimusic.modelo;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ListaDeCanciones {
 
+    private static Connection c = Conexion.con;
     int id;
     String nombre;
     String nombreCreador;
-
     private boolean reproductor = false;
-
-    private static Connection c = Conexion.con;
 
     public ListaDeCanciones(int idLista, String nombre, String nombreCreador) {
         this.id = idLista;
         this.nombre = nombre;
-        this.nombreCreador = nombreCreador;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public boolean isReproductor() {
-        return reproductor;
-    }
-
-    public void setReproductor(boolean reproductor) {
-        this.reproductor = reproductor;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getNombreCreador() {
-        return nombreCreador;
-    }
-
-    public void setNombreCreador(String nombreCreador) {
         this.nombreCreador = nombreCreador;
     }
 
@@ -81,6 +46,7 @@ public class ListaDeCanciones {
             e.printStackTrace();
         }
     }
+
     public static int obtenerIdLista(String nombreLista, String nombreUsuario) {
         try {
             // Preparar una sentencia SQL para obtener el ID de la última lista recién creada por el usuario
@@ -114,7 +80,6 @@ public class ListaDeCanciones {
         return -1; // Cambia esto según tus necesidades
     }
 
-
     private static void establecerRelacionPlayListUsuario(int idLista, String nombreUsuario) {
         try {
             // Preparar una sentencia SQL para insertar una fila en la tabla playListUsuarios
@@ -137,18 +102,7 @@ public class ListaDeCanciones {
         }
     }
 
-    public void eliminarLista() {
-        try {
-            PreparedStatement stm = c.prepareStatement("DELETE FROM lista WHERE nombre = ?");
-            stm.setString(1, this.nombre);
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void addCancion(int idLista,int idCancion) {
+    public static void addCancion(int idLista, int idCancion) {
 
 
         try {
@@ -165,6 +119,98 @@ public class ListaDeCanciones {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static List<Cancion> obtenerCancionesEnLista(int idLista) {
+        List<Cancion> cancionesEnLista = new ArrayList<>();
+        try {
+            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE plc.listaId = ?";
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setInt(1, idLista);
+
+                try (ResultSet resultSet = stm.executeQuery()) {
+                    while (resultSet.next()) {
+                        int idCancion = resultSet.getInt("cancionId");
+                        String nombre = resultSet.getString("nombreCancion");
+                        String album = resultSet.getString("album");
+                        String archivo = resultSet.getString("archivo");
+                        String artista = resultSet.getString("artista");
+
+                        Cancion cancion = new Cancion(idCancion, nombre, artista, album);
+                        cancionesEnLista.add(cancion);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return cancionesEnLista;
+    }
+
+    public static boolean encontrarCancion(int idCancion, int idLista) {
+        boolean cancionEncontrada = false;
+        try {
+            String sql = "SELECT 1 FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE c.cancionId  = ? AND plc.listaId = ?";
+            try (PreparedStatement stm = c.prepareStatement(sql)) {
+                stm.setInt(1, idCancion);
+                stm.setInt(2, idLista);
+
+                try (ResultSet resultSet = stm.executeQuery()) {
+                    // Si la consulta devuelve resultados, la canción se encuentra en la lista
+                    if (resultSet.next()) {
+                        cancionEncontrada = true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return cancionEncontrada;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public boolean isReproductor() {
+        return reproductor;
+    }
+
+    public void setReproductor(boolean reproductor) {
+        this.reproductor = reproductor;
+    }
+
+    public String getNombreCreador() {
+        return nombreCreador;
+    }
+
+    public void setNombreCreador(String nombreCreador) {
+        this.nombreCreador = nombreCreador;
+    }
+
+    public void eliminarLista() {
+        try {
+            PreparedStatement stm = c.prepareStatement("DELETE FROM lista WHERE nombre = ?");
+            stm.setString(1, this.nombre);
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -309,42 +355,15 @@ public class ListaDeCanciones {
         return -1; // Retorna -1 si la canción no está en la lista
     }
 
-
     public boolean cambiarOrdenRep() {
         if (this.reproductor == true) {
-            this.reproductor=false;
-        }
-        else if (this.reproductor == false) {
-            this.reproductor=true;
+            this.reproductor = false;
+        } else if (this.reproductor == false) {
+            this.reproductor = true;
         }
         return this.reproductor;
     }
-    public static List<Cancion> obtenerCancionesEnLista(int idLista) {
-        List<Cancion> cancionesEnLista = new ArrayList<>();
-        try {
-            String sql = "SELECT c.* FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE plc.listaId = ?";
-            try (PreparedStatement stm = c.prepareStatement(sql)) {
-                stm.setInt(1, idLista);
 
-                try (ResultSet resultSet = stm.executeQuery()) {
-                    while (resultSet.next()) {
-                        int idCancion = resultSet.getInt("cancionId");
-                        String nombre = resultSet.getString("nombreCancion");
-                        String album = resultSet.getString("album");
-                        String archivo = resultSet.getString("archivo");
-                        String artista = resultSet.getString("artista");
-
-                        Cancion cancion = new Cancion(idCancion, nombre, artista, album);
-                        cancionesEnLista.add(cancion);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return cancionesEnLista;
-    }
     public void mostrarListaDeCanciones(int idLista) {
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(idLista);
 
@@ -353,29 +372,8 @@ public class ListaDeCanciones {
             System.out.println("ID: " + cancion.getId() +
                     ", Nombre: " + cancion.getNombre() +
                     ", Artista: " + cancion.getNombreArtista() +
-                    ", Album: " + cancion.getAlbum() );
+                    ", Album: " + cancion.getAlbum());
         }
-    }
-    public static boolean encontrarCancion(int idCancion, int idLista) {
-        boolean cancionEncontrada = false;
-        try {
-            String sql = "SELECT 1 FROM cancion c JOIN playListCanciones plc ON c.cancionId = plc.cancionId WHERE c.cancionId  = ? AND plc.listaId = ?";
-            try (PreparedStatement stm = c.prepareStatement(sql)) {
-                stm.setInt(1, idCancion);
-                stm.setInt(2, idLista);
-
-                try (ResultSet resultSet = stm.executeQuery()) {
-                    // Si la consulta devuelve resultados, la canción se encuentra en la lista
-                    if (resultSet.next()) {
-                        cancionEncontrada = true;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return cancionEncontrada;
     }
 
 
