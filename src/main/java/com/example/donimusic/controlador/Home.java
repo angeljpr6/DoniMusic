@@ -84,7 +84,7 @@ public class Home implements Initializable {
     public TextField buscarNCTextFieldPl;
     public TableView tablaAnadirCancionPlayLPrin;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
-    private boolean reproduciendo = false;
+    public static boolean reproduciendo = false;
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
     private ArrayList<Cancion> cancionesAnadirNewPlaylist = new ArrayList<>();

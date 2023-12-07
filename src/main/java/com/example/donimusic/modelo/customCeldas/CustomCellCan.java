@@ -61,8 +61,12 @@ public class CustomCellCan extends ListCell<Cancion> {
                 albumLabel.setTextFill(Color.WHITE);
                 duracionLabel.setTextFill(Color.WHITE);
                 if (item != null) {
+                    if (Home.cancionActual!=null) {
+                        Home.cancionActual.pausarCancion();
+                        Home.cancionActual.setRuta("");
+                        Home.reproduciendo = false;
+                    }
                     Home.cancionActual = item;
-
                 } else {
 
                 }
