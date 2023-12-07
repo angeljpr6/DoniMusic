@@ -1,6 +1,7 @@
 package com.example.donimusic.controlador;
 
-import com.example.donimusic.modelo.Conexion;
+import com.example.donimusic.modelo.Conexiones.Conexion;
+import com.example.donimusic.modelo.Conexiones.ConexionSqlite;
 import com.example.donimusic.modelo.Usuario;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -24,6 +26,9 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /*
@@ -32,6 +37,7 @@ import java.util.ResourceBundle;
 public class IniciarSesion implements Initializable {
     private static boolean logoCargado = false;
     private static Connection c = Conexion.con;
+
     public Label registroBtn;
     public Pane iconoError;
     public Pane errorUsuarioInexist;
@@ -42,7 +48,8 @@ public class IniciarSesion implements Initializable {
     public AnchorPane inicioLogo;
     public Pane imagenLogo;
     public Label artistaBtn;
-
+    public CheckBox recordarCuenta;
+    private static final Connection a = ConexionSqlite.con;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -122,6 +129,9 @@ public class IniciarSesion implements Initializable {
             System.out.println(e.getMessage());
         }*/
         Home.usuario = new Usuario("pepe", "ca");
+        if (recordarCuenta.isSelected()) {
+            comprobarYInsertarUsuario(usuarioTextField.getText(), contrasenaTextField.getText());
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -131,6 +141,7 @@ public class IniciarSesion implements Initializable {
         homeStage.setScene(scene);
         homeStage.show();
         Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
+
         myStage.close();
     }
 
@@ -149,5 +160,58 @@ public class IniciarSesion implements Initializable {
 
     public void cambiarCursorManoArtista(MouseEvent mouseEvent) {
         artistaBtn.setCursor(Cursor.HAND);
+    }
+
+
+    public void insertarUsuario(String nombreUsuario,String password) {
+        try {
+            PreparedStatement stm = a.prepareStatement("INSERT INTO usuario (nombreUsuario, contraseña) VALUES (?, ?)");
+            stm.setString(1,nombreUsuario);
+            stm.setString(2, password);
+            stm.execute();
+
+        }  catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void borrarUsuario() {
+        try {
+            PreparedStatement stm = a.prepareStatement("DELETE FROM usuario");
+
+            stm.execute();
+
+
+        }  catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void comprobarYInsertarUsuario(String nombreUsuario, String password) {
+        try {
+            hayDatosEnTabla();
+            if (!hayDatosEnTabla()) {
+                System.out.println("No hay datos en la tabla. Realizar acción Y.");
+            } else {
+                borrarUsuario();
+                insertarUsuario(nombreUsuario, password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error al comprobar usuario. Realizar acción Z.");
+        }
+    }
+
+    private boolean hayDatosEnTabla()  {
+        String consulta = "SELECT COUNT(*) FROM usuario";
+        try (PreparedStatement stm = a.prepareStatement(consulta);
+             ResultSet result = stm.executeQuery()) {
+            result.next();
+
+            int count = result.getInt(1);
+            return count > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

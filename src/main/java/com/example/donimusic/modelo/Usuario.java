@@ -1,6 +1,7 @@
 package com.example.donimusic.modelo;
 
 import com.example.donimusic.controlador.Home;
+import com.example.donimusic.modelo.Conexiones.Conexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

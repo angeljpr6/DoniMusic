@@ -14,4 +14,6 @@ module com.example.donimusic {
     opens com.example.donimusic.modelo to javafx.fxml;
     exports com.example.donimusic.modelo.customCeldas;
     opens com.example.donimusic.modelo.customCeldas to javafx.fxml;
+    exports com.example.donimusic.modelo.Conexiones;
+    opens com.example.donimusic.modelo.Conexiones to javafx.fxml;
 }

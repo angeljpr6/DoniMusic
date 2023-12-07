@@ -1,6 +1,6 @@
 package com.example.donimusic.controlador;
 
-import com.example.donimusic.modelo.Conexion;
+import com.example.donimusic.modelo.Conexiones.Conexion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

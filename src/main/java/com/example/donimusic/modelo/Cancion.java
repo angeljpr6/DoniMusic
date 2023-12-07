@@ -1,5 +1,6 @@
 package com.example.donimusic.modelo;
 
+import com.example.donimusic.modelo.Conexiones.Conexion;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 

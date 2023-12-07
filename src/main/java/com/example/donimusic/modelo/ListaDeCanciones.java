@@ -1,5 +1,7 @@
 package com.example.donimusic.modelo;
 
+import com.example.donimusic.modelo.Conexiones.Conexion;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
