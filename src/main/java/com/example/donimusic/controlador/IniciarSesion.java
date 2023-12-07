@@ -64,13 +64,10 @@ public class IniciarSesion implements Initializable {
             logoCargado = true;
         }
 
-        /*
-        Esto se tiene que incluir por separado cuando aparezca el error en especifico
-
-        iconoError.getChildren().add(imageViewError);
-
-        iconoError1.getChildren().add(imageViewError);
-         */
+        if (hayDatosEnTabla()){
+            rellenarDatos();
+            recordarCuenta.setSelected(true);
+        }
 
     }
 
@@ -112,8 +109,9 @@ public class IniciarSesion implements Initializable {
     }
 
     public void iniciarSesion(MouseEvent mouseEvent) throws IOException {
-        /*PreparedStatement stm;
-
+        PreparedStatement stm;
+        String textoNombre=usuarioTextField.getText();
+        String textoCont=contrasenaTextField.getText();
         try {
             stm = c.prepareStatement("SELECT * FROM usuario");
             ResultSet result = stm.executeQuery();
@@ -121,28 +119,32 @@ public class IniciarSesion implements Initializable {
                 String nombre=result.getString("nombreUsuario");
                 String password=result.getString("contraseña");
 
-                if(nombre.equals(usuarioTextField.getText()) && password.equals(contrasenaTextField)){
-                    //aqui va lo que ta
-                }
+                if(nombre.equals(textoNombre) && password.equals(textoCont)){
+                    Home.usuario = new Usuario(usuarioTextField.getText(), contrasenaTextField.getText());
+                    if (recordarCuenta.isSelected()) {
+                        comprobarYInsertarUsuario(usuarioTextField.getText(), contrasenaTextField.getText());
+                    }else {
+                        if (hayDatosEnTabla()){
+                            borrarUsuario();
+                        }
+                    }
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+                    Stage homeStage = new Stage();
+                    homeStage.setTitle("Home");
+                    homeStage.setResizable(false);
+                    homeStage.setScene(scene);
+                    homeStage.show();
+                    Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
+
+                    myStage.close();
+                }else errorUsuarioInexist.setVisible(true);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }*/
-        Home.usuario = new Usuario("pepe", "ca");
-        if (recordarCuenta.isSelected()) {
-            comprobarYInsertarUsuario(usuarioTextField.getText(), contrasenaTextField.getText());
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage homeStage = new Stage();
-        homeStage.setTitle("Home");
-        homeStage.setResizable(false);
-        homeStage.setScene(scene);
-        homeStage.show();
-        Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
 
-        myStage.close();
     }
 
     public void abrirInicioArtista(MouseEvent mouseEvent) throws IOException {
@@ -189,9 +191,12 @@ public class IniciarSesion implements Initializable {
 
     public void comprobarYInsertarUsuario(String nombreUsuario, String password) {
         try {
+            System.out.println("usuario ");
+            rellenarDatos();
+
             hayDatosEnTabla();
             if (!hayDatosEnTabla()) {
-                System.out.println("No hay datos en la tabla. Realizar acción Y.");
+                insertarUsuario(nombreUsuario, password);
             } else {
                 borrarUsuario();
                 insertarUsuario(nombreUsuario, password);
@@ -210,6 +215,23 @@ public class IniciarSesion implements Initializable {
 
             int count = result.getInt(1);
             return count > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void rellenarDatos(){
+        String consulta = "SELECT * FROM usuario";
+        try (PreparedStatement stm = a.prepareStatement(consulta);
+             ResultSet result = stm.executeQuery()) {
+            while (result.next()) {
+
+                String usuario = result.getString(1);
+                String contrasena = result.getString(2);
+
+                usuarioTextField.setText(usuario);
+                contrasenaTextField.setText(contrasena);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
