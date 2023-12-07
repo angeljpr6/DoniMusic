@@ -3,7 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="412.0" maxWidth="600.0" minHeight="412.0" minWidth="600.0" prefHeight="400.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="412.0" maxWidth="600.0" minHeight="412.0" minWidth="600.0"
+            prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/21"
             fx:controller="com.example.donimusic.controlador.IniciarSesion">
     <children>
