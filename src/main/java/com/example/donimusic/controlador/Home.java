@@ -240,18 +240,12 @@ public class Home implements Initializable {
     public void inicializarSlider() {
         MediaPlayer mediaPlayer = Cancion.mediaPlayer;
 
-        // Agregar un listener al tiempo actual de reproducción del MediaPlayer
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-            // Obtener la duración total de la canción
-            Duration totalDuration = mediaPlayer.getTotalDuration();
 
-            // Obtener el tiempo actual de reproducción
+            Duration totalDuration = mediaPlayer.getTotalDuration();
             Duration currentDuration = mediaPlayer.getCurrentTime();
 
-            // Calcular el progreso como un porcentaje
             double progress = currentDuration.toMillis() / totalDuration.toMillis() * 100.0;
-
-            // Actualizar el valor del Slider con el progreso
             cancionSlider.setValue(progress);
         });
 
@@ -295,7 +289,7 @@ public class Home implements Initializable {
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
-        playlistPrinListView.setCellFactory(new CustomCellFactoryCan());
+        playlistPrinListView.setCellFactory(new CustomCellFactoryCan(this));
         playlistPrinListView.getItems().clear();
 
         for (Cancion c : canciones) {
@@ -610,12 +604,16 @@ public class Home implements Initializable {
         reproducirCancion();
         cancionActual = listaActual.siguiente(cancionActual);
         reproducirCancion();
+        int indiceSeleccionado = playlistPrinListView.getSelectionModel().getSelectedIndex();
+        playlistPrinListView.getSelectionModel().select(indiceSeleccionado+1);
     }
 
     public void anteriorCancion(MouseEvent mouseEvent) {
         reproducirCancion();
         cancionActual = listaActual.atras(cancionActual);
         reproducirCancion();
+        int indiceSeleccionado = playlistPrinListView.getSelectionModel().getSelectedIndex();
+        playlistPrinListView.getSelectionModel().select(indiceSeleccionado-1);
     }
 
     public void obtenerCancionBusqueda(MouseEvent mouseEvent) {

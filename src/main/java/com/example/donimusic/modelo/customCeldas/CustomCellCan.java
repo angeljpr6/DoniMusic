@@ -10,12 +10,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 public class CustomCellCan extends ListCell<Cancion> {
+    private final Home home;
     private final HBox hbox;
     private final Label nombreLabel;
     private final Label albumLabel;
     private final Label duracionLabel;
 
-    public CustomCellCan() {
+    public CustomCellCan(Home home) {
+        this.home=home;
         hbox = new HBox();
 
         nombreLabel = new Label();
@@ -61,12 +63,14 @@ public class CustomCellCan extends ListCell<Cancion> {
                 albumLabel.setTextFill(Color.WHITE);
                 duracionLabel.setTextFill(Color.WHITE);
                 if (item != null) {
-                    if (Home.cancionActual!=null) {
-                        Home.cancionActual.pausarCancion();
+                    if (Home.cancionActual!=null){
                         Home.cancionActual.setRuta("");
-                        Home.reproduciendo = false;
+                    }
+                    if (Home.reproduciendo){
+                        home.reproducirCancion();
                     }
                     Home.cancionActual = item;
+                    home.reproducirCancion();
                 } else {
 
                 }

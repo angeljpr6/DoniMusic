@@ -348,7 +348,7 @@ public class ListaDeCanciones {
     private int obtenerIndiceCancion(Cancion cancion, List<Cancion> cancionesEnLista) {
         // Recorre manualmente la lista para encontrar la posición de la canción
         for (int i = 0; i < cancionesEnLista.size(); i++) {
-            if (cancionesEnLista.get(i).equals(cancion)) {
+            if (cancionesEnLista.get(i).getId() == (cancion.getId())) {
                 return i;
             }
         }
