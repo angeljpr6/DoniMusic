@@ -13,6 +13,7 @@
     <children>
         <Pane prefHeight="412.0" prefWidth="600.0" style="-fx-background-color: #212628;">
             <children>
+            <CheckBox fx:id="recordarCuenta" layoutX="185.0" layoutY="257.0" mnemonicParsing="false" text="Recordarme" textFill="WHITE" />
                 <Label fx:id="artistaBtn" layoutX="502.0" layoutY="378.0" onMouseClicked="#abrirInicioArtista" onMouseEntered="#cambiarCursorManoArtista" onMouseExited="#cambiarCursorDefault" text="Soy un artista" textFill="WHITE" underline="true">
                     <font>
                         <Font name="Yu Gothic UI Regular" size="14.0" />
@@ -72,7 +73,6 @@
                         </Label>
                     </children>
                 </AnchorPane>
-            <CheckBox fx:id="recordarCuenta" layoutX="185.0" layoutY="257.0" mnemonicParsing="false" text="Recordarme" textFill="WHITE" />
             </children>
         </Pane>
     </children>
