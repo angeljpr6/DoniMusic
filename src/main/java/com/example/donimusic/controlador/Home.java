@@ -32,6 +32,7 @@ public class Home implements Initializable {
     public static Usuario usuario = new Usuario();
     public static Cancion cancionActual = null;
     public static ListaDeCanciones listaActual = null;
+    public static boolean reproduciendo = false;
     public Label inicioLabel;
     public Pane atrasCircle;
     public Label atrasMensaje;
@@ -84,7 +85,6 @@ public class Home implements Initializable {
     public TextField buscarNCTextFieldPl;
     public TableView tablaAnadirCancionPlayLPrin;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
-    public static boolean reproduciendo = false;
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
     private ArrayList<Cancion> cancionesAnadirNewPlaylist = new ArrayList<>();
@@ -605,7 +605,7 @@ public class Home implements Initializable {
         cancionActual = listaActual.siguiente(cancionActual);
         reproducirCancion();
         int indiceSeleccionado = playlistPrinListView.getSelectionModel().getSelectedIndex();
-        playlistPrinListView.getSelectionModel().select(indiceSeleccionado+1);
+        playlistPrinListView.getSelectionModel().select(indiceSeleccionado + 1);
     }
 
     public void anteriorCancion(MouseEvent mouseEvent) {
@@ -613,7 +613,7 @@ public class Home implements Initializable {
         cancionActual = listaActual.atras(cancionActual);
         reproducirCancion();
         int indiceSeleccionado = playlistPrinListView.getSelectionModel().getSelectedIndex();
-        playlistPrinListView.getSelectionModel().select(indiceSeleccionado-1);
+        playlistPrinListView.getSelectionModel().select(indiceSeleccionado - 1);
     }
 
     public void obtenerCancionBusqueda(MouseEvent mouseEvent) {

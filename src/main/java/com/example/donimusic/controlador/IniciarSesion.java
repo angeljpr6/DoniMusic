@@ -35,9 +35,9 @@ import java.util.ResourceBundle;
  * Background color: #212628
  */
 public class IniciarSesion implements Initializable {
+    private static final Connection a = ConexionSqlite.con;
     private static boolean logoCargado = false;
     private static Connection c = Conexion.con;
-
     public Label registroBtn;
     public Pane iconoError;
     public Pane errorUsuarioInexist;
@@ -49,7 +49,6 @@ public class IniciarSesion implements Initializable {
     public Pane imagenLogo;
     public Label artistaBtn;
     public CheckBox recordarCuenta;
-    private static final Connection a = ConexionSqlite.con;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,7 +63,7 @@ public class IniciarSesion implements Initializable {
             logoCargado = true;
         }
 
-        if (hayDatosEnTabla()){
+        if (hayDatosEnTabla()) {
             rellenarDatos();
             recordarCuenta.setSelected(true);
         }
@@ -110,21 +109,21 @@ public class IniciarSesion implements Initializable {
 
     public void iniciarSesion(MouseEvent mouseEvent) throws IOException {
         PreparedStatement stm;
-        String textoNombre=usuarioTextField.getText();
-        String textoCont=contrasenaTextField.getText();
+        String textoNombre = usuarioTextField.getText();
+        String textoCont = contrasenaTextField.getText();
         try {
             stm = c.prepareStatement("SELECT * FROM usuario");
             ResultSet result = stm.executeQuery();
             while (result.next()) {
-                String nombre=result.getString("nombreUsuario");
-                String password=result.getString("contraseña");
+                String nombre = result.getString("nombreUsuario");
+                String password = result.getString("contraseña");
 
-                if(nombre.equals(textoNombre) && password.equals(textoCont)){
+                if (nombre.equals(textoNombre) && password.equals(textoCont)) {
                     Home.usuario = new Usuario(usuarioTextField.getText(), contrasenaTextField.getText());
                     if (recordarCuenta.isSelected()) {
                         comprobarYInsertarUsuario(usuarioTextField.getText(), contrasenaTextField.getText());
-                    }else {
-                        if (hayDatosEnTabla()){
+                    } else {
+                        if (hayDatosEnTabla()) {
                             borrarUsuario();
                         }
                     }
@@ -139,7 +138,7 @@ public class IniciarSesion implements Initializable {
                     Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
 
                     myStage.close();
-                }else errorUsuarioInexist.setVisible(true);
+                } else errorUsuarioInexist.setVisible(true);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -165,14 +164,14 @@ public class IniciarSesion implements Initializable {
     }
 
 
-    public void insertarUsuario(String nombreUsuario,String password) {
+    public void insertarUsuario(String nombreUsuario, String password) {
         try {
             PreparedStatement stm = a.prepareStatement("INSERT INTO usuario (nombreUsuario, contraseña) VALUES (?, ?)");
-            stm.setString(1,nombreUsuario);
+            stm.setString(1, nombreUsuario);
             stm.setString(2, password);
             stm.execute();
 
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -184,7 +183,7 @@ public class IniciarSesion implements Initializable {
             stm.execute();
 
 
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -207,7 +206,7 @@ public class IniciarSesion implements Initializable {
         }
     }
 
-    private boolean hayDatosEnTabla()  {
+    private boolean hayDatosEnTabla() {
         String consulta = "SELECT COUNT(*) FROM usuario";
         try (PreparedStatement stm = a.prepareStatement(consulta);
              ResultSet result = stm.executeQuery()) {
@@ -219,7 +218,8 @@ public class IniciarSesion implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    private void rellenarDatos(){
+
+    private void rellenarDatos() {
         String consulta = "SELECT * FROM usuario";
         try (PreparedStatement stm = a.prepareStatement(consulta);
              ResultSet result = stm.executeQuery()) {

@@ -17,7 +17,7 @@ public class CustomCellCan extends ListCell<Cancion> {
     private final Label duracionLabel;
 
     public CustomCellCan(Home home) {
-        this.home=home;
+        this.home = home;
         hbox = new HBox();
 
         nombreLabel = new Label();
@@ -63,10 +63,10 @@ public class CustomCellCan extends ListCell<Cancion> {
                 albumLabel.setTextFill(Color.WHITE);
                 duracionLabel.setTextFill(Color.WHITE);
                 if (item != null) {
-                    if (Home.cancionActual!=null){
+                    if (Home.cancionActual != null) {
                         Home.cancionActual.setRuta("");
                     }
-                    if (Home.reproduciendo){
+                    if (Home.reproduciendo) {
                         home.reproducirCancion();
                     }
                     Home.cancionActual = item;

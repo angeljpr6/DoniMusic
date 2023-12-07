@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 
 public class ConexionSqlite {
 
-    public static Connection con;
     private final static String url = "jdbc:sqlite:src/main/resources/BaseDeDatos/recuerdaUsuario.db";
+    public static Connection con;
 
     public Connection conectar() {
         con = null;
@@ -20,7 +20,7 @@ public class ConexionSqlite {
             if (con != null) {
 
             }
-        } catch ( SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ConexionSqlite.class.getName()).log(Level.SEVERE, null, ex);
         }
         return con;

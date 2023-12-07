@@ -9,8 +9,9 @@ import javafx.util.Callback;
 public class CustomCellFactoryCan implements Callback<ListView<Cancion>, ListCell<Cancion>> {
 
     private final Home home;
+
     public CustomCellFactoryCan(Home home) {
-        this.home=home;
+        this.home = home;
     }
 
     @Override
