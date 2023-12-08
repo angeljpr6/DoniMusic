@@ -88,6 +88,8 @@ public class Home implements Initializable {
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
     private ArrayList<Cancion> cancionesAnadirNewPlaylist = new ArrayList<>();
+    private TableColumn<String, String> columnaNombrePlaylist1 = new TableColumn<>("Nombre");
+    private TableColumn<String, String> columnaArtista1 = new TableColumn<>("Artista");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -123,28 +125,28 @@ public class Home implements Initializable {
     }
 
     public void inicializarColumnaBusqPrinc() {
-        columnaNombrePlaylist.setResizable(true);
-        columnaNombrePlaylist.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
-        columnaNombrePlaylist.setMinWidth(600);
+        columnaNombrePlaylist1.setResizable(true);
+        columnaNombrePlaylist1.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
+        columnaNombrePlaylist1.setMinWidth(600);
 
         // Configurar CellValueFactory para obtener el nombre de la canción
-        columnaNombrePlaylist.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaNombrePlaylist1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
         // Añadir una nueva columna para mostrar el artista de la canción
-        columnaArtista.setCellValueFactory(new PropertyValueFactory<>("nombreArtista"));
-        columnaArtista.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
-        columnaArtista.setMinWidth(142);
+        columnaArtista1.setCellValueFactory(new PropertyValueFactory<>("nombreArtista"));
+        columnaArtista1.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
+        columnaArtista1.setMinWidth(142);
 
 
         // Agregar las columnas al TableView
-        tablaBusquedaPrin.getColumns().addAll(columnaNombrePlaylist, columnaArtista);
+        tablaBusquedaPrin.getColumns().addAll(columnaNombrePlaylist1, columnaArtista1);
     }
 
     public void inciarColumnAnadirPlayList() {
         columnaNombrePlaylist.setResizable(true);
         columnaNombrePlaylist.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
-        columnaNombrePlaylist.setMinWidth(1);
-        columnaNombrePlaylist.setMaxWidth(100);
+        columnaNombrePlaylist.setMinWidth(100);
+        columnaNombrePlaylist.setMaxWidth(200);
 
         // Configurar CellValueFactory para obtener el nombre de la canción
         columnaNombrePlaylist.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -152,8 +154,8 @@ public class Home implements Initializable {
         // Añadir una nueva columna para mostrar el artista de la canción
         columnaArtista.setCellValueFactory(new PropertyValueFactory<>("nombreArtista"));
         columnaArtista.setStyle("-fx-background-color: #383c41; -fx-text-fill: white;");
-        columnaArtista.setMinWidth(1);
-        columnaArtista.setMaxWidth(98);
+        columnaArtista.setMinWidth(100);
+        columnaArtista.setMaxWidth(100);
 
 
         // Agregar las columnas al TableView
@@ -584,8 +586,8 @@ public class Home implements Initializable {
         for (Cancion l : listaDeCancionesArrayList) {
             listaCanciones.add(l);
         }
-        tablaBusquedaPrin.getColumns().add(columnaNombrePlaylist);
-        tablaBusquedaPrin.getColumns().add(columnaArtista);
+        tablaBusquedaPrin.getColumns().add(columnaNombrePlaylist1);
+        tablaBusquedaPrin.getColumns().add(columnaArtista1);
         tablaBusquedaPrin.setItems(listaCanciones);
         tablaBusquedaPrin.setVisible(true);
     }
