@@ -32,10 +32,17 @@ public class Cancion {
 
     }
 
+
+    /**
+     * Métedo para buscar canciones por nombre
+     * @param busqueda
+     * @return
+     */
     public static ArrayList<Cancion> buscarCancion(String busqueda) {
         ArrayList<Cancion> canciones = new ArrayList<>();
         PreparedStatement stm;
         try {
+            //se busca en los nombres de las canciones segun el nombre que se le pasa al metodo
             stm = c.prepareStatement("SELECT * FROM cancion WHERE nombreCancion LIKE '" + busqueda + "%';");
             ResultSet result = stm.executeQuery();
             while (result.next()) {
@@ -56,6 +63,9 @@ public class Cancion {
 
     }
 
+    /**
+     * Método para descargar el mp3 de la base de datos
+     */
     public void descargarCancion() {
         File tempFile = null;
         try {
@@ -88,6 +98,11 @@ public class Cancion {
         }
     }
 
+
+    /**
+     * Método para reproducir la cancion llamando a los
+     * métodos necesarios
+     */
     public void reproducirCancion() {
         this.descargarCancion();
         File archivo = new File(this.ruta);
@@ -96,10 +111,15 @@ public class Cancion {
         mediaPlayer.play();
     }
 
+    /**
+     * Método para pausar la cancion
+     */
     public void pausarCancion() {
         mediaPlayer.pause();
     }
-
+    /**
+     * Método para pausar la cancion
+     */
     public void playCancion() {
         mediaPlayer.play();
     }

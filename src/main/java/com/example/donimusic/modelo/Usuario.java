@@ -22,9 +22,14 @@ public class Usuario {
     public Usuario() {
     }
 
+    /**
+     * Método para crear usuario
+     * @return
+     */
     public boolean crearUsuario() {
         PreparedStatement stm;
         try {
+            //Se inserta en la base de datos los datos del usuario
 
             stm = c.prepareStatement("insert into usuario values(?,?);");
             stm.setString(1, nombre);
@@ -42,6 +47,10 @@ public class Usuario {
         return true;
     }
 
+    /**
+     * Método que devuelve la lista del los usuarios registrados
+     * @return
+     */
     public ArrayList<ListaDeCanciones> obtenerListasUsuario() {
         ArrayList<ListaDeCanciones> arrayListaDeCanciones = new ArrayList<>();
         try {

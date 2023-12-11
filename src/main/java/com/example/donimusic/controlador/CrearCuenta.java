@@ -49,14 +49,20 @@ public class CrearCuenta implements Initializable {
 
     }
 
-
+    /**
+     * Boton de registrarse
+     * @param actionEvent
+     * @throws IOException
+     */
     public void registrarse(ActionEvent actionEvent) throws IOException {
         errorContrasena.setVisible(false);
         errorUsuarioExist.setVisible(false);
+        //Se comprueba que los credenciales no esten en blanco
         if (!contrasenaRegis.getText().isBlank() && !usuarioRegis.getText().isBlank()) {
             if (contrasenaRegis.getText().equals(confirmContrasenaRegis.getText())) {
                 Home.usuario.setNombre(usuarioRegis.getText());
                 Home.usuario.setPassword(contrasenaRegis.getText());
+                //se abre el home si el usuario se registra correctamente
                 if (Home.usuario.crearUsuario()) {
                     abrirHome();
                 } else errorUsuarioExist.setVisible(true);
@@ -66,6 +72,10 @@ public class CrearCuenta implements Initializable {
         }
     }
 
+    /**
+     * Método para abrir home
+     * @throws IOException
+     */
     public void abrirHome() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
         Parent root = loader.load();
@@ -79,6 +89,11 @@ public class CrearCuenta implements Initializable {
         myStage.close();
     }
 
+    /**
+     * Botón para volver a iniciar sesion
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void AbrirInterfazInicio(MouseEvent mouseEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/iniciarSesion.fxml"));
         Parent root = loader.load();
@@ -94,6 +109,10 @@ public class CrearCuenta implements Initializable {
 
     }
 
+    /**
+     * Método para cambiar el tipo de cursor
+     * @param mouseEvent
+     */
     public void cambiarCursorMano(MouseEvent mouseEvent) {
         salirRegistro.setCursor(Cursor.HAND);
 
