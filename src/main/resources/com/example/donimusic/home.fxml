@@ -206,5 +206,23 @@
             <Font size="17.0" />
          </font>
       </Label>
+      <Button layoutX="1082.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#abrirAjustes" text="Ajustes" />
+      <Pane fx:id="ajustesPane" layoutX="433.0" layoutY="83.0" prefHeight="540.0" prefWidth="452.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
+         <children>
+            <Label fx:id="nomUsuAjust" layoutX="32.0" layoutY="31.0" text="NombreUsuario" textFill="WHITE" />
+            <Button layoutX="32.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#cambContra" text="Cambiar Contraseña" />
+            <TextField fx:id="antContra" disable="true" layoutX="26.0" layoutY="214.0" />
+            <TextField fx:id="nuevContra" disable="true" layoutX="26.0" layoutY="270.0" />
+            <Label layoutX="32.0" layoutY="182.0" text="Antigua Contraseña" textFill="WHITE" />
+            <Label layoutX="32.0" layoutY="245.0" text="Nueva Contraseña" textFill="WHITE" />
+            <Button fx:id="acepContBtn" disable="true" layoutX="74.0" layoutY="325.0" mnemonicParsing="false" onMouseClicked="#acepContra" text="Aceptar" />
+            <Button layoutX="276.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#cambUsu" text="Cambiar usuario" />
+            <TextField fx:id="nuevNombre" disable="true" layoutX="253.0" layoutY="217.0" />
+            <Label disable="true" layoutX="257.0" layoutY="185.0" textFill="WHITE" />
+            <Label layoutX="243.0" layoutY="182.0" text="Introduce el nombre de usuario" textFill="WHITE" />
+            <Button fx:id="acepUsuBtn" disable="true" layoutX="299.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#acepUsuNom" text="Aceptar" />
+            <Button layoutX="217.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#cerrarAju" text="Cerrar" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

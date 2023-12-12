@@ -85,6 +85,13 @@ public class Home implements Initializable {
     public TextField buscarNCTextFieldPl;
     public TableView tablaAnadirCancionPlayLPrin;
     public Label nomUsu;
+    public Label nomUsuAjust;
+    public Pane ajustesPane;
+    public TextField antContra;
+    public TextField nuevContra;
+    public TextField nuevNombre;
+    public Button acepUsuBtn;
+    public Button acepContBtn;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
@@ -94,6 +101,7 @@ public class Home implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        nomUsuAjust.setText(usuario.getNombre());
         nomUsu.setText(usuario.getNombre());
         labelSeleccionado.add(inicioLabel);
         crearBotonAtras();
@@ -796,4 +804,31 @@ public class Home implements Initializable {
     }
 
 
+    public void abrirAjustes(MouseEvent mouseEvent) {
+        ajustesPane.setVisible(true);
+    }
+
+    public void cambContra(MouseEvent mouseEvent) {
+        antContra.setDisable(true);
+        nuevContra.setDisable(true);
+        acepContBtn.setDisable(true);
+    }
+
+    public void acepContra(MouseEvent mouseEvent) {
+        if (antContra.equals(usuario.getPassword())){
+            // TODO: 12/12/2023
+        }
+    }
+
+    public void cambUsu(MouseEvent mouseEvent) {
+        nuevNombre.setDisable(true);
+        acepUsuBtn.setDisable(true);
+    }
+
+    public void acepUsuNom(MouseEvent mouseEvent) {
+    }
+
+    public void cerrarAju(MouseEvent mouseEvent) {
+        ajustesPane.setVisible(false);
+    }
 }
