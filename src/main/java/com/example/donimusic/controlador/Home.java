@@ -288,6 +288,9 @@ public class Home implements Initializable {
     }
 
     public void rellenarPlayList(List<Cancion> canciones) {
+        anadirNuevaCancionPlBtn.setDisable(false);
+        anadirNuevaCancionPlBtn.setVisible(true);
+
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
@@ -388,11 +391,17 @@ public class Home implements Initializable {
         cambiarCursorDefault(mouseEvent);
     }
     public void abrirRock(MouseEvent mouseEvent) {
-        ListaDeCanciones listaDeCanciones = (ListaDeCanciones) playlistListView.getSelectionModel().selectedItemProperty().getValue();
-        listaActual = listaDeCanciones;
-        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaDeCanciones.getId());
+        Usuario doniol=new Usuario("doniol","1234");
+        ArrayList<ListaDeCanciones> listaDeCancionesArrayList = doniol.obtenerListasUsuario();
+        for (ListaDeCanciones l : listaDeCancionesArrayList) {
+            if (l.getId() == 1) {
+                listaActual = l;
+            }
+        }
+        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
-        System.out.println(listaDeCanciones.getId());
+        anadirNuevaCancionPlBtn.setDisable(true);
+        anadirNuevaCancionPlBtn.setVisible(false);
     }
 
     public void fumonEntered(MouseEvent mouseEvent) {
@@ -413,6 +422,9 @@ public class Home implements Initializable {
         }
         List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
+
+        anadirNuevaCancionPlBtn.setDisable(true);
+        anadirNuevaCancionPlBtn.setVisible(false);
     }
 
     public void enEspanolEntered(MouseEvent mouseEvent) {
@@ -422,6 +434,21 @@ public class Home implements Initializable {
     public void enEspanolExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
     }
+    public void abrirEspanol(MouseEvent mouseEvent) {
+        Usuario doniol=new Usuario("doniol","1234");
+        ArrayList<ListaDeCanciones> listaDeCancionesArrayList = doniol.obtenerListasUsuario();
+        for (ListaDeCanciones l : listaDeCancionesArrayList) {
+            if (l.getId() == 2) {
+                listaActual = l;
+            }
+        }
+        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
+        rellenarPlayList(canciones);
+
+        anadirNuevaCancionPlBtn.setDisable(true);
+        anadirNuevaCancionPlBtn.setVisible(false);
+    }
+
 
     public void rapEntered(MouseEvent mouseEvent) {
         cambiarCursorMano(mouseEvent, rapPane);
@@ -429,6 +456,20 @@ public class Home implements Initializable {
 
     public void rapExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
+    }
+    public void abrirRap(MouseEvent mouseEvent) {
+        Usuario doniol=new Usuario("doniol","1234");
+        ArrayList<ListaDeCanciones> listaDeCancionesArrayList = doniol.obtenerListasUsuario();
+        for (ListaDeCanciones l : listaDeCancionesArrayList) {
+            if (l.getId() == 1) {
+                listaActual = l;
+            }
+        }
+        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
+        rellenarPlayList(canciones);
+
+        anadirNuevaCancionPlBtn.setDisable(true);
+        anadirNuevaCancionPlBtn.setVisible(false);
     }
 
     public void crearPlaylist(MouseEvent mouseEvent) {
