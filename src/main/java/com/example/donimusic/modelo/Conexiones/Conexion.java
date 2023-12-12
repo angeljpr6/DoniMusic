@@ -11,7 +11,7 @@ public class Conexion {
     private static final String drive = "com.mysql.cj.jdbc.Driver";
     private static final String user = "conct";
     private static final String pass = "1234";
-    private static final String url = "jdbc:mysql://192.168.85.216:3306/donimusic?characterEncoding=utf8";
+    private static final String url = "jdbc:mysql://127.0.0.1:3306/donimusic?characterEncoding=utf8";
     public static Connection con;
 
     public Connection conectar() {

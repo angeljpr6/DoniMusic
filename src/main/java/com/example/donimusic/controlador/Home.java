@@ -442,7 +442,7 @@ public class Home implements Initializable {
                 listaActual = l;
             }
         }
-        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
+        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(2);
         rellenarPlayList(canciones);
 
         anadirNuevaCancionPlBtn.setDisable(true);

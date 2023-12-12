@@ -37,7 +37,8 @@ public class ListaDeCanciones {
                     int id = rs.getInt(1);
 
                     // Llamar al método para establecer la relación en la tabla playListUsuarios
-                    obtenerIdLista(nombreLista, usuario);
+
+                    establecerRelacionPlayListUsuario(obtenerIdLista(nombreLista, usuario),usuario);
                 } else {
                     System.out.println("No se pudo obtener el ID de la lista de canciones.");
                 }
@@ -64,8 +65,7 @@ public class ListaDeCanciones {
                 // Obtener el ID de la lista
                 int idLista = rs.getInt("listaId");
 
-                // Llamar al método para establecer la relación en la tabla playListUsuarios
-                establecerRelacionPlayListUsuario(idLista, nombreUsuario);
+
 
                 // Retornar el ID de la lista
                 return idLista;

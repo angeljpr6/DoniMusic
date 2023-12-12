@@ -59,7 +59,7 @@ public class Usuario {
                     "JOIN playListUsuarios ON lista.listaId = playListUsuarios.listaId " +
                     "WHERE playListUsuarios.nombreUsuario = ?;";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
-                stm.setString(1, Home.usuario.getNombre());
+                stm.setString(1, nombre);
                 String nombreLista = "", autorLista = "";
                 int idLista = 0;
 
