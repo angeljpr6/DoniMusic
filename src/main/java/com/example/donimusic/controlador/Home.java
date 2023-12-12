@@ -387,6 +387,13 @@ public class Home implements Initializable {
     public void rockExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
     }
+    public void abrirRock(MouseEvent mouseEvent) {
+        ListaDeCanciones listaDeCanciones = (ListaDeCanciones) playlistListView.getSelectionModel().selectedItemProperty().getValue();
+        listaActual = listaDeCanciones;
+        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaDeCanciones.getId());
+        rellenarPlayList(canciones);
+        System.out.println(listaDeCanciones.getId());
+    }
 
     public void fumonEntered(MouseEvent mouseEvent) {
         cambiarCursorMano(mouseEvent, fumonPane);
@@ -394,6 +401,18 @@ public class Home implements Initializable {
 
     public void fumonExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
+    }
+
+    public void abrirFumon(MouseEvent mouseEvent) {
+        Usuario doniol=new Usuario("doniol","1234");
+        ArrayList<ListaDeCanciones> listaDeCancionesArrayList = doniol.obtenerListasUsuario();
+        for (ListaDeCanciones l : listaDeCancionesArrayList) {
+            if (l.getId() == 1) {
+                listaActual = l;
+            }
+        }
+        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
+        rellenarPlayList(canciones);
     }
 
     public void enEspanolEntered(MouseEvent mouseEvent) {
@@ -733,4 +752,6 @@ public class Home implements Initializable {
         tablaAnadirCancionPlayLPrin.setItems(listaCanciones);
         tablaAnadirCancionPlayLPrin.setVisible(true);
     }
+
+
 }
