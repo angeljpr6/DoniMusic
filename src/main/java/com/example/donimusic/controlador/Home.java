@@ -84,6 +84,7 @@ public class Home implements Initializable {
     public Button buscarBtn3;
     public TextField buscarNCTextFieldPl;
     public TableView tablaAnadirCancionPlayLPrin;
+    public Label nomUsu;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
@@ -93,7 +94,7 @@ public class Home implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        nomUsu.setText(usuario.getNombre());
         labelSeleccionado.add(inicioLabel);
         crearBotonAtras();
         rellenarPanelTusPlayList();
