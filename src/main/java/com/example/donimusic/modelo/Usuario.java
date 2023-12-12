@@ -1,18 +1,19 @@
 package com.example.donimusic.modelo;
 
 import com.example.donimusic.controlador.Home;
+import com.example.donimusic.modelo.Conexiones.Conexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Usuario {
+    private static Connection c = Conexion.con;
     String nombre;
     String password;
-    private static Connection c= Conexion.con;
+
     public Usuario(String nombre, String password) {
         this.nombre = nombre;
         this.password = password;
@@ -21,12 +22,17 @@ public class Usuario {
     public Usuario() {
     }
 
-    public boolean crearUsuario(){
+    /**
+     * Método para crear usuario
+     * @return
+     */
+    public boolean crearUsuario() {
         PreparedStatement stm;
         try {
+            //Se inserta en la base de datos los datos del usuario
 
-            stm=c.prepareStatement("insert into usuario values(?,?);");
-            stm.setString(1,nombre);
+            stm = c.prepareStatement("insert into usuario values(?,?);");
+            stm.setString(1, nombre);
             stm.setString(2, password);
             stm.execute();
 
@@ -40,23 +46,30 @@ public class Usuario {
         }
         return true;
     }
-    public ArrayList<ListaDeCanciones> obtenerListasUsuario(){
+
+    /**
+     * Método que devuelve la lista del los usuarios registrados
+     * @return
+     */
+    public ArrayList<ListaDeCanciones> obtenerListasUsuario() {
         ArrayList<ListaDeCanciones> arrayListaDeCanciones = new ArrayList<>();
         try {
-            String sql = "SELECT lista.nombreUsuario, lista.nombre " +
+            String sql = "SELECT * " +
                     "FROM lista " +
                     "JOIN playListUsuarios ON lista.listaId = playListUsuarios.listaId " +
-                    "WHERE playListUsuarios.nombreUsuario = ?;";  // Quité las comillas alrededor del signo de interrogación
+                    "WHERE playListUsuarios.nombreUsuario = ?;";
             try (PreparedStatement stm = c.prepareStatement(sql)) {
                 stm.setString(1, Home.usuario.getNombre());
-                String nombreLista="",autorLista="";
+                String nombreLista = "", autorLista = "";
+                int idLista = 0;
 
                 try (ResultSet resultSet = stm.executeQuery()) {
                     while (resultSet.next()) {
 
                         autorLista = resultSet.getString("nombreUsuario");
                         nombreLista = resultSet.getString("nombre");
-                        arrayListaDeCanciones.add(new ListaDeCanciones(nombreLista,autorLista));
+                        idLista = resultSet.getInt("listaId");
+                        arrayListaDeCanciones.add(new ListaDeCanciones(idLista, nombreLista, autorLista));
 
                     }
                 }
@@ -84,24 +97,5 @@ public class Usuario {
         this.password = password;
     }
 
-
-    public void eliminarLista(ListaDeCanciones listaDeCanciones){
-    listaDeCanciones.eliminarLista();
-    }
-    public void crearLista(ListaDeCanciones listaDeCanciones) {
-         listaDeCanciones.crearLista(nombre);
-    }
-    public void addCancion(ListaDeCanciones listaDeCanciones,Cancion cancion) {
-        listaDeCanciones.addCancion(cancion.getId());
-    }
-    public void eliminarCancion(ListaDeCanciones listaDeCanciones,Cancion cancion) {
-        listaDeCanciones.eliminarCancion(cancion.getId());
-    }
-    public void buscarCancionEnLista(ListaDeCanciones listaDeCanciones,Cancion cancion){
-
-        //Este metodo debería retornar un arrayList de canciones así que si lo usas recuerda guardar los resultados
-
-        listaDeCanciones.buscarCancion(cancion.getNombre(),listaDeCanciones.getId());
-    }
 
 }

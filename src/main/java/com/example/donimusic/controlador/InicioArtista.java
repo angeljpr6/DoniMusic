@@ -1,6 +1,6 @@
 package com.example.donimusic.controlador;
 
-import com.example.donimusic.modelo.Conexion;
+import com.example.donimusic.modelo.Conexiones.Conexion;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -24,14 +23,14 @@ import java.util.ResourceBundle;
 
 public class InicioArtista implements Initializable {
 
+    @FXML
+    private static Connection c = Conexion.con;
     public Pane iconoError;
     public Pane errorUsuarioInexist;
     public Pane iconoError1;
     public TextField usuarioTextField;
     public PasswordField contrasenaTextField;
     public Label noArtistaBtn;
-    @FXML
-    private static Connection c= Conexion.con;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,6 +53,7 @@ public class InicioArtista implements Initializable {
         Stage myStage = (Stage) this.iconoError.getScene().getWindow();
         myStage.close();
     }
+
     public void cambiarCursorMano(MouseEvent mouseEvent) {
         noArtistaBtn.setCursor(Cursor.HAND);
     }
@@ -61,6 +61,7 @@ public class InicioArtista implements Initializable {
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
         noArtistaBtn.setCursor(Cursor.DEFAULT);
     }
+
     public void abrirInicioSesion(MouseEvent mouseEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/iniciarSesion.fxml"));
         Parent root = loader.load();

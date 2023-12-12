@@ -1,188 +1,302 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane prefHeight="855.0" prefWidth="1341.0" style="-fx-background-color: #181818;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.donimusic.controlador.Home">
-   <children>
-      <Pane fx:id="panelPrincipal" layoutY="737.0" prefHeight="118.0" prefWidth="1341.0" style="-fx-background-color: black;">
-         <children>
-            <Label fx:id="nombreCancion" layoutX="110.0" layoutY="27.0" text="Nombre de la cancion" textFill="WHITE">
-               <font>
-                  <Font name="Yu Gothic UI Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="autorCancion" layoutX="110.0" layoutY="51.0" text="Autor" textFill="WHITE">
-               <font>
-                  <Font name="Yu Gothic UI Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="anadirFavLabel" layoutX="265.0" layoutY="20.0" onMouseClicked="#anadirFavoritos" onMouseEntered="#anadirFavEntered" onMouseExited="#anadirFavExited" prefHeight="32.0" prefWidth="142.0" text="Añadir Favoritos" textFill="#838383" />
-            <Button fx:id="botonReproducir" layoutX="651.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#reproducirCancion" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(0,0,0,0);" />
-         </children></Pane>
-      <Pane fx:id="controlAppPane" layoutX="14.0" layoutY="62.0" prefHeight="649.0" prefWidth="286.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
-         <children>
-            <Label fx:id="inicioLabel" layoutX="42.0" layoutY="25.0" onMouseClicked="#irInicio" onMouseEntered="#inicioEntered" onMouseExited="#inicioExited" text="Inicio" textFill="WHITE">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <Label fx:id="crearPlaylistLabel" layoutX="42.0" layoutY="62.0" onMouseClicked="#crearPlaylist" onMouseEntered="#crearPlaylistEntered" onMouseExited="#crearPlaylistExited" text="Crear Playlist" textFill="#838383">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <Label fx:id="cancionesFavLabel" layoutX="42.0" layoutY="98.0" onMouseClicked="#abrirFavoritos" onMouseEntered="#cancionesFavoritasEntered" onMouseExited="#cancionesFavoritasExited" text="Canciones Favoritas" textFill="#838383">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <Line endX="100.0" layoutX="134.0" layoutY="131.0" startX="-100.0" />
-            <ListView fx:id="playlistListView" layoutX="43.0" layoutY="150.0" maxHeight="450.0" prefHeight="50.0" prefWidth="243.0" />
-         </children>
-      </Pane>
-      <Pane fx:id="inicioPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
-         <children>
-            <Pane layoutX="90.0" layoutY="71.0" prefHeight="118.0" prefWidth="815.0" style="-fx-background-color: #383c41; -fx-background-radius: 5px;">
-               <children>
-                  <Label fx:id="nombrePlaylistHist" layoutX="65.0" layoutY="25.0" prefHeight="32.0" prefWidth="712.0" text="Nombre de la playlist" textFill="WHITE">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="autorPlaylistHist" layoutX="65.0" layoutY="68.0" prefHeight="26.0" prefWidth="722.0" text="Autor de la playlist" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <Label layoutX="90.0" layoutY="31.0" text="Ultima playlist escuchada" textFill="#838383">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
-            <Button fx:id="buscarBtn" layoutX="90.0" layoutY="217.0" mnemonicParsing="false" onMouseClicked="#buscarCancion" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(0, 0, 0, 0);" />
-            <Pane fx:id="rockPane" layoutX="60.0" layoutY="351.0" onMouseEntered="#rockEntered" onMouseExited="#rockExited" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2e5010; -fx-background-radius: 7px;">
-               <children>
-                  <Label layoutX="80.0" layoutY="160.0" prefHeight="26.0" prefWidth="40.0" text="Rock" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Pane fx:id="rockImagen" layoutX="29.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
-               </children>
-            </Pane>
-            <Pane fx:id="fumonPane" layoutX="272.0" layoutY="351.0" onMouseEntered="#fumonEntered" onMouseExited="#fumonExited" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #6d5015; -fx-background-radius: 7px;">
-               <children>
-                  <Label layoutX="76.0" layoutY="160.0" prefHeight="26.0" prefWidth="49.0" text="Fumon" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Pane fx:id="fumonImagen" layoutX="30.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
-               </children>
-            </Pane>
-            <Pane fx:id="enEspanolPane" layoutX="483.0" layoutY="351.0" onMouseEntered="#enEspanolEntered" onMouseExited="#enEspanolExited" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ae1a1a; -fx-background-radius: 7px;">
-               <children>
-                  <Label layoutX="64.0" layoutY="160.0" prefHeight="26.0" prefWidth="73.0" text="En español" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Pane fx:id="enEspanolImagen" layoutX="30.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
-               </children>
-            </Pane>
-            <Pane fx:id="rapPane" layoutX="693.0" layoutY="351.0" onMouseEntered="#rapEntered" onMouseExited="#rapExited" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #155b6d; -fx-background-radius: 7px;">
-               <children>
-                  <Label layoutX="88.0" layoutY="160.0" prefHeight="26.0" prefWidth="31.0" text="Rap" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Pane fx:id="rapImagen" layoutX="33.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0" style="-fx-background-color: black;" />
-               </children>
-            </Pane>
-            <TableView fx:id="tablaBusquedaPrin" layoutX="150.0" layoutY="224.0" prefHeight="251.0" prefWidth="744.0" style="-fx-background-color: #383c41; -fx-text-fill: black;" visible="false" />
-            <TextField fx:id="buscarTextField" layoutX="139.0" layoutY="224.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="766.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
-         </children>
-      </Pane>
-      <Label fx:id="atrasMensaje" layoutX="332.0" layoutY="36.0" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: black; -fx-alignment: center;" text="Atrás" textFill="#838383" visible="false">
-         <font>
-            <Font name="Yu Gothic UI Bold" size="15.0" />
-         </font>
-      </Label>
-      <Pane fx:id="logo" layoutX="28.0" layoutY="7.0" prefHeight="49.0" prefWidth="49.0" />
-      <Pane fx:id="playlistPrincipalPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
-         <children>
-            <Label fx:id="nombrePlaylistPrin" layoutX="68.0" layoutY="36.0" text="Nombre de la Playlist" textFill="WHITE">
-               <font>
-                  <Font name="Yu Gothic UI Bold" size="31.0" />
-               </font>
-            </Label>
-            <Label fx:id="autorPlaylistPrin" layoutX="68.0" layoutY="89.0" text="Autor" textFill="WHITE">
-               <font>
-                  <Font name="Yu Gothic UI Bold" size="22.0" />
-               </font>
-            </Label>
-            <ScrollPane layoutX="68.0" layoutY="176.0" prefHeight="454.0" prefWidth="885.0" style="-fx-background-color: #383c41; -fx-background: #383c41;" />
-            <Label layoutX="111.0" layoutY="153.0" prefHeight="20.0" prefWidth="393.0" text="Nombre" textFill="#c9c9c9">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="511.0" layoutY="153.0" prefHeight="20.0" prefWidth="348.0" text="Autor" textFill="#c9c9c9">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="866.0" layoutY="153.0" prefHeight="20.0" prefWidth="57.0" text="Duracion" textFill="#c9c9c9">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="crearPlaylistPane" layoutX="366.0" layoutY="120.0" prefHeight="531.0" prefWidth="610.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
-         <children>
-            <TextField fx:id="nombreNuevaPlaylist" layoutX="28.0" layoutY="21.0" onMouseClicked="#vaciarNombreNuevaPlaylist" promptText="Nombre de la Playlist" style="-fx-background-color: 101010; -fx-text-fill: #838383;" text="Nombre de la Playlist">
-               <font>
-                  <Font name="Yu Gothic UI Bold" size="26.0" />
-               </font>
-            </TextField>
-            <Button fx:id="guardarNuevaPlaylistBtn" layoutX="537.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#guardarNuevaPlaylist" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />
-            <Pane fx:id="anadirNuevaCancionBtn" layoutX="57.0" layoutY="90.0" onMouseClicked="#anadirNuevaCancion" onMouseEntered="#anadirNuevaCancionEntered" onMouseExited="#anadirNuevaCancionExited" prefHeight="64.0" prefWidth="64.0" />
-            <Button fx:id="cancelarNuevaPlaylistBtn1" layoutX="466.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaPlaylist" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Cancelar" />
-            <ScrollPane fx:id="cancionesAnadidas" layoutX="47.0" layoutY="166.0" prefHeight="309.0" prefWidth="552.0" style="-fx-background: #383c41; -fx-background-color: black;" />
-            <TextField layoutX="157.0" layoutY="94.0" style="-fx-background-color: 101010; -fx-text-fill: white;" text="Añadir canción">
-               <font>
-                  <Font name="Yu Gothic UI Bold" size="23.0" />
-               </font>
-            </TextField>
-            <Line endX="421.0" layoutX="146.0" layoutY="69.0" startX="-100.0" stroke="WHITE" />
-         </children>
-      </Pane>
-      <Pane fx:id="cancionPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false" />
-      <Pane fx:id="atrasCircle" layoutX="332.0" layoutY="65.0" onMouseClicked="#irAtras" onMouseEntered="#atrasEntered" onMouseExited="#atrasExited" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: black; -fx-background-radius: 100px; -fx-opacity: 0.3;" />
-      <Pane fx:id="anadirCancionPane" layoutX="1002.0" layoutY="120.0" prefHeight="531.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
-         <children>
-            <TextField fx:id="buscarNCTextField" layoutX="55.0" layoutY="22.0" onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="200.0" promptText="Buscar" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Buscar" />
-            <Button fx:id="guardarNuevaCancionBtn" layoutX="167.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#guardarNuevaCancion" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />
-            <Button fx:id="cancelarNuevaCancionBtn1" layoutX="96.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#cancelarNuevaCancion" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Cancelar" />
-         </children>
-      </Pane>
-      <Label layoutX="83.0" layoutY="19.0" text="DoniMusic" textFill="WHITE">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-   </children>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="855.0" prefWidth="1341.0"
+            style="-fx-background-color: #181818;" xmlns="http://javafx.com/javafx/21"
+            fx:controller="com.example.donimusic.controlador.Home">
+    <children>
+        <Pane fx:id="panelPrincipal" layoutY="737.0" prefHeight="118.0" prefWidth="1341.0"
+              style="-fx-background-color: black;">
+            <children>
+                <Label fx:id="nombreCancion" layoutX="110.0" layoutY="27.0" text="Nombre de la cancion"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="Yu Gothic UI Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="autorCancion" layoutX="110.0" layoutY="51.0" text="Autor" textFill="WHITE">
+                    <font>
+                        <Font name="Yu Gothic UI Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="anadirFavLabel" layoutX="265.0" layoutY="20.0" onMouseClicked="#anadirFavoritos"
+                       onMouseEntered="#anadirFavEntered" onMouseExited="#anadirFavExited" prefHeight="32.0"
+                       prefWidth="142.0" text="Añadir Favoritos" textFill="#838383"/>
+                <Button fx:id="botonReproducir" layoutX="651.0" layoutY="18.0" mnemonicParsing="false"
+                        onMouseClicked="#pausarYReproducir" prefHeight="40.0" prefWidth="40.0"
+                        style="-fx-background-color: rgba(0,0,0,0);"/>
+                <Button fx:id="botonSiguiente" layoutX="710.0" layoutY="23.0" mnemonicParsing="false"
+                        onMouseClicked="#siguienteCancion" prefHeight="24.0" prefWidth="24.0"
+                        style="-fx-background-color: rgba(0,0,0,0);"/>
+                <Button fx:id="botonAnterior" layoutX="601.0" layoutY="23.0" mnemonicParsing="false"
+                        onMouseClicked="#anteriorCancion" prefHeight="24.0" prefWidth="24.0"
+                        style="-fx-background-color: rgba(0,0,0,0);"/>
+                <Slider fx:id="cancionSlider" layoutX="552.0" layoutY="61.0" majorTickUnit="1.0" minorTickCount="1"
+                        prefHeight="14.0" prefWidth="243.0"/>
+            </children>
+        </Pane>
+        <Pane fx:id="controlAppPane" layoutX="14.0" layoutY="63.0" prefHeight="649.0" prefWidth="286.0"
+              style="-fx-background-color: #212628; -fx-background-radius: 10px;">
+            <children>
+                <Label fx:id="inicioLabel" layoutX="42.0" layoutY="25.0" onMouseClicked="#irInicio"
+                       onMouseEntered="#inicioEntered" onMouseExited="#inicioExited" text="Inicio" textFill="WHITE">
+                    <font>
+                        <Font size="17.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="crearPlaylistLabel" layoutX="42.0" layoutY="62.0" onMouseClicked="#crearPlaylist"
+                       onMouseEntered="#crearPlaylistEntered" onMouseExited="#crearPlaylistExited" text="Crear Playlist"
+                       textFill="#838383">
+                    <font>
+                        <Font size="17.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="cancionesFavLabel" layoutX="42.0" layoutY="98.0" onMouseClicked="#abrirFavoritos"
+                       onMouseEntered="#cancionesFavoritasEntered" onMouseExited="#cancionesFavoritasExited"
+                       text="Canciones Favoritas" textFill="#838383">
+                    <font>
+                        <Font size="17.0"/>
+                    </font>
+                </Label>
+                <Line endX="100.0" layoutX="134.0" layoutY="131.0" startX="-100.0"/>
+                <ListView fx:id="playlistListView" layoutX="43.0" layoutY="150.0" maxHeight="450.0"
+                          onMouseClicked="#seleccionarPlayList" prefHeight="50.0" prefWidth="243.0"
+                          style="-fx-background-color: #212628; -fx-background: #212628;"/>
+            </children>
+        </Pane>
+        <Pane fx:id="inicioPane" layoutX="326.0" layoutY="61.0" onMouseClicked="#cerrarBusqueda" prefHeight="649.0"
+              prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
+            <children>
+                <Pane layoutX="90.0" layoutY="71.0" prefHeight="118.0" prefWidth="815.0"
+                      style="-fx-background-color: #383c41; -fx-background-radius: 5px;">
+                    <children>
+                        <Label fx:id="nombrePlaylistHist" layoutX="65.0" layoutY="25.0" prefHeight="32.0"
+                               prefWidth="712.0" text="Nombre de la playlist" textFill="WHITE">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Label>
+                        <Label fx:id="autorPlaylistHist" layoutX="65.0" layoutY="68.0" prefHeight="26.0"
+                               prefWidth="722.0" text="Autor de la playlist" textFill="WHITE">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+                <Label layoutX="90.0" layoutY="31.0" text="Ultima playlist escuchada" textFill="#838383">
+                    <font>
+                        <Font size="17.0"/>
+                    </font>
+                </Label>
+                <Button fx:id="buscarBtn" layoutX="90.0" layoutY="217.0" mnemonicParsing="false"
+                        onMouseClicked="#buscarCancion" prefHeight="40.0" prefWidth="40.0"
+                        style="-fx-background-color: rgba(0, 0, 0, 0);"/>
+                <Pane fx:id="rockPane" layoutX="60.0" layoutY="351.0" onMouseEntered="#rockEntered"
+                      onMouseExited="#rockExited" prefHeight="200.0" prefWidth="200.0"
+                      style="-fx-background-color: #2e5010; -fx-background-radius: 7px;">
+                    <children>
+                        <Label layoutX="80.0" layoutY="160.0" prefHeight="26.0" prefWidth="40.0" text="Rock"
+                               textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Pane fx:id="rockImagen" layoutX="29.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0"
+                              style="-fx-background-color: black;"/>
+                    </children>
+                </Pane>
+                <Pane fx:id="fumonPane" layoutX="272.0" layoutY="351.0" onMouseEntered="#fumonEntered"
+                      onMouseExited="#fumonExited" prefHeight="200.0" prefWidth="200.0"
+                      style="-fx-background-color: #6d5015; -fx-background-radius: 7px;">
+                    <children>
+                        <Label layoutX="76.0" layoutY="160.0" prefHeight="26.0" prefWidth="49.0" text="Fumon"
+                               textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Pane fx:id="fumonImagen" layoutX="30.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0"
+                              style="-fx-background-color: black;"/>
+                    </children>
+                </Pane>
+                <Pane fx:id="enEspanolPane" layoutX="483.0" layoutY="351.0" onMouseEntered="#enEspanolEntered"
+                      onMouseExited="#enEspanolExited" prefHeight="200.0" prefWidth="200.0"
+                      style="-fx-background-color: #ae1a1a; -fx-background-radius: 7px;">
+                    <children>
+                        <Label layoutX="64.0" layoutY="160.0" prefHeight="26.0" prefWidth="73.0" text="En español"
+                               textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Pane fx:id="enEspanolImagen" layoutX="30.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0"
+                              style="-fx-background-color: black;"/>
+                    </children>
+                </Pane>
+                <Pane fx:id="rapPane" layoutX="693.0" layoutY="351.0" onMouseEntered="#rapEntered"
+                      onMouseExited="#rapExited" prefHeight="200.0" prefWidth="200.0"
+                      style="-fx-background-color: #155b6d; -fx-background-radius: 7px;">
+                    <children>
+                        <Label layoutX="88.0" layoutY="160.0" prefHeight="26.0" prefWidth="31.0" text="Rap"
+                               textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+                        <Pane fx:id="rapImagen" layoutX="33.0" layoutY="14.0" prefHeight="139.0" prefWidth="142.0"
+                              style="-fx-background-color: black;"/>
+                    </children>
+                </Pane>
+                <TableView fx:id="tablaBusquedaPrin" layoutX="150.0" layoutY="224.0"
+                           onMouseClicked="#obtenerCancionBusqueda" prefHeight="251.0" prefWidth="744.0"
+                           style="-fx-background-color: #383c41; -fx-text-fill: black;" visible="false"/>
+                <TextField fx:id="buscarTextField" layoutX="139.0" layoutY="224.0"
+                           onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="766.0"
+                           promptText="Buscar"
+                           style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                           text="Buscar"/>
+            </children>
+        </Pane>
+        <Label fx:id="atrasMensaje" layoutX="332.0" layoutY="36.0" prefHeight="26.0" prefWidth="58.0"
+               style="-fx-background-color: black; -fx-alignment: center;" text="Atrás" textFill="#838383"
+               visible="false">
+            <font>
+                <Font name="Yu Gothic UI Bold" size="15.0"/>
+            </font>
+        </Label>
+        <Pane fx:id="logo" layoutX="28.0" layoutY="7.0" prefHeight="49.0" prefWidth="49.0"/>
+        <Pane fx:id="playlistPrincipalPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0"
+              style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
+            <children>
+                <Label fx:id="nombrePlaylistPrin" layoutX="68.0" layoutY="36.0" text="Nombre de la Playlist"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="Yu Gothic UI Bold" size="31.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="autorPlaylistPrin" layoutX="68.0" layoutY="89.0" text="Autor" textFill="WHITE">
+                    <font>
+                        <Font name="Yu Gothic UI Bold" size="22.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="103.0" layoutY="153.0" prefHeight="20.0" prefWidth="393.0" text="Nombre"
+                       textFill="#c9c9c9">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="496.0" layoutY="153.0" prefHeight="20.0" prefWidth="348.0" text="Autor"
+                       textFill="#c9c9c9">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="846.0" layoutY="153.0" prefHeight="20.0" prefWidth="57.0" text="Duracion"
+                       textFill="#c9c9c9">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <ListView fx:id="playlistPrinListView" layoutX="96.0" layoutY="173.0" prefHeight="448.0"
+                          prefWidth="849.0" style="-fx-background-color: #212628; -fx-background: #212628;"/>
+                <Pane fx:id="anadirNuevaCancionPlBtn" layoutX="843.0" layoutY="73.0"
+                      onMouseClicked="#anadirNuevaCancionPlaylist" onMouseEntered="#anadirNuevaCancionPlEntered"
+                      onMouseExited="#anadirNuevaCancionPlExited" prefHeight="64.0" prefWidth="64.0"/>
+            </children>
+        </Pane>
+        <Pane fx:id="crearPlaylistPane" layoutX="366.0" layoutY="120.0" prefHeight="531.0" prefWidth="610.0"
+              style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
+            <children>
+                <TextField fx:id="nombreNuevaPlaylist" layoutX="28.0" layoutY="21.0"
+                           onMouseClicked="#vaciarNombreNuevaPlaylist" promptText="Nombre de la Playlist"
+                           style="-fx-background-color: 101010; -fx-text-fill: #838383;" text="Nombre de la Playlist">
+                    <font>
+                        <Font name="Yu Gothic UI Bold" size="26.0"/>
+                    </font>
+                </TextField>
+                <Button fx:id="guardarNuevaPlaylistBtn" layoutX="537.0" layoutY="492.0" mnemonicParsing="false"
+                        onMouseClicked="#guardarNuevaPlaylist"
+                        style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                        text="Guardar"/>
+                <Pane fx:id="anadirNuevaCancionBtn" layoutX="57.0" layoutY="90.0" onMouseClicked="#anadirNuevaCancion"
+                      onMouseEntered="#anadirNuevaCancionEntered" onMouseExited="#anadirNuevaCancionExited"
+                      prefHeight="64.0" prefWidth="64.0"/>
+                <Button fx:id="cancelarNuevaPlaylistBtn1" layoutX="466.0" layoutY="492.0" mnemonicParsing="false"
+                        onMouseClicked="#cancelarNuevaPlaylist"
+                        style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                        text="Cancelar"/>
+                <ScrollPane fx:id="cancionesAnadidas" layoutX="47.0" layoutY="166.0" prefHeight="309.0"
+                            prefWidth="552.0" style="-fx-background: #383c41; -fx-background-color: black;"/>
+                <TextField layoutX="157.0" layoutY="94.0" style="-fx-background-color: 101010; -fx-text-fill: white;"
+                           text="Añadir canción">
+                    <font>
+                        <Font name="Yu Gothic UI Bold" size="23.0"/>
+                    </font>
+                </TextField>
+                <Line endX="421.0" layoutX="146.0" layoutY="69.0" startX="-100.0" stroke="WHITE"/>
+            </children>
+        </Pane>
+        <Pane fx:id="cancionPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0"
+              style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false"/>
+        <Pane fx:id="atrasCircle" layoutX="332.0" layoutY="65.0" onMouseClicked="#irAtras"
+              onMouseEntered="#atrasEntered" onMouseExited="#atrasExited" prefHeight="40.0" prefWidth="40.0"
+              style="-fx-background-color: black; -fx-background-radius: 100px; -fx-opacity: 0.3;"/>
+        <Pane fx:id="anadirCancionPane" layoutX="1002.0" layoutY="120.0" prefHeight="531.0" prefWidth="315.0"
+              style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
+            <children>
+                <TableView fx:id="tablaAnadirCancionPlayL" layoutX="84.0" layoutY="28.0"
+                           onMouseClicked="#seleccionarCancionAnadir" prefHeight="200.0" prefWidth="200.0"
+                           style="-fx-background-color: #383c41; -fx-text-fill: black;" visible="false"/>
+                <TextField fx:id="buscarNCTextField" layoutX="74.0" layoutY="26.0"
+                           onMouseClicked="#introducirTextoBuscar" prefHeight="32.0" prefWidth="219.0"
+                           promptText="Buscar"
+                           style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                           text="Buscar"/>
+                <Button fx:id="anadirBoton" disable="true" layoutX="167.0" layoutY="478.0" mnemonicParsing="false"
+                        onAction="#anadirCancionNewPlaylist"
+                        style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                        text="Añadir"/>
+                <Button fx:id="cancelarNuevaCancionBtn1" layoutX="96.0" layoutY="478.0" mnemonicParsing="false"
+                        onMouseClicked="#cancelarNuevaCancion"
+                        style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                        text="Atras"/>
+                <Button fx:id="buscarBtn2" layoutX="23.0" layoutY="22.0" mnemonicParsing="false"
+                        onMouseClicked="#buscarCancion2" prefHeight="40.0" prefWidth="40.0"
+                        style="-fx-background-color: rgba(0, 0, 0, 0);"/>
+            </children>
+        </Pane>
+        <Label layoutX="83.0" layoutY="19.0" text="DoniMusic" textFill="WHITE">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Label>
+        <Pane fx:id="anadirCancionPlayLPane" layoutX="651.0" layoutY="122.0" prefHeight="531.0" prefWidth="315.0"
+              style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
+            <children>
+                <TableView fx:id="tablaAnadirCancionPlayLPrin" layoutX="74.0" layoutY="22.0"
+                           onMouseClicked="#seleccionarCancionAnadir" prefHeight="200.0" prefWidth="200.0"
+                           style="-fx-background-color: #383c41; -fx-text-fill: black;"/>
+                <TextField fx:id="buscarNCTextFieldPl" layoutX="64.0" layoutY="22.0"
+                           onMouseClicked="#introducirTextoBuscar" prefHeight="25.0" prefWidth="220.0"
+                           promptText="Buscar"
+                           style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                           text="Buscar"/>
+                <Button fx:id="guardarNuevaCancionPlayLBtn" layoutX="165.0" layoutY="478.0" mnemonicParsing="false"
+                        onMouseClicked="#guardarNuevaCancionPlayL"
+                        style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                        text="Guardar"/>
+                <Button fx:id="cancelarNuevaCancionPlayLBtn" layoutX="108.0" layoutY="478.0" mnemonicParsing="false"
+                        onMouseClicked="#cancelarNuevaCancionPlayL"
+                        style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;"
+                        text="Atrás"/>
+                <Button fx:id="buscarBtn3" layoutX="14.0" layoutY="15.0" mnemonicParsing="false"
+                        onMouseClicked="#buscarCancion3" prefHeight="40.0" prefWidth="40.0"
+                        style="-fx-background-color: rgba(0, 0, 0, 0);"/>
+            </children>
+        </Pane>
+    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package com.example.donimusic.controlador;
 
-import com.example.donimusic.modelo.Conexion;
+import com.example.donimusic.modelo.Conexiones.Conexion;
+import com.example.donimusic.modelo.Conexiones.ConexionSqlite;
 import com.example.donimusic.modelo.Usuario;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -33,7 +35,9 @@ import java.util.ResourceBundle;
  * Background color: #212628
  */
 public class IniciarSesion implements Initializable {
-    private static boolean logoCargado=false;
+    private static final Connection a = ConexionSqlite.con;
+    private static boolean logoCargado = false;
+    private static Connection c = Conexion.con;
     public Label registroBtn;
     public Pane iconoError;
     public Pane errorUsuarioInexist;
@@ -42,10 +46,9 @@ public class IniciarSesion implements Initializable {
     public PasswordField contrasenaTextField;
     @FXML
     public AnchorPane inicioLogo;
-    private static Connection c= Conexion.con;
     public Pane imagenLogo;
     public Label artistaBtn;
-
+    public CheckBox recordarCuenta;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,20 +60,17 @@ public class IniciarSesion implements Initializable {
         if (!logoCargado) {
             inicioLogo.setVisible(true);
             verLogo();
-            logoCargado=true;
+            logoCargado = true;
         }
 
-        /*
-        Esto se tiene que incluir por separado cuando aparezca el error en especifico
-
-        iconoError.getChildren().add(imageViewError);
-
-        iconoError1.getChildren().add(imageViewError);
-         */
+        if (hayDatosEnTabla()) {
+            rellenarDatos();
+            recordarCuenta.setSelected(true);
+        }
 
     }
 
-    public void verLogo(){
+    public void verLogo() {
         Image logoImg = new Image(String.valueOf(CrearCuenta.class.getResource("/Iconos/logoPequeño.PNG")));
         ImageView logo = new ImageView(logoImg);
         imagenLogo.getChildren().add(logo);
@@ -108,33 +108,42 @@ public class IniciarSesion implements Initializable {
     }
 
     public void iniciarSesion(MouseEvent mouseEvent) throws IOException {
-        /*PreparedStatement stm;
-
+        PreparedStatement stm;
+        String textoNombre = usuarioTextField.getText();
+        String textoCont = contrasenaTextField.getText();
         try {
             stm = c.prepareStatement("SELECT * FROM usuario");
             ResultSet result = stm.executeQuery();
             while (result.next()) {
-                String nombre=result.getString("nombreUsuario");
-                String password=result.getString("contraseña");
+                String nombre = result.getString("nombreUsuario");
+                String password = result.getString("contraseña");
 
-                if(nombre.equals(usuarioTextField.getText()) && password.equals(contrasenaTextField)){
-                    //aqui va lo que ta
-                }
+                if (nombre.equals(textoNombre) && password.equals(textoCont)) {
+                    Home.usuario = new Usuario(usuarioTextField.getText(), contrasenaTextField.getText());
+                    if (recordarCuenta.isSelected()) {
+                        comprobarYInsertarUsuario(usuarioTextField.getText(), contrasenaTextField.getText());
+                    } else {
+                        if (hayDatosEnTabla()) {
+                            borrarUsuario();
+                        }
+                    }
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+                    Stage homeStage = new Stage();
+                    homeStage.setTitle("Home");
+                    homeStage.setResizable(false);
+                    homeStage.setScene(scene);
+                    homeStage.show();
+                    Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
+
+                    myStage.close();
+                } else errorUsuarioInexist.setVisible(true);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }*/
-        Home.usuario = new Usuario("pepe","ca");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage homeStage = new Stage();
-        homeStage.setTitle("Home");
-        homeStage.setResizable(false);
-        homeStage.setScene(scene);
-        homeStage.show();
-        Stage myStage = (Stage) this.inicioLogo.getScene().getWindow();
-        myStage.close();
+        }
+
     }
 
     public void abrirInicioArtista(MouseEvent mouseEvent) throws IOException {
@@ -152,5 +161,79 @@ public class IniciarSesion implements Initializable {
 
     public void cambiarCursorManoArtista(MouseEvent mouseEvent) {
         artistaBtn.setCursor(Cursor.HAND);
+    }
+
+
+    public void insertarUsuario(String nombreUsuario, String password) {
+        try {
+            PreparedStatement stm = a.prepareStatement("INSERT INTO usuario (nombreUsuario, contraseña) VALUES (?, ?)");
+            stm.setString(1, nombreUsuario);
+            stm.setString(2, password);
+            stm.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void borrarUsuario() {
+        try {
+            PreparedStatement stm = a.prepareStatement("DELETE FROM usuario");
+
+            stm.execute();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void comprobarYInsertarUsuario(String nombreUsuario, String password) {
+        try {
+            System.out.println("usuario ");
+            rellenarDatos();
+
+            hayDatosEnTabla();
+            if (!hayDatosEnTabla()) {
+                insertarUsuario(nombreUsuario, password);
+            } else {
+                borrarUsuario();
+                insertarUsuario(nombreUsuario, password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error al comprobar usuario. Realizar acción Z.");
+        }
+    }
+
+    private boolean hayDatosEnTabla() {
+        String consulta = "SELECT COUNT(*) FROM usuario";
+        try (PreparedStatement stm = a.prepareStatement(consulta);
+             ResultSet result = stm.executeQuery()) {
+            result.next();
+
+            int count = result.getInt(1);
+            return count > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void rellenarDatos() {
+        String consulta = "SELECT * FROM usuario";
+        try (PreparedStatement stm = a.prepareStatement(consulta);
+             ResultSet result = stm.executeQuery()) {
+            while (result.next()) {
+
+                String usuario = result.getString(1);
+                String contrasena = result.getString(2);
+
+                usuarioTextField.setText(usuario);
+                contrasenaTextField.setText(contrasena);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
