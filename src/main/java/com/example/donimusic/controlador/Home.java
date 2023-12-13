@@ -390,6 +390,9 @@ public class Home implements Initializable {
         anadirNuevaCancionPlBtn.setDisable(false);
         anadirNuevaCancionPlBtn.setVisible(true);
 
+        elimListbtn.setVisible(true);
+        elimListbtn.setDisable(false);
+
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
@@ -551,6 +554,9 @@ public class Home implements Initializable {
         rellenarPlayList(canciones);
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
+
+        elimListbtn.setVisible(false);
+        elimListbtn.setDisable(true);
     }
 
     public void fumonEntered(MouseEvent mouseEvent) {
@@ -576,6 +582,8 @@ public class Home implements Initializable {
         List<Cancion> canciones = obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
 
+        elimListbtn.setVisible(false);
+        elimListbtn.setDisable(true);
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
     }
@@ -602,6 +610,9 @@ public class Home implements Initializable {
         }
         List<Cancion> canciones = obtenerCancionesEnLista(2);
         rellenarPlayList(canciones);
+
+        elimListbtn.setVisible(false);
+        elimListbtn.setDisable(true);
 
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
@@ -630,6 +641,9 @@ public class Home implements Initializable {
         }
         List<Cancion> canciones = obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
+
+        elimListbtn.setVisible(false);
+        elimListbtn.setDisable(true);
 
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
