@@ -112,6 +112,10 @@ public class Usuario {
         }
     }
 
+    /**
+     * Elimina la cuenta de un usuario
+     * @return
+     */
     public boolean eliminarCuenta(){
         String name=nombre;
         try {
