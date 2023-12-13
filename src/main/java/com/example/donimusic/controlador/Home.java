@@ -110,6 +110,7 @@ public class Home implements Initializable {
     private ArrayList<Cancion> cancionesAnadirNewPlaylist = new ArrayList<>();
     private TableColumn<String, String> columnaNombrePlaylist1 = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista1 = new TableColumn<>("Artista");
+    private boolean esperar=false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -316,13 +317,15 @@ public class Home implements Initializable {
 
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
 
-            Duration totalDuration = mediaPlayer.getTotalDuration();
-            Duration currentDuration = mediaPlayer.getCurrentTime();
+            if (esperar) {
 
-            double progress = currentDuration.toMillis() / totalDuration.toMillis() * 100.0;
-            cancionSlider.setValue(progress);
+                Duration totalDuration = mediaPlayer.getTotalDuration();
+                Duration currentDuration = mediaPlayer.getCurrentTime();
+
+                double progress = currentDuration.toMillis() / totalDuration.toMillis() * 100.0;
+                cancionSlider.setValue(progress);
+            }
         });
-
     }
 
     /**
@@ -1223,5 +1226,10 @@ public class Home implements Initializable {
         double segundo = cancionSlider.getValue();
         Duration duration = new Duration(segundo*1000);
         cancionActual.cambiarSegundo(duration);
+        esperar=false;
+    }
+
+    public void deslSlider(MouseEvent mouseEvent) {
+        esperar=true;
     }
 }
