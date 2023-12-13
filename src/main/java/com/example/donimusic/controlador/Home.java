@@ -927,10 +927,19 @@ public class Home implements Initializable {
         reproducirCancion();
     }
 
+    /**
+     * Cierra la tabla de busqueda al clickar fuera
+     * @param mouseEvent
+     */
     public void cerrarBusqueda(MouseEvent mouseEvent) {
         tablaBusquedaPrin.setVisible(false);
     }
 
+    /**
+     * Boton para bucar canciones al cuando las vas a
+     * añadir a una playlist
+     * @param mouseEvent
+     */
     public void buscarCancion2(MouseEvent mouseEvent) {
         tablaAnadirCancionPlayL.getColumns().clear();
 
@@ -945,6 +954,12 @@ public class Home implements Initializable {
         tablaAnadirCancionPlayL.setVisible(true);
     }
 
+
+    /**
+     * Selecciona la cancion que se haya seleccionado
+     * en la busqueda de añadir canciones a la playlist
+     * @param mouseEvent
+     */
     public void seleccionarCancionAnadir(MouseEvent mouseEvent) {
         anadirBoton.setDisable(true);
         if (tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem() != null) {
@@ -1165,7 +1180,7 @@ public class Home implements Initializable {
     }
 
     /**
-     * Si el nuevo nombre no esta en blanco cambiara el nombre de la lista por el introducido
+     * Modifica en nmbre de una playList
      * @param mouseEvent
      */
     public void cambiarNombreList(MouseEvent mouseEvent) {

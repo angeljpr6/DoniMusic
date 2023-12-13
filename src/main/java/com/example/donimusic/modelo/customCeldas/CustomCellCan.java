@@ -13,7 +13,7 @@ public class CustomCellCan extends ListCell<Cancion> {
     private final Home home;
     private final HBox hbox;
     private final Label nombreLabel;
-    private final Label albumLabel;
+    private final Label artistLabel;
     private final Label duracionLabel;
 
     public CustomCellCan(Home home) {
@@ -21,16 +21,16 @@ public class CustomCellCan extends ListCell<Cancion> {
         hbox = new HBox();
 
         nombreLabel = new Label();
-        albumLabel = new Label();
+        artistLabel = new Label();
         duracionLabel = new Label();
 
         nombreLabel.setPrefWidth(393);
-        albumLabel.setPrefWidth(348);
+        artistLabel.setPrefWidth(348);
         duracionLabel.setPrefWidth(57);
 
         //añado los label al hBox
         hbox.getChildren().add(nombreLabel);
-        hbox.getChildren().add(albumLabel);
+        hbox.getChildren().add(artistLabel);
         hbox.getChildren().add(duracionLabel);
         hbox.setPrefHeight(50);
 
@@ -39,7 +39,7 @@ public class CustomCellCan extends ListCell<Cancion> {
         hbox.setStyle(estilo);
         Color textoInicial = Color.rgb(0x83, 0x83, 0x83);
         nombreLabel.setTextFill(textoInicial);
-        albumLabel.setTextFill(textoInicial);
+        artistLabel.setTextFill(textoInicial);
         duracionLabel.setTextFill(textoInicial);
     }
 
@@ -50,7 +50,7 @@ public class CustomCellCan extends ListCell<Cancion> {
             setGraphic(null);
         } else {
             nombreLabel.setText(item.getNombre() + " ");
-            albumLabel.setText(item.getAlbum() + " ");
+            artistLabel.setText(item.getNombreArtista() + " ");
             duracionLabel.setText(item.getDuracion() + " ");
             setGraphic(hbox);
             Color fondo = Color.rgb(0x21, 0x26, 0x28);
@@ -60,7 +60,7 @@ public class CustomCellCan extends ListCell<Cancion> {
         selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
             if (isNowSelected) {
                 nombreLabel.setTextFill(Color.WHITE);
-                albumLabel.setTextFill(Color.WHITE);
+                artistLabel.setTextFill(Color.WHITE);
                 duracionLabel.setTextFill(Color.WHITE);
                 if (item != null) {
                     if (Home.cancionActual != null) {
@@ -78,7 +78,7 @@ public class CustomCellCan extends ListCell<Cancion> {
             } else {
                 Color texto = Color.rgb(0x83, 0x83, 0x83);
                 nombreLabel.setTextFill(texto);
-                albumLabel.setTextFill(texto);
+                artistLabel.setTextFill(texto);
                 duracionLabel.setTextFill(texto);
             }
         });
