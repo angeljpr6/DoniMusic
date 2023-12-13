@@ -5,7 +5,9 @@ import com.example.donimusic.modelo.Conexiones.Conexion;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Representa una lista de canciones en un sistema de gestión de reproducción musical.
+ */
 public class ListaDeCanciones {
 
     private static Connection c = Conexion.con;
@@ -14,12 +16,25 @@ public class ListaDeCanciones {
     String nombreCreador;
     private boolean reproductor = false;
 
+    /**
+     * Constructor para la clase ListaDeCanciones.
+     *
+     * @param idLista       Identificador único de la lista.
+     * @param nombre        Nombre de la lista de canciones.
+     * @param nombreCreador Nombre del creador de la lista.
+     */
     public ListaDeCanciones(int idLista, String nombre, String nombreCreador) {
         this.id = idLista;
         this.nombre = nombre;
         this.nombreCreador = nombreCreador;
     }
-
+    /**
+     * Crea una nueva lista de canciones en la base de datos y establece la relación
+     * en la tabla playListUsuarios.
+     *
+     * @param nombreLista Nombre de la nueva lista de canciones.
+     * @param usuario     Nombre del usuario que crea la lista.
+     */
     public static void crearLista(String nombreLista, String usuario) {
         try {
             // El " Statement.RETURN_GENERATED_KEYS" especifica que se deben devolver las claves generadas automáticamente.
@@ -49,7 +64,13 @@ public class ListaDeCanciones {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Obtiene el ID de una lista de canciones a partir de su nombre y el nombre del usuario.
+     *
+     * @param nombreLista  Nombre de la lista de canciones.
+     * @param nombreUsuario Nombre del usuario propietario de la lista.
+     * @return El ID de la lista de canciones.
+     */
     public static int obtenerIdLista(String nombreLista, String nombreUsuario) {
         try {
             // Preparar una sentencia SQL para obtener el ID de la última lista recién creada por el usuario
@@ -103,7 +124,12 @@ public class ListaDeCanciones {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Añade una canción a la lista de reproducción.
+     *
+     * @param idLista    Identificador único de la lista.
+     * @param idCancion  Identificador único de la canción.
+     */
     public static void addCancion(int idLista, int idCancion) {
 
 
@@ -123,7 +149,12 @@ public class ListaDeCanciones {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Obtiene la lista de canciones asociadas a una lista de reproducción.
+     *
+     * @param idLista Identificador único de la lista.
+     * @return Lista de canciones en la lista de reproducción.
+     */
     public static List<Cancion> obtenerCancionesEnLista(int idLista) {
         List<Cancion> cancionesEnLista = new ArrayList<>();
         try {
@@ -150,7 +181,13 @@ public class ListaDeCanciones {
 
         return cancionesEnLista;
     }
-
+    /**
+     * Verifica si una canción específica está presente en una lista de reproducción.
+     *
+     * @param idCancion Identificador único de la canción.
+     * @param idLista   Identificador único de la lista de reproducción.
+     * @return true si la canción está en la lista, false en caso contrario.
+     */
     public static boolean encontrarCancion(int idCancion, int idLista) {
         boolean cancionEncontrada = false;
         try {
@@ -204,7 +241,11 @@ public class ListaDeCanciones {
     public void setNombreCreador(String nombreCreador) {
         this.nombreCreador = nombreCreador;
     }
-
+    /**
+     * Elimina una canción de la lista de reproducción.
+     *
+     *this.nombre idenditifica  la canción a eliminar.
+     */
     public void eliminarLista() {
         try {
             PreparedStatement stm = c.prepareStatement("DELETE FROM lista WHERE nombre = ?");
@@ -216,6 +257,11 @@ public class ListaDeCanciones {
         }
     }
 
+    /**
+     * Combrueba si existe una lista
+     * @param idLista
+     * @return
+     */
     private boolean existeLista(int idLista) {
         try {
             String sql = "SELECT COUNT(*) FROM lista WHERE listaId = ?";
@@ -233,7 +279,9 @@ public class ListaDeCanciones {
             return false;
         }
     }
-
+    /**
+     * Elimina la lista de canciones de la base de datos.
+     */
     public void eliminarCancion(int idCancion) {
         try {
             PreparedStatement stm = c.prepareStatement("DELETE FROM playListCanciones WHERE listaId = ? AND cancionId = ?");
@@ -244,7 +292,13 @@ public class ListaDeCanciones {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Busca canciones en una lista de reproducción por nombre.
+     *
+     * @param nombreCancion Nombre de la canción a buscar.
+     * @param idLista       Identificador único de la lista de reproducción.
+     * @return Lista de canciones que coinciden con la búsqueda.
+     */
     public List<Cancion> buscarCancion(String nombreCancion, int idLista) {
         List<Cancion> cancionesEnLista = new ArrayList<>();
         try {
@@ -272,7 +326,12 @@ public class ListaDeCanciones {
 
         return cancionesEnLista;
     }
-
+    /**
+     * Reproduce la siguiente canción en la lista de reproducción.
+     *
+     * @param cancion Canción actual.
+     * @return La siguiente canción en la lista.
+     */
     public Cancion siguiente(Cancion cancion) {
         // Obtiene la lista de canciones asociadas a la lista de reproducción actual
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(this.id);
@@ -303,7 +362,12 @@ public class ListaDeCanciones {
         // Retorna null si no se pudo reproducir la siguiente canción
         return null;
     }
-
+    /**
+     * Reproduce la canción anterior en la lista de reproducción.
+     *
+     * @param cancion Canción actual.
+     * @return La canción anterior en la lista.
+     */
     public Cancion atras(Cancion cancion) {
         // Obtiene la lista de canciones asociadas a la lista de reproducción actual
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(this.id);
@@ -335,7 +399,12 @@ public class ListaDeCanciones {
         // Retorna null si no se pudo reproducir la canción anterior
         return null;
     }
-
+    /**
+     * Reproduce una canción aleatoria de la lista de reproducción.
+     *
+     * @param cancionesEnLista Lista de canciones en la lista de reproducción.
+     * @return Canción aleatoria.
+     */
     public Cancion llamarAleatorio(List<Cancion> cancionesEnLista) {
         // Verifica si la lista de canciones no está vacía
         if (!cancionesEnLista.isEmpty()) {
@@ -347,8 +416,14 @@ public class ListaDeCanciones {
         return null;
     }
 
+    /**
+     * Recorre manualmente la lista para encontrar la posición de la canción
+     * @param cancion
+     * @param cancionesEnLista
+     * @return
+     */
     private int obtenerIndiceCancion(Cancion cancion, List<Cancion> cancionesEnLista) {
-        // Recorre manualmente la lista para encontrar la posición de la canción
+
         for (int i = 0; i < cancionesEnLista.size(); i++) {
             if (cancionesEnLista.get(i).getId() == (cancion.getId())) {
                 return i;
@@ -356,7 +431,11 @@ public class ListaDeCanciones {
         }
         return -1; // Retorna -1 si la canción no está en la lista
     }
-
+    /**
+     * Cambia el modo de reproducción entre secuencial y aleatorio.
+     *
+     * @return El nuevo estado del reproductor (true si es aleatorio, false si es secuencial).
+     */
     public boolean cambiarOrdenRep() {
         if (this.reproductor == true) {
             this.reproductor = false;
@@ -366,6 +445,11 @@ public class ListaDeCanciones {
         return this.reproductor;
     }
 
+    /**
+     * Muestra la información de las canciones en la lista.
+     *
+     * @param idLista Identificador de la lista de canciones.
+     */
     public void mostrarListaDeCanciones(int idLista) {
         List<Cancion> cancionesEnLista = obtenerCancionesEnLista(idLista);
 
