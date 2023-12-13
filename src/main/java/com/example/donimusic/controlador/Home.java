@@ -8,9 +8,12 @@ import com.example.donimusic.modelo.customCeldas.CustomCellFactoryPlaylist;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -21,8 +24,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -946,5 +951,36 @@ public class Home implements Initializable {
         cancionPane.setDisable(false);
 
         ajustesPane.setVisible(false);
+    }
+
+    /**
+     * Método para eliminar cuenta del usuario
+     * @param actionEvent
+     */
+    public void borrarCuenta(ActionEvent actionEvent) {
+        if (usuario.eliminarCuenta()){
+            try {
+                abrirInterfazInicio();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    /**
+     * Método para abrir la interfaz de inicio de sesion
+     */
+    public void abrirInterfazInicio() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/iniciarSesion.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage crearCuentaStage = new Stage();
+        crearCuentaStage.setTitle("Iniciar Sesión");
+        crearCuentaStage.setResizable(false);
+        crearCuentaStage.setScene(scene);
+        crearCuentaStage.show();
+        Stage myStage = (Stage) this.buscarNCTextField.getScene().getWindow();
+        myStage.close();
     }
 }

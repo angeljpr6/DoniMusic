@@ -1,6 +1,5 @@
 package com.example.donimusic.modelo;
 
-import com.example.donimusic.controlador.Home;
 import com.example.donimusic.modelo.Conexiones.Conexion;
 
 import java.sql.Connection;
@@ -111,6 +110,29 @@ public class Usuario {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean eliminarCuenta(){
+        String name=nombre;
+        try {
+            PreparedStatement stm=c.prepareStatement("DELETE FROM playListCanciones WHERE listaId IN (SELECT listaId FROM lista WHERE nombreUsuario = ?);");
+            stm.setString(1,name);
+            stm.execute();
+            stm=c.prepareStatement("DELETE FROM playlistusuarios WHERE listaId IN (SELECT listaId FROM lista WHERE nombreUsuario = ?);");
+            stm.setString(1,name);
+            stm.execute();
+            stm=c.prepareStatement("delete from lista where nombreUsuario=?;");
+            stm.setString(1,name);
+            stm.execute();
+            stm=c.prepareStatement("delete from usuario where nombreUsuario=?;");
+            stm.setString(1,name);
+            stm.execute();
+            return true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 

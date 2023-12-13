@@ -221,7 +221,8 @@
             <Label disable="true" layoutX="257.0" layoutY="185.0" textFill="WHITE" />
             <Label layoutX="243.0" layoutY="182.0" text="Introduce el nombre de usuario" textFill="WHITE" />
             <Button fx:id="acepUsuBtn" disable="true" layoutX="299.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#acepUsuNom" text="Aceptar" />
-            <Button layoutX="217.0" layoutY="464.0" mnemonicParsing="false" onMouseClicked="#cerrarAju" text="Cerrar" />
+            <Button layoutX="76.0" layoutY="471.0" mnemonicParsing="false" onMouseClicked="#cerrarAju" text="Cerrar" />
+            <Button layoutX="299.0" layoutY="471.0" mnemonicParsing="false" onAction="#borrarCuenta" text="Eliminar Cuenta" />
          </children>
       </Pane>
     </children>
