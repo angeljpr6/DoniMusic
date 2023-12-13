@@ -1154,8 +1154,9 @@ public class Home implements Initializable {
 
     public void cambiarNombreList(MouseEvent mouseEvent) {
         if (!nuevoNomList.getText().isBlank()) {
-            listaActual.cambiarNombreLista(nuevoNomList.getText());
-            listaActual.setNombre(nuevNombre.getText());
+            String nuevoNombreAux=nuevoNomList.getText();
+            listaActual.cambiarNombreLista(nuevoNombreAux);
+            listaActual.setNombre(nuevoNombreAux);
             controlAppPane.setDisable(false);
             playlistPrincipalPane.setDisable(false);
 
