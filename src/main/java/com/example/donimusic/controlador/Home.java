@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.example.donimusic.modelo.ListaDeCanciones.obtenerCancionesEnLista;
+
 public class Home implements Initializable {
     public static Usuario usuario = new Usuario();
     public static Cancion cancionActual = null;
@@ -98,6 +100,10 @@ public class Home implements Initializable {
     public Button acepUsuBtn;
     public Button acepContBtn;
     public Button ajustesBtn;
+    public Button editarNomListBtn;
+    public TextField nuevoNomList;
+    public Pane nuevoNomListPane;
+    public Button elimListbtn;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
@@ -120,7 +126,29 @@ public class Home implements Initializable {
         inicializarColumnaBusqPrinc();
         inciarColumnAnadirPlayList();
         inicializarIconoAjust();
+        inicializarIconoLapiz();
+        inicializarIconoPapelera();
 
+    }
+
+    /**
+     * Se le pone al lapiz su icono correspondiente
+     */
+    public void inicializarIconoLapiz(){
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/lapiz.png")));
+        ImageView imageView = new ImageView(image);
+
+        editarNomListBtn.setGraphic(imageView);
+    }
+
+    /**
+     * Se le pone al lapiz su icono correspondiente
+     */
+    public void inicializarIconoPapelera(){
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/papelera-de-reciclaje.png")));
+        ImageView imageView = new ImageView(image);
+
+        elimListbtn.setGraphic(imageView);
     }
 
     /**
@@ -519,7 +547,7 @@ public class Home implements Initializable {
                 listaActual = l;
             }
         }
-        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
+        List<Cancion> canciones = obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
@@ -545,7 +573,7 @@ public class Home implements Initializable {
                 listaActual = l;
             }
         }
-        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
+        List<Cancion> canciones = obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
 
         anadirNuevaCancionPlBtn.setDisable(true);
@@ -572,7 +600,7 @@ public class Home implements Initializable {
                 listaActual = l;
             }
         }
-        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(2);
+        List<Cancion> canciones = obtenerCancionesEnLista(2);
         rellenarPlayList(canciones);
 
         anadirNuevaCancionPlBtn.setDisable(true);
@@ -600,7 +628,7 @@ public class Home implements Initializable {
                 listaActual = l;
             }
         }
-        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(1);
+        List<Cancion> canciones = obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
 
         anadirNuevaCancionPlBtn.setDisable(true);
@@ -856,7 +884,7 @@ public class Home implements Initializable {
 
         ListaDeCanciones listaDeCanciones = (ListaDeCanciones) playlistListView.getSelectionModel().selectedItemProperty().getValue();
         listaActual = listaDeCanciones;
-        List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaDeCanciones.getId());
+        List<Cancion> canciones = obtenerCancionesEnLista(listaDeCanciones.getId());
         rellenarPlayList(canciones);
         System.out.println(listaDeCanciones.getId());
     }
@@ -1001,7 +1029,7 @@ public class Home implements Initializable {
             Cancion c1 = (Cancion) tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem();
             if (!ListaDeCanciones.encontrarCancion(c1.getId(), listaActual.getId())) {
                 ListaDeCanciones.addCancion(listaActual.getId(), c1.getId());
-                List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaActual.getId());
+                List<Cancion> canciones = obtenerCancionesEnLista(listaActual.getId());
                 rellenarPlayList(canciones);
             }
             cancelarNuevaCancionPlayL(mouseEvent);
@@ -1123,5 +1151,42 @@ public class Home implements Initializable {
         crearCuentaStage.show();
         Stage myStage = (Stage) this.buscarNCTextField.getScene().getWindow();
         myStage.close();
+    }
+
+    /**
+     * Abrimos el panel para editar el nombre de una lista
+     * @param mouseEvent
+     */
+    public void editarNomList(MouseEvent mouseEvent) {
+        controlAppPane.setDisable(true);
+        playlistPrincipalPane.setDisable(true);
+
+        nuevoNomListPane.setVisible(true);
+    }
+
+    /**
+     * Si el nuevo nombre no esta en blanco cambiara el nombre de la lista por el introducido
+     * @param mouseEvent
+     */
+    public void cambiarNombreList(MouseEvent mouseEvent) {
+        if (!nuevoNomList.getText().isBlank()) {
+            String nuevoNombreAux=nuevoNomList.getText();
+            listaActual.cambiarNombreLista(nuevoNombreAux);
+            listaActual.setNombre(nuevoNombreAux);
+            controlAppPane.setDisable(false);
+            playlistPrincipalPane.setDisable(false);
+
+            nuevoNomListPane.setVisible(false);
+
+            rellenarPlayList(obtenerCancionesEnLista(listaActual.getId()));
+            rellenarPanelTusPlayList();
+        }
+    }
+
+    public void eliminarLista(MouseEvent mouseEvent) {
+        listaActual.eliminarLista();
+        irInicio(mouseEvent);
+        rellenarPanelTusPlayList();
+
     }
 }

@@ -155,6 +155,8 @@
                 </Label>
                 <ListView fx:id="playlistPrinListView" layoutX="96.0" layoutY="173.0" prefHeight="448.0" prefWidth="849.0" style="-fx-background-color: #212628; -fx-background: #212628;" />
                 <Pane fx:id="anadirNuevaCancionPlBtn" layoutX="843.0" layoutY="73.0" onMouseClicked="#anadirNuevaCancionPlaylist" onMouseEntered="#anadirNuevaCancionPlEntered" onMouseExited="#anadirNuevaCancionPlExited" prefHeight="64.0" prefWidth="64.0" />
+            <Button fx:id="editarNomListBtn" layoutX="408.0" layoutY="43.0" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onMouseClicked="#editarNomList" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: rgba(0,0,0,0);" />
+            <Button fx:id="elimListbtn" layoutX="635.0" layoutY="47.0" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onMouseClicked="#eliminarLista" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: red; -fx-background-radius: 5px;" />
             </children>
         </Pane>
         <Pane fx:id="crearPlaylistPane" layoutX="366.0" layoutY="120.0" prefHeight="531.0" prefWidth="610.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
@@ -210,19 +212,29 @@
       <Pane fx:id="ajustesPane" layoutX="433.0" layoutY="83.0" prefHeight="540.0" prefWidth="452.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
          <children>
             <Label fx:id="nomUsuAjust" layoutX="32.0" layoutY="31.0" text="NombreUsuario" textFill="WHITE" />
-            <Button layoutX="32.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#cambContra" text="Cambiar Contraseña" />
+            <Button layoutX="40.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#cambContra" style="-fx-background-color: #aeaeae; -fx-background-radius: 15px;" text="Cambiar Contraseña" />
             <TextField fx:id="antContra" disable="true" layoutX="26.0" layoutY="214.0" />
             <TextField fx:id="nuevContra" disable="true" layoutX="26.0" layoutY="270.0" />
             <Label layoutX="32.0" layoutY="182.0" text="Antigua Contraseña" textFill="WHITE" />
             <Label layoutX="32.0" layoutY="245.0" text="Nueva Contraseña" textFill="WHITE" />
-            <Button fx:id="acepContBtn" disable="true" layoutX="74.0" layoutY="325.0" mnemonicParsing="false" onMouseClicked="#acepContra" text="Aceptar" />
-            <Button layoutX="276.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#cambUsu" text="Cambiar usuario" />
+            <Button fx:id="acepContBtn" disable="true" layoutX="74.0" layoutY="325.0" mnemonicParsing="false" onMouseClicked="#acepContra" style="-fx-background-color: #aeaeae; -fx-background-radius: 15px;" text="Aceptar" />
+            <Button layoutX="276.0" layoutY="123.0" mnemonicParsing="false" onMouseClicked="#cambUsu" style="-fx-background-color: #aeaeae; -fx-background-radius: 15px;" text="Cambiar usuario" />
             <TextField fx:id="nuevNombre" disable="true" layoutX="253.0" layoutY="217.0" />
             <Label disable="true" layoutX="257.0" layoutY="185.0" textFill="WHITE" />
             <Label layoutX="243.0" layoutY="182.0" text="Introduce el nombre de usuario" textFill="WHITE" />
-            <Button fx:id="acepUsuBtn" disable="true" layoutX="299.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#acepUsuNom" text="Aceptar" />
-            <Button layoutX="76.0" layoutY="471.0" mnemonicParsing="false" onMouseClicked="#cerrarAju" text="Cerrar" />
-            <Button layoutX="299.0" layoutY="471.0" mnemonicParsing="false" onAction="#borrarCuenta" text="Eliminar Cuenta" />
+            <Button fx:id="acepUsuBtn" disable="true" layoutX="299.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#acepUsuNom" style="-fx-background-color: #aeaeae; -fx-background-radius: 15px;" text="Aceptar" />
+            <Button layoutX="76.0" layoutY="471.0" mnemonicParsing="false" onMouseClicked="#cerrarAju" style="-fx-background-color: #aeaeae; -fx-background-radius: 15px;" text="Cerrar" />
+            <Button layoutX="299.0" layoutY="471.0" mnemonicParsing="false" onAction="#borrarCuenta" style="-fx-background-color: red; -fx-background-radius: 15px;" text="Eliminar Cuenta" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="nuevoNomListPane" layoutX="558.0" layoutY="138.0" prefHeight="231.0" prefWidth="315.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
+         <children>
+            <TextField fx:id="nuevoNomList" layoutX="25.0" layoutY="78.0" prefHeight="40.0" prefWidth="270.0" promptText="Nuevo nombre" style="-fx-background-color: rgba(0,0,0,0); -fx-text-fill: white; -fx-background-radius: 20px;">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </TextField>
+            <Button layoutX="122.0" layoutY="168.0" mnemonicParsing="false" onMouseClicked="#cambiarNombreList" style="-fx-background-color: #383c41; -fx-text-fill: white; -fx-background-radius: 20px;" text="Guardar" />
          </children>
       </Pane>
     </children>
