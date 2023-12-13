@@ -1163,6 +1163,7 @@ public class Home implements Initializable {
             nuevoNomListPane.setVisible(false);
 
             rellenarPlayList(obtenerCancionesEnLista(listaActual.getId()));
+            rellenarPanelTusPlayList();
         }
     }
 }
