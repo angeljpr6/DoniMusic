@@ -207,8 +207,17 @@ public class ListaDeCanciones {
 
     public void eliminarLista() {
         try {
-            PreparedStatement stm = c.prepareStatement("DELETE FROM lista WHERE nombre = ?");
-            stm.setString(1, this.nombre);
+            PreparedStatement stm = c.prepareStatement("DELETE FROM playListCanciones WHERE listaId = ?");
+            stm.setInt(1, this.id);
+            stm.execute();
+
+            stm = c.prepareStatement("DELETE FROM playListUsuarios WHERE listaId = ?");
+            stm.setInt(1, this.id);
+            stm.execute();
+
+            stm = c.prepareStatement("DELETE FROM lista WHERE listaId = ?");
+            stm.setInt(1, this.id);
+            stm.execute();
 
 
         } catch (SQLException e) {

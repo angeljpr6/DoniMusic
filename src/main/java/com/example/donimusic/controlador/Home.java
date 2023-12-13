@@ -103,6 +103,7 @@ public class Home implements Initializable {
     public Button editarNomListBtn;
     public TextField nuevoNomList;
     public Pane nuevoNomListPane;
+    public Button elimListbtn;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
@@ -126,6 +127,7 @@ public class Home implements Initializable {
         inciarColumnAnadirPlayList();
         inicializarIconoAjust();
         inicializarIconoLapiz();
+        inicializarIconoPapelera();
 
     }
 
@@ -137,6 +139,16 @@ public class Home implements Initializable {
         ImageView imageView = new ImageView(image);
 
         editarNomListBtn.setGraphic(imageView);
+    }
+
+    /**
+     * Se le pone al lapiz su icono correspondiente
+     */
+    public void inicializarIconoPapelera(){
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/papelera-de-reciclaje.png")));
+        ImageView imageView = new ImageView(image);
+
+        elimListbtn.setGraphic(imageView);
     }
 
     /**
@@ -1152,6 +1164,10 @@ public class Home implements Initializable {
         nuevoNomListPane.setVisible(true);
     }
 
+    /**
+     * Si el nuevo nombre no esta en blanco cambiara el nombre de la lista por el introducido
+     * @param mouseEvent
+     */
     public void cambiarNombreList(MouseEvent mouseEvent) {
         if (!nuevoNomList.getText().isBlank()) {
             String nuevoNombreAux=nuevoNomList.getText();
@@ -1165,5 +1181,12 @@ public class Home implements Initializable {
             rellenarPlayList(obtenerCancionesEnLista(listaActual.getId()));
             rellenarPanelTusPlayList();
         }
+    }
+
+    public void eliminarLista(MouseEvent mouseEvent) {
+        listaActual.eliminarLista();
+        irInicio(mouseEvent);
+        rellenarPanelTusPlayList();
+
     }
 }

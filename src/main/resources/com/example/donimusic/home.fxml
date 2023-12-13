@@ -126,7 +126,7 @@
             </font>
         </Label>
         <Pane fx:id="logo" layoutX="28.0" layoutY="7.0" prefHeight="49.0" prefWidth="49.0" />
-        <Pane fx:id="playlistPrincipalPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
+        <Pane fx:id="playlistPrincipalPane" layoutX="326.0" layoutY="61.0" prefHeight="649.0" prefWidth="965.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;">
             <children>
                 <Label fx:id="nombrePlaylistPrin" layoutX="68.0" layoutY="36.0" text="Nombre de la Playlist" textFill="WHITE">
                     <font>
@@ -156,6 +156,7 @@
                 <ListView fx:id="playlistPrinListView" layoutX="96.0" layoutY="173.0" prefHeight="448.0" prefWidth="849.0" style="-fx-background-color: #212628; -fx-background: #212628;" />
                 <Pane fx:id="anadirNuevaCancionPlBtn" layoutX="843.0" layoutY="73.0" onMouseClicked="#anadirNuevaCancionPlaylist" onMouseEntered="#anadirNuevaCancionPlEntered" onMouseExited="#anadirNuevaCancionPlExited" prefHeight="64.0" prefWidth="64.0" />
             <Button fx:id="editarNomListBtn" layoutX="408.0" layoutY="43.0" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onMouseClicked="#editarNomList" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: rgba(0,0,0,0);" />
+            <Button fx:id="elimListbtn" layoutX="635.0" layoutY="47.0" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onMouseClicked="#eliminarLista" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: red; -fx-background-radius: 5px;" />
             </children>
         </Pane>
         <Pane fx:id="crearPlaylistPane" layoutX="366.0" layoutY="120.0" prefHeight="531.0" prefWidth="610.0" style="-fx-background-color: #101010; -fx-background-radius: 10px;" visible="false">
