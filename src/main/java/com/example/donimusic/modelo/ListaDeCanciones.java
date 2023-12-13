@@ -357,6 +357,22 @@ public class ListaDeCanciones {
         return -1; // Retorna -1 si la canción no está en la lista
     }
 
+    /**
+     * Se cambia el nombre de la lista por el que es pasado por parametro
+     * @param nuevoNombre
+     */
+    public void cambiarNombreLista(String nuevoNombre){
+        try {
+            PreparedStatement stm=c.prepareStatement("update lista set nombre= ? where listaId=?;");
+            stm.setString(1, nuevoNombre);
+            stm.setInt(2,id);
+            stm.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean cambiarOrdenRep() {
         if (this.reproductor == true) {
             this.reproductor = false;

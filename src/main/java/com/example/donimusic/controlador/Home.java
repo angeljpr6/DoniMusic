@@ -98,6 +98,9 @@ public class Home implements Initializable {
     public Button acepUsuBtn;
     public Button acepContBtn;
     public Button ajustesBtn;
+    public Button editarNomListBtn;
+    public TextField nuevoNomList;
+    public Pane nuevoNomListPane;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
@@ -120,7 +123,18 @@ public class Home implements Initializable {
         inicializarColumnaBusqPrinc();
         inciarColumnAnadirPlayList();
         inicializarIconoAjust();
+        inicializarIconoLapiz();
 
+    }
+
+    /**
+     * Se le pone al lapiz su icono correspondiente
+     */
+    public void inicializarIconoLapiz(){
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/lapiz.png")));
+        ImageView imageView = new ImageView(image);
+
+        editarNomListBtn.setGraphic(imageView);
     }
 
     /**
@@ -1123,5 +1137,26 @@ public class Home implements Initializable {
         crearCuentaStage.show();
         Stage myStage = (Stage) this.buscarNCTextField.getScene().getWindow();
         myStage.close();
+    }
+
+    /**
+     * Abrimos el panel para editar el nombre de una lista
+     * @param mouseEvent
+     */
+    public void editarNomList(MouseEvent mouseEvent) {
+        controlAppPane.setDisable(true);
+        playlistPrincipalPane.setDisable(true);
+
+        nuevoNomListPane.setVisible(true);
+    }
+
+    public void cambiarNombreList(MouseEvent mouseEvent) {
+        if (!nuevoNomList.getText().isBlank()) {
+            listaActual.cambiarNombreLista(nuevoNomList.getText());
+            controlAppPane.setDisable(true);
+            playlistPrincipalPane.setDisable(true);
+
+            nuevoNomListPane.setVisible(true);
+        }
     }
 }
