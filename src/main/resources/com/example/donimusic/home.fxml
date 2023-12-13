@@ -206,7 +206,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Button layoutX="1082.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#abrirAjustes" text="Ajustes" />
+      <Button fx:id="ajustesBtn" layoutX="1111.0" layoutY="20.0" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" onMouseClicked="#abrirAjustes" prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: rgba(0,0,0,0);" />
       <Pane fx:id="ajustesPane" layoutX="433.0" layoutY="83.0" prefHeight="540.0" prefWidth="452.0" style="-fx-background-color: #212628; -fx-background-radius: 10px;" visible="false">
          <children>
             <Label fx:id="nomUsuAjust" layoutX="32.0" layoutY="31.0" text="NombreUsuario" textFill="WHITE" />

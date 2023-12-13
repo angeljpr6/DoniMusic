@@ -92,6 +92,7 @@ public class Home implements Initializable {
     public TextField nuevNombre;
     public Button acepUsuBtn;
     public Button acepContBtn;
+    public Button ajustesBtn;
     ArrayList<Label> labelSeleccionado = new ArrayList<>();
     private TableColumn<String, String> columnaNombrePlaylist = new TableColumn<>("Nombre");
     private TableColumn<String, String> columnaArtista = new TableColumn<>("Artista");
@@ -113,9 +114,23 @@ public class Home implements Initializable {
         inicializarAnadirCancion();
         inicializarColumnaBusqPrinc();
         inciarColumnAnadirPlayList();
+        inicializarIconoAjust();
 
     }
 
+    /**
+     * Se le pone al boton de ajustes su imagen correspondiente
+     */
+    public void inicializarIconoAjust(){
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/configuraciones.png")));
+        ImageView imageView = new ImageView(image);
+
+        ajustesBtn.setGraphic(imageView);
+    }
+
+    /**
+     * Se le pone al panel de añadir cancion en una nueva playlist su imagen correspondiente
+     */
     public void inicializarAnadirCancion() {
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/mas.png")));
         ImageView imageView = new ImageView(image);
@@ -172,6 +187,9 @@ public class Home implements Initializable {
 
     }
 
+    /**
+     * Se le pone al panel del logo su imagen correspondiente
+     */
     public void inicializarLogo() {
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/logoPequeño.png")));
         ImageView imageView = new ImageView(image);
@@ -182,6 +200,9 @@ public class Home implements Initializable {
         logo.getChildren().add(imageView);
     }
 
+    /**
+     * A cada uno de los generos predeterminados se le añade su imagen
+     */
     public void inicializarGeneros() {
         //Rock
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/imagenes/imagenRock.jpeg")));
@@ -221,6 +242,9 @@ public class Home implements Initializable {
 
     }
 
+    /**
+     * Se le pone al boton de buscar principal su imagen correspondiente
+     */
     public void inicializarBuscarBoton() {
         Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/lupa.png")));
 
@@ -235,6 +259,9 @@ public class Home implements Initializable {
 
     }
 
+    /**
+     * Se cargan todos los iconos correpondientes de cada boton del panel de control de las canciones
+     */
     public void inicializarControlarCancion() {
 
         Image imagePlay = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/boton-de-play.png")));
@@ -248,6 +275,9 @@ public class Home implements Initializable {
         botonAnterior.setGraphic(imageViewAnterior);
     }
 
+    /**
+     * Se vincula el slider con el mediaPlayer de cancion para que este avance con la cancion
+     */
     public void inicializarSlider() {
         MediaPlayer mediaPlayer = Cancion.mediaPlayer;
 
@@ -262,40 +292,67 @@ public class Home implements Initializable {
 
     }
 
+    /**
+     * Cambia el color de un label a blanco
+     * @param label
+     */
     public void seleccionarLabel(Label label) {
         label.setStyle("-fx-text-fill: white;");
     }
-
+    /**
+     * Cambia el color de un label a #838383
+     * @param label
+     */
     public void deselecionarLabel(Label label) {
         label.setStyle("-fx-text-fill: #838383;");
     }
 
+    /**
+     * Se añade al circulo de atras una flecha de menor que y se pone en el centro del circulo
+     */
     public void crearBotonAtras() {
-        Image imageError = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/menorQue.png")));
-        ImageView imageViewError = new ImageView(imageError);
+        Image image = new Image(String.valueOf(IniciarSesion.class.getResource("/Iconos/menorQue.png")));
+        ImageView imageView = new ImageView(image);
 
-        double centerX = (atrasCircle.getPrefWidth() - imageError.getWidth()) / 2;
-        double centerY = (atrasCircle.getPrefHeight() - imageError.getHeight()) / 2;
+        double centerX = (atrasCircle.getPrefWidth() - image.getWidth()) / 2;
+        double centerY = (atrasCircle.getPrefHeight() - image.getHeight()) / 2;
 
-        imageViewError.setLayoutX(centerX);
-        imageViewError.setLayoutY(centerY);
-        atrasCircle.getChildren().add(imageViewError);
+        imageView.setLayoutX(centerX);
+        imageView.setLayoutY(centerY);
+        atrasCircle.getChildren().add(imageView);
     }
 
+    /**
+     * Se le añade al panel que contiene las playlist del usuario cada una de sus playlist
+     */
     public void rellenarPanelTusPlayList() {
 
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = usuario.obtenerListasUsuario();
+
+        /* Aqui establecemos una altura de 50 y luego la incrementamos para evitar
+         * que se vean huecos en blanco
+         */
         int altura = 50;
+
+        /* Le añadimos a la lista una clase CellFactory que establecera los estilos de la lista
+         * y como se comportara el al seleccionar un item de esta
+         */
         playlistListView.setCellFactory(new CustomCellFactoryPlaylist());
         playlistListView.getItems().clear();
 
         for (ListaDeCanciones l : listaDeCancionesArrayList) {
             playlistListView.getItems().add(l);
             playlistListView.setPrefHeight(altura);
+
+            // Se incrementa la altura
             altura += 57;
         }
     }
 
+    /**
+     * Rellena el panel principal de las playlist con las canciones de la lista seleccionada
+     * @param canciones
+     */
     public void rellenarPlayList(List<Cancion> canciones) {
         anadirNuevaCancionPlBtn.setDisable(false);
         anadirNuevaCancionPlBtn.setVisible(true);
@@ -303,6 +360,10 @@ public class Home implements Initializable {
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
+
+        /* Le añadimos a la lista una clase CellFactory que establecera los estilos de la lista
+         * y como se comportara el al seleccionar un item de esta
+         */
         playlistPrinListView.setCellFactory(new CustomCellFactoryCan(this));
         playlistPrinListView.getItems().clear();
 
@@ -311,15 +372,28 @@ public class Home implements Initializable {
         }
     }
 
+    /**
+     * Actualiza los datos del controloador de canciones para que muestre el nombre y el autor de la
+     * cancion actual
+     */
     public void actualizarCancionRep() {
         autorCancion.setText(cancionActual.getNombreArtista());
         nombreCancion.setText(cancionActual.getNombre());
     }
 
+    /**
+     * Cambia el curso a una mano
+     * @param mouseEvent
+     * @param node le introducimos un nodo para poder usar este metodo en otros botones y paneles
+     */
     public void cambiarCursorMano(MouseEvent mouseEvent, Node node) {
         node.setCursor(Cursor.HAND);
     }
 
+    /**
+     * Establece la condiciones que se deben cumplir para que el boton atras funcione y a donde debe llevar
+     * @param mouseEvent
+     */
     public void irAtras(MouseEvent mouseEvent) {
         if (cancionPane.isVisible()) {
             cancionPane.setVisible(false);
@@ -331,10 +405,18 @@ public class Home implements Initializable {
         }
     }
 
+    /**
+     * Cambia el cursor al cursor por defecto
+     * @param mouseEvent
+     */
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
         atrasCircle.setCursor(Cursor.DEFAULT);
     }
 
+    /**
+     * Cuando seleccionas el texto de añadir favoritos dependiendo de si esta o no añadida cambiara por un texto u otro
+     * @param mouseEvent
+     */
     public void anadirFavoritos(MouseEvent mouseEvent) {
         if (anadirFavLabel.getText().equals("Quitar de favoritos")) {
 
@@ -344,6 +426,10 @@ public class Home implements Initializable {
         }
     }
 
+    /**
+     * Dependiendo de que se muestre en añadir favoritos al poner el raton encima se mostrara un texto u otro
+     * @param mouseEvent
+     */
     public void anadirFavEntered(MouseEvent mouseEvent) {
         if (anadirFavLabel.getText().equals("Añadido")) {
             anadirFavLabel.setText("Quitar de favoritos");
@@ -354,6 +440,10 @@ public class Home implements Initializable {
         }
     }
 
+    /**
+     * Dependiendo de que se muestre en añadir favoritos al quitar el raton de encima se mostrara un texto u otro
+     * @param mouseEvent
+     */
     public void anadirFavExited(MouseEvent mouseEvent) {
         if (anadirFavLabel.getText().equals("Quitar de favoritos")) {
             anadirFavLabel.setText("Añadido");
@@ -364,18 +454,30 @@ public class Home implements Initializable {
         }
     }
 
+    /**
+     * Cuando se pone el raton encima del boton atras este se vuelve mas claro y muestra el texto "Atrás"
+     * @param mouseEvent
+     */
     public void atrasEntered(MouseEvent mouseEvent) {
         atrasCircle.setOpacity(1);
         atrasMensaje.setVisible(true);
         cambiarCursorMano(mouseEvent, atrasCircle);
     }
 
+    /**
+     * cuando se quita el raton de encima el boton atras vuelve a su estado original
+     * @param mouseEvent
+     */
     public void atrasExited(MouseEvent mouseEvent) {
         atrasCircle.setOpacity(0.3);
         atrasMensaje.setVisible(false);
         cambiarCursorDefault(mouseEvent);
     }
 
+    /**
+     *
+     * @param mouseEvent
+     */
     public void introducirTextoBuscar(MouseEvent mouseEvent) {
         if (anadirCancionPane.isVisible()) {
             if (buscarNCTextField.getText().equals("Buscar")) {
@@ -805,6 +907,11 @@ public class Home implements Initializable {
 
 
     public void abrirAjustes(MouseEvent mouseEvent) {
+        controlAppPane.setDisable(true);
+        playlistPrincipalPane.setDisable(true);
+        inicioPane.setDisable(true);
+        cancionPane.setDisable(true);
+
         ajustesPane.setVisible(true);
     }
 
@@ -833,6 +940,11 @@ public class Home implements Initializable {
 
 
     public void cerrarAju(MouseEvent mouseEvent) {
+        controlAppPane.setDisable(false);
+        playlistPrincipalPane.setDisable(false);
+        inicioPane.setDisable(false);
+        cancionPane.setDisable(false);
+
         ajustesPane.setVisible(false);
     }
 }
