@@ -129,7 +129,6 @@ public class ListaDeCanciones {
      */
     public static void addCancion(int idLista, int idCancion) {
 
-
         try {
             PreparedStatement stm = c.prepareStatement("INSERT INTO playListCanciones (listaId, cancionId) VALUES (?, ?)");
             stm.setInt(1, idLista);

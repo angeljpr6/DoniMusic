@@ -1218,4 +1218,10 @@ public class Home implements Initializable {
         rellenarPanelTusPlayList();
 
     }
+
+    public void cambiarSegundo(MouseEvent mouseEvent) {
+        double segundo = cancionSlider.getValue();
+        Duration duration = new Duration(segundo*1000);
+        cancionActual.cambiarSegundo(duration);
+    }
 }
