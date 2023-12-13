@@ -20,12 +20,13 @@ public class Cancion {
     private String album;
 
 
-    public Cancion(int id, String nombre, String nombreArtista, String album) {
+    public Cancion(int id, String nombre, String nombreArtista, String album, int duracion) {
         this.id = id;
         this.nombre = nombre;
         this.nombreArtista = nombreArtista;
         this.ruta = "";
         this.album = album;
+        this.duracion=duracion;
     }
 
     public Cancion() {
@@ -51,7 +52,8 @@ public class Cancion {
                 String archivo = result.getString("archivo");
                 String nombreArtista = result.getString("artista");
                 String album = result.getString("album");
-                Cancion c1 = new Cancion(id, nombre, nombreArtista, album);
+                int duracion = result.getInt("duracion");
+                Cancion c1 = new Cancion(id, nombre, nombreArtista, album,duracion);
                 canciones.add(c1);
             }
 

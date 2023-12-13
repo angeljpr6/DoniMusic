@@ -51,7 +51,7 @@ public class CustomCellCan extends ListCell<Cancion> {
         } else {
             nombreLabel.setText(item.getNombre() + " ");
             artistLabel.setText(item.getNombreArtista() + " ");
-            duracionLabel.setText(item.getDuracion() + " ");
+            duracionLabel.setText(item.getDuracion() + "`s ");
             setGraphic(hbox);
             Color fondo = Color.rgb(0x21, 0x26, 0x28);
             setBackground(new Background(new BackgroundFill(fondo, null, null)));

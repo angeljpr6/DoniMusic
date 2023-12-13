@@ -166,8 +166,9 @@ public class ListaDeCanciones {
                         String album = resultSet.getString("album");
                         String archivo = resultSet.getString("archivo");
                         String artista = resultSet.getString("artista");
+                        int duracion=resultSet.getInt("duracion");
 
-                        Cancion cancion = new Cancion(idCancion, nombre, artista, album);
+                        Cancion cancion = new Cancion(idCancion, nombre, artista, album, duracion);
                         cancionesEnLista.add(cancion);
                     }
                 }
@@ -319,8 +320,9 @@ public class ListaDeCanciones {
                         String nombre = resultSet.getString("nombreCancion");
                         String album = resultSet.getString("album");
                         String artista = resultSet.getString("artista");
+                        int duracion=resultSet.getInt("duracion");
 
-                        Cancion cancion = new Cancion(idCancion, nombre, artista, album);
+                        Cancion cancion = new Cancion(idCancion, nombre, artista, album,duracion);
                         cancionesEnLista.add(cancion);
                     }
                 }
