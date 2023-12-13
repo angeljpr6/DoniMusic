@@ -809,24 +809,28 @@ public class Home implements Initializable {
     }
 
     public void cambContra(MouseEvent mouseEvent) {
-        antContra.setDisable(true);
-        nuevContra.setDisable(true);
-        acepContBtn.setDisable(true);
+        antContra.setDisable(false);
+        nuevContra.setDisable(false);
+        acepContBtn.setDisable(false);
     }
 
     public void acepContra(MouseEvent mouseEvent) {
-        if (antContra.equals(usuario.getPassword())){
-            // TODO: 12/12/2023
+        String antContAux=antContra.getText();
+        if (antContAux.equals(usuario.getPassword())){
+            usuario.cambiarContraseña(nuevContra.getText());
+            usuario.setPassword(nuevContra.getText());
         }
     }
 
     public void cambUsu(MouseEvent mouseEvent) {
-        nuevNombre.setDisable(true);
-        acepUsuBtn.setDisable(true);
+        nuevNombre.setDisable(false);
+        acepUsuBtn.setDisable(false);
     }
 
     public void acepUsuNom(MouseEvent mouseEvent) {
+        usuario.cambiarUsuario(nuevNombre.getText());
     }
+
 
     public void cerrarAju(MouseEvent mouseEvent) {
         ajustesPane.setVisible(false);

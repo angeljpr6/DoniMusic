@@ -80,6 +80,32 @@ public class Usuario {
         return arrayListaDeCanciones;
     }
 
+    public void cambiarContraseña(String contrasena){
+        String name=nombre;
+        try {
+            PreparedStatement stm=c.prepareStatement("update usuario set contraseña=? where nombreUsuario=?;");
+            stm.setString(1, contrasena);
+            stm.setString(2,name);
+            stm.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cambiarUsuario(String usuario){
+        String name=nombre;
+        try {
+            PreparedStatement stm=c.prepareStatement("update usuario set nombreUsuario= ? where nombreUsuario=?;");
+            stm.setString(1, usuario);
+            stm.setString(2,name);
+            stm.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public String getNombre() {
         return nombre;
