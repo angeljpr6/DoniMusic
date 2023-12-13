@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class Conexion {
     private static final String drive = "com.mysql.cj.jdbc.Driver";
     private static final String user = "root";
-    private static final String pass = "1234";
+    private static final String pass = "";
     private static final String url = "jdbc:mysql://127.0.0.1:3306/donimusic?characterEncoding=utf8";
     public static Connection con;
 

@@ -480,7 +480,7 @@ public class Home implements Initializable {
     }
 
     /**
-     *
+     * Se comprueba en que panel estamos situados para que al seleccionar una barra de busqueda se le quite el texto de Buscar
      * @param mouseEvent
      */
     public void introducirTextoBuscar(MouseEvent mouseEvent) {
@@ -506,6 +506,11 @@ public class Home implements Initializable {
     public void rockExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
     }
+
+    /**
+     * Cuando se seleciona el panel de rock se abre la playlist predeterminada de rock
+     * @param mouseEvent
+     */
     public void abrirRock(MouseEvent mouseEvent) {
         Usuario doniol=new Usuario("doniol","1234");
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = doniol.obtenerListasUsuario();
@@ -528,6 +533,10 @@ public class Home implements Initializable {
         cambiarCursorDefault(mouseEvent);
     }
 
+    /**
+     * Cuando se seleciona el panel de fumon se abre la playlist predeterminada de fumon
+     * @param mouseEvent
+     */
     public void abrirFumon(MouseEvent mouseEvent) {
         Usuario doniol=new Usuario("doniol","1234");
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = doniol.obtenerListasUsuario();
@@ -550,6 +559,11 @@ public class Home implements Initializable {
     public void enEspanolExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
     }
+
+    /**
+     * Cuando se seleciona el panel de español se abre la playlist predeterminada de español
+     * @param mouseEvent
+     */
     public void abrirEspanol(MouseEvent mouseEvent) {
         Usuario doniol=new Usuario("doniol","1234");
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = doniol.obtenerListasUsuario();
@@ -573,6 +587,11 @@ public class Home implements Initializable {
     public void rapExited(MouseEvent mouseEvent) {
         cambiarCursorDefault(mouseEvent);
     }
+
+    /**
+     * Cuando se seleciona el panel de rap se abre la playlist predeterminada de rap
+     * @param mouseEvent
+     */
     public void abrirRap(MouseEvent mouseEvent) {
         Usuario doniol=new Usuario("doniol","1234");
         ArrayList<ListaDeCanciones> listaDeCancionesArrayList = doniol.obtenerListasUsuario();
@@ -588,6 +607,11 @@ public class Home implements Initializable {
         anadirNuevaCancionPlBtn.setVisible(false);
     }
 
+    /**
+     * Se cambia el apartado seleccionado a crear playlist y se ajusta el programa para que aparezca
+     * el panel de crearPlaylist y se desactivan el resto
+     * @param mouseEvent
+     */
     public void crearPlaylist(MouseEvent mouseEvent) {
         cambiarLabelSeleccionado(crearPlaylistLabel);
         crearPlaylistPane.setVisible(true);
@@ -605,31 +629,48 @@ public class Home implements Initializable {
         cambiarCursorDefault(mouseEvent);
     }
 
+    /**
+     * Se comprueba que la playlist tenga un nombre y si es asi se crea la lista con las canciones seleccionadas
+     * y entonces se cierra el panel y se habilitan el resto de paneles
+     * @param mouseEvent
+     */
     public void guardarNuevaPlaylist(MouseEvent mouseEvent) {
         if (!nombreNuevaPlaylist.getText().isBlank()) {
             ListaDeCanciones.crearLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
             int id = ListaDeCanciones.obtenerIdLista(nombreNuevaPlaylist.getText(), usuario.getNombre());
+
             for (Cancion c : cancionesAnadirNewPlaylist) {
                 ListaDeCanciones.addCancion(id, c.getId());
             }
+
             rellenarPanelTusPlayList();
             crearPlaylistPane.setVisible(false);
+
             if (playlistPrincipalPane.isVisible()) {
                 cambiarLabelSeleccionado(cancionesFavLabel);
             } else cambiarLabelSeleccionado(inicioLabel);
+
             VBox vBoxAux = new VBox();
             cancionesAnadidas.setContent(vBoxAux);
             nombreNuevaPlaylist.setText("Nombre de la Playlist");
+
             controlAppPane.setDisable(false);
             playlistPrincipalPane.setDisable(false);
             inicioPane.setDisable(false);
             cancionPane.setDisable(false);
+
             rellenarPanelTusPlayList();
+
+            // Vacia el array de canciones que se añaden a la lista
             cancionesAnadirNewPlaylist.removeAll(cancionesAnadirNewPlaylist);
             anadirCancionPane.setVisible(false);
         }
     }
 
+    /**
+     * Se oculta el panel de crearPalylist y se habilita el resto
+     * @param mouseEvent
+     */
     public void cancelarNuevaPlaylist(MouseEvent mouseEvent) {
         crearPlaylistPane.setVisible(false);
         anadirCancionPane.setVisible(false);
@@ -641,6 +682,7 @@ public class Home implements Initializable {
         VBox limpiarPane = new VBox();
         cancionesAnadidas.setContent(limpiarPane);
 
+        // Vacia el array de canciones que se añaden a la lista
         cancionesAnadirNewPlaylist.removeAll(cancionesAnadirNewPlaylist);
 
         nombreNuevaPlaylist.setText("Nombre de la Playlist");
@@ -650,6 +692,11 @@ public class Home implements Initializable {
         cancionPane.setDisable(false);
     }
 
+    /**
+     * Al seleccionar el boton de añadir cancion cuando estamos creando una nueva lista
+     * se abre un panel para añadir canciones y deshabilitamos el otro
+     * @param mouseEvent
+     */
     public void anadirNuevaCancion(MouseEvent mouseEvent) {
         anadirCancionPane.setVisible(true);
         crearPlaylistPane.setDisable(true);
@@ -667,18 +714,30 @@ public class Home implements Initializable {
         anadirCancionPane.setVisible(false);
     }
 
+    /**
+     * Salimos del panel de añadir cancion cuando estamos creando una nueva lista
+     * @param mouseEvent
+     */
     public void cancelarNuevaCancion(MouseEvent mouseEvent) {
 
         anadirCancionPane.setVisible(false);
         crearPlaylistPane.setDisable(false);
     }
 
+    /**
+     * Al selecionar el panel donde introducimos el nombre de la nueva lista se le quita el texto por defecto
+     * @param mouseEvent
+     */
     public void vaciarNombreNuevaPlaylist(MouseEvent mouseEvent) {
         if (nombreNuevaPlaylist.getText().equals("Nombre de la Playlist")) {
             nombreNuevaPlaylist.setText("");
         }
     }
 
+    /**
+     * Abrimos el panel de cancones favoritas
+     * @param mouseEvent
+     */
     public void abrirFavoritos(MouseEvent mouseEvent) {
         cambiarLabelSeleccionado(cancionesFavLabel);
         playlistPrincipalPane.setVisible(true);
@@ -694,6 +753,10 @@ public class Home implements Initializable {
         cambiarCursorDefault(mouseEvent);
     }
 
+    /**
+     * Ponemos el panel principal delante
+     * @param mouseEvent
+     */
     public void irInicio(MouseEvent mouseEvent) {
         cambiarLabelSeleccionado(inicioLabel);
         crearPlaylistPane.setVisible(false);
@@ -709,6 +772,10 @@ public class Home implements Initializable {
         cambiarCursorDefault(mouseEvent);
     }
 
+    /**
+     * Cambiamos el label que esta seleccionado
+     * @param label
+     */
     public void cambiarLabelSeleccionado(Label label) {
         deselecionarLabel(labelSeleccionado.get(0));
         seleccionarLabel(label);
@@ -716,15 +783,25 @@ public class Home implements Initializable {
         labelSeleccionado.add(label);
     }
 
+    /**
+     * Al pulsar el boton de pausa/play se realiza cambia de uno a otro
+     * @param mouseEvent
+     */
     public void pausarYReproducir(MouseEvent mouseEvent) {
         reproducirCancion();
     }
 
+    /**
+     * Descargamos la cancion y la reproducimos
+     */
     public void inicializarCancion() {
         cancionActual.descargarCancion();
         cancionActual.reproducirCancion();
     }
 
+    /**
+     * Comprobamos si se esta reproduciendo o no una cancion para sabes si pausamos o reproducimos la cancion actual
+     */
     public void reproducirCancion() {
         if (cancionActual != null) {
             actualizarCancionRep();
@@ -736,6 +813,8 @@ public class Home implements Initializable {
                 reproduciendo = false;
             } else {
                 reproduciendo = true;
+
+                // Si la cancion no existe la inicializamos
                 if (cancionActual.getRuta().equals("")) {
                     inicializarCancion();
                     inicializarSlider();
@@ -769,6 +848,10 @@ public class Home implements Initializable {
     }
 
 
+    /**
+     * Rellenamos el panel de la playlist con las canciones de la playlist actual
+     * @param mouseEvent
+     */
     public void seleccionarPlayList(MouseEvent mouseEvent) {
 
         ListaDeCanciones listaDeCanciones = (ListaDeCanciones) playlistListView.getSelectionModel().selectedItemProperty().getValue();
@@ -778,6 +861,10 @@ public class Home implements Initializable {
         System.out.println(listaDeCanciones.getId());
     }
 
+    /**
+     * Pausamos la cancion actual pasamos a la siguiente y comenzamos a reproducirla
+     * @param mouseEvent
+     */
     public void siguienteCancion(MouseEvent mouseEvent) {
         reproducirCancion();
         cancionActual = listaActual.siguiente(cancionActual);
@@ -786,6 +873,10 @@ public class Home implements Initializable {
         playlistPrinListView.getSelectionModel().select(indiceSeleccionado + 1);
     }
 
+    /**
+     * Pausamos la cancion actual pasamos a la anterior y comenzamos a reproducirla
+     * @param mouseEvent
+     */
     public void anteriorCancion(MouseEvent mouseEvent) {
         reproducirCancion();
         cancionActual = listaActual.atras(cancionActual);
@@ -794,6 +885,10 @@ public class Home implements Initializable {
         playlistPrinListView.getSelectionModel().select(indiceSeleccionado - 1);
     }
 
+    /**
+     * Al seleccionar una cancion de la barra de busqueda principal se comienza a reproducir
+     * @param mouseEvent
+     */
     public void obtenerCancionBusqueda(MouseEvent mouseEvent) {
         Cancion c1 = (Cancion) tablaBusquedaPrin.getSelectionModel().getSelectedItem();
         if (reproduciendo == true) {
@@ -829,6 +924,11 @@ public class Home implements Initializable {
         }
     }
 
+    /**
+     * Al seleccionar una cancion dentro cuando estamos añadiendo una cancion a una lista ya creada
+     * si no esta dentro se la añadira
+     * @param actionEvent
+     */
     public void anadirCancionNewPlaylist(ActionEvent actionEvent) {
         if (tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem() != null) {
             Cancion c1 = (Cancion) tablaAnadirCancionPlayL.getSelectionModel().getSelectedItem();
@@ -863,6 +963,10 @@ public class Home implements Initializable {
         }
     }
 
+    /**
+     * abrimos el panel de añadir una cancion a una lista ya creada y deshablitamos el resto
+     * @param mouseEvent
+     */
     public void anadirNuevaCancionPlaylist(MouseEvent mouseEvent) {
         anadirCancionPlayLPane.setVisible(true);
         playlistPrincipalPane.setDisable(true);
@@ -877,16 +981,25 @@ public class Home implements Initializable {
         cambiarCursorMano(mouseEvent, anadirNuevaCancionPlBtn);
     }
 
+    /**
+     * Salimos del panel de añadir una cancion a una lista ya creada y hablitamos el resto
+     * @param mouseEvent
+     */
     public void cancelarNuevaCancionPlayL(MouseEvent mouseEvent) {
         anadirCancionPlayLPane.setVisible(false);
         playlistPrincipalPane.setDisable(false);
         controlAppPane.setDisable(false);
     }
 
+    /**
+     * Salimos del panel de añadir una cancion a una lista ya creada, hablitamos el resto
+     * y guardamos
+     * @param mouseEvent
+     */
     public void guardarNuevaCancionPlayL(MouseEvent mouseEvent) {
         if (tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem() != null) {
             Cancion c1 = (Cancion) tablaAnadirCancionPlayLPrin.getSelectionModel().getSelectedItem();
-            if (!ListaDeCanciones.encontrarCancion(c1.getId(), listaActual.getId())) {// TODO: 04/12/2023 cambiar el true por una comprobacion de si no existe la cancion en la lista
+            if (!ListaDeCanciones.encontrarCancion(c1.getId(), listaActual.getId())) {
                 ListaDeCanciones.addCancion(listaActual.getId(), c1.getId());
                 List<Cancion> canciones = ListaDeCanciones.obtenerCancionesEnLista(listaActual.getId());
                 rellenarPlayList(canciones);
@@ -896,6 +1009,10 @@ public class Home implements Initializable {
 
     }
 
+    /**
+     * Se crea lo necesario para la barra de busqueda de añadir cancion a una lista creada
+     * @param mouseEvent
+     */
     public void buscarCancion3(MouseEvent mouseEvent) {
         tablaAnadirCancionPlayLPrin.getColumns().clear();
 
@@ -911,6 +1028,10 @@ public class Home implements Initializable {
     }
 
 
+    /**
+     * Abre el panel de ajustes de usuario
+     * @param mouseEvent
+     */
     public void abrirAjustes(MouseEvent mouseEvent) {
         controlAppPane.setDisable(true);
         playlistPrincipalPane.setDisable(true);
@@ -920,12 +1041,20 @@ public class Home implements Initializable {
         ajustesPane.setVisible(true);
     }
 
+    /**
+     * Habilita los campos para cambiar la contraseña del usuario
+     * @param mouseEvent
+     */
     public void cambContra(MouseEvent mouseEvent) {
         antContra.setDisable(false);
         nuevContra.setDisable(false);
         acepContBtn.setDisable(false);
     }
 
+    /**
+     * Si la contraseña actual es correcta se cambiara por la nueva contraseña
+     * @param mouseEvent
+     */
     public void acepContra(MouseEvent mouseEvent) {
         String antContAux=antContra.getText();
         if (antContAux.equals(usuario.getPassword())){
@@ -934,16 +1063,28 @@ public class Home implements Initializable {
         }
     }
 
+    /**
+     * Habilita los campos para cambiar el nombre del usuario
+     * @param mouseEvent
+     */
     public void cambUsu(MouseEvent mouseEvent) {
         nuevNombre.setDisable(false);
         acepUsuBtn.setDisable(false);
     }
 
+    /**
+     * Cambia el nombre del usuario
+     * @param mouseEvent
+     */
     public void acepUsuNom(MouseEvent mouseEvent) {
         usuario.cambiarUsuario(nuevNombre.getText());
     }
 
 
+    /**
+     * Cerramos el panel de ajustes y habilitamos el resto
+     * @param mouseEvent
+     */
     public void cerrarAju(MouseEvent mouseEvent) {
         controlAppPane.setDisable(false);
         playlistPrincipalPane.setDisable(false);
