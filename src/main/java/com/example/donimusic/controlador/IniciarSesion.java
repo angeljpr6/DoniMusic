@@ -70,6 +70,9 @@ public class IniciarSesion implements Initializable {
 
     }
 
+    /**
+     * Método para mostrar 2 segundos el logo al iniciar
+     */
     public void verLogo() {
         Image logoImg = new Image(String.valueOf(CrearCuenta.class.getResource("/Iconos/logoPequeño.PNG")));
         ImageView logo = new ImageView(logoImg);
@@ -77,15 +80,18 @@ public class IniciarSesion implements Initializable {
         inicioLogo.setVisible(true);
         Timeline timeline = new Timeline();
 
-        // Añadir un KeyFrame para ocultar el inicioLogo después de 5 segundos
+        //se muestra el panel del logo 2 segundos
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(2), event -> inicioLogo.setVisible(false))
         );
-
-        // Iniciar la animación
         timeline.play();
     }
 
+    /**
+     * Botón para abrir la ventana registro
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void AbrirInterfazRegistro(MouseEvent mouseEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/crearCuenta.fxml"));
         Parent root = loader.load();
@@ -99,14 +105,28 @@ public class IniciarSesion implements Initializable {
         myStage.close();
     }
 
+    /**
+     * Cambia el cursor a una mano
+     * @param mouseEvent
+     */
     public void cambiarCursorMano(MouseEvent mouseEvent) {
         registroBtn.setCursor(Cursor.HAND);
     }
 
+    /**
+     * Cambia el cursor al por defecto
+     * @param mouseEvent
+     */
     public void cambiarCursorDefault(MouseEvent mouseEvent) {
         registroBtn.setCursor(Cursor.DEFAULT);
     }
 
+
+    /**
+     * Método para inicir sesión
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void iniciarSesion(MouseEvent mouseEvent) throws IOException {
         PreparedStatement stm;
         String textoNombre = usuarioTextField.getText();
@@ -117,7 +137,7 @@ public class IniciarSesion implements Initializable {
             while (result.next()) {
                 String nombre = result.getString("nombreUsuario");
                 String password = result.getString("contraseña");
-
+                //Comprueba que los datos introducidos esten en la base de datos
                 if (nombre.equals(textoNombre) && password.equals(textoCont)) {
                     Home.usuario = new Usuario(usuarioTextField.getText(), contrasenaTextField.getText());
                     if (recordarCuenta.isSelected()) {
@@ -127,6 +147,7 @@ public class IniciarSesion implements Initializable {
                             borrarUsuario();
                         }
                     }
+                    //Abre el Home
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/home.fxml"));
                     Parent root = loader.load();
                     Scene scene = new Scene(root);
@@ -146,6 +167,11 @@ public class IniciarSesion implements Initializable {
 
     }
 
+    /**
+     * Botón para abrir la ventana de inicio de artista
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void abrirInicioArtista(MouseEvent mouseEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/donimusic/inicioArtista.fxml"));
         Parent root = loader.load();
@@ -163,7 +189,11 @@ public class IniciarSesion implements Initializable {
         artistaBtn.setCursor(Cursor.HAND);
     }
 
-
+    /**
+     * Método para insertar un nuevo usuario en la base de datos
+     * @param nombreUsuario
+     * @param password
+     */
     public void insertarUsuario(String nombreUsuario, String password) {
         try {
             PreparedStatement stm = a.prepareStatement("INSERT INTO usuario (nombreUsuario, contraseña) VALUES (?, ?)");
@@ -176,6 +206,9 @@ public class IniciarSesion implements Initializable {
         }
     }
 
+    /**
+     * Método para eliminar usuario de la base de datos local
+     */
     public void borrarUsuario() {
         try {
             PreparedStatement stm = a.prepareStatement("DELETE FROM usuario");

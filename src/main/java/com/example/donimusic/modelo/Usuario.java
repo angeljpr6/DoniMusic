@@ -48,7 +48,7 @@ public class Usuario {
     }
 
     /**
-     * Método que devuelve la lista del los usuarios registrados
+     * Método que devuelve las palylist del usuario
      * @return
      */
     public ArrayList<ListaDeCanciones> obtenerListasUsuario() {
@@ -80,6 +80,10 @@ public class Usuario {
         return arrayListaDeCanciones;
     }
 
+    /**
+     * Método para cambiar la contraseña en la base de datos
+     * @param contrasena
+     */
     public void cambiarContraseña(String contrasena){
         String name=nombre;
         try {
@@ -92,7 +96,10 @@ public class Usuario {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Método para cambiar el nombre de usuario en la base de datos
+     * @param usuario
+     */
     public void cambiarUsuario(String usuario){
         String name=nombre;
         try {
