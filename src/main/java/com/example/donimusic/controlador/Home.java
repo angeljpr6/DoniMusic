@@ -551,6 +551,9 @@ public class Home implements Initializable {
         rellenarPlayList(canciones);
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
+
+        elimListbtn.setVisible(false);
+        elimListbtn.setDisable(true);
     }
 
     public void fumonEntered(MouseEvent mouseEvent) {
@@ -576,6 +579,8 @@ public class Home implements Initializable {
         List<Cancion> canciones = obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
 
+        elimListbtn.setVisible(false);
+        elimListbtn.setDisable(true);
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
     }
@@ -602,6 +607,9 @@ public class Home implements Initializable {
         }
         List<Cancion> canciones = obtenerCancionesEnLista(2);
         rellenarPlayList(canciones);
+
+        elimListbtn.setVisible(false);
+        elimListbtn.setDisable(true);
 
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
@@ -630,6 +638,9 @@ public class Home implements Initializable {
         }
         List<Cancion> canciones = obtenerCancionesEnLista(1);
         rellenarPlayList(canciones);
+
+        elimListbtn.setVisible(false);
+        elimListbtn.setDisable(true);
 
         anadirNuevaCancionPlBtn.setDisable(true);
         anadirNuevaCancionPlBtn.setVisible(false);
