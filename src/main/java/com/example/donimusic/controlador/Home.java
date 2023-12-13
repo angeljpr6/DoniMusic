@@ -390,6 +390,9 @@ public class Home implements Initializable {
         anadirNuevaCancionPlBtn.setDisable(false);
         anadirNuevaCancionPlBtn.setVisible(true);
 
+        elimListbtn.setVisible(true);
+        elimListbtn.setDisable(false);
+
         playlistPrincipalPane.setVisible(true);
         nombrePlaylistPrin.setText(listaActual.getNombre());
         autorPlaylistPrin.setText(listaActual.getNombreCreador());
